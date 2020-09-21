@@ -1,0 +1,172 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/models/location.dart';
+import 'package:easyhour_app/models/smart_working.dart';
+import 'package:easyhour_app/providers/app_bar_provider.dart';
+import 'package:easyhour_app/providers/smart_working_provider.dart';
+import 'package:easyhour_app/screens/base_screen.dart';
+import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/add_edit_form.dart';
+import 'package:easyhour_app/widgets/button.dart';
+import 'package:easyhour_app/widgets/loader.dart';
+import 'package:easyhour_app/widgets/text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:smart_select/smart_select.dart';
+import 'package:google_map_location_picker/google_map_location_picker.dart';
+
+class SmartWorkingAddScreen extends BaseScreen {
+  @override
+  Widget getBody() => _SmartWorkingForm();
+
+  @override
+  EasyAppBarAction getEasyAppBarAction() => null;
+}
+
+class _SmartWorkingForm extends StatefulWidget {
+  @override
+  createState() => _SmartWorkingFormState();
+}
+
+class _SmartWorkingFormState
+    extends AddEditFormState<SmartWorking, SmartWorkingProvider> {
+  SmartWorking _item;
+
+  SmartWorking get item => _item;
+
+  _SmartWorkingFormState() : super(LocaleKeys.label_smartworkings);
+
+  @override
+  void setItem(SmartWorking itemToEdit) {
+    if (_item == null) _item = itemToEdit ?? SmartWorking();
+  }
+
+  @override
+  List<Widget> getFormElements() => [
+        _LocationSelectField(_item),
+        EasyTextField(
+            key: ValueKey(_item.dateRange ?? UniqueKey()),
+            labelText: LocaleKeys.label_date_range,
+            icon: EasyIcons.calendar,
+            initialValue: _item.dateRange?.formatDisplay(),
+            onTap: () async {
+              DateTimeRange picked = await openDateRangePicker(item.dateRange);
+              if (picked != null) {
+                setState(() {
+                  item.dataInizio = picked.start;
+                  item.dataFine = picked.end;
+                });
+              }
+            }),
+        EasyTextField(
+          labelText: LocaleKeys.label_description,
+          icon: EasyIcons.description,
+          maxLines: 3,
+          isRequired: false,
+          onSaved: (value) => _item.descrizione = value,
+        ),
+      ];
+}
+
+class _LocationSelectField extends StatefulWidget {
+  final SmartWorking item;
+
+  _LocationSelectField(this.item);
+
+  @override
+  _LocationSelectFieldState createState() => _LocationSelectFieldState();
+}
+
+class _LocationSelectFieldState extends State<_LocationSelectField> {
+  bool _loading = false;
+  List<S2Choice<Location>> _locations = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getLocations();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Autocomplete with first location if only one is found
+    if (_locations?.length == 1) widget.item.location = _locations[0].value;
+
+    return _loading
+        ? EasyLoader()
+        : SmartSelect<Location>.single(
+            title: LocaleKeys.label_location.tr(),
+            placeholder: LocaleKeys.label_choose.tr(),
+            value: widget.item.location,
+            onChange: (state) =>
+                setState(() => widget.item.location = state.value),
+            choiceItems: _locations,
+            choiceStyle: S2ChoiceStyle(
+              titleStyle: Theme.of(context)
+                  .textTheme
+                  .button
+                  .copyWith(color: Colors.black),
+              activeColor: Theme.of(context).primaryColor,
+            ),
+            choiceEmptyBuilder: (context, value) => Center(
+                  child: Text(LocaleKeys.message_no_locations.tr(),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ),
+            modalFilter: true,
+            modalFilterAuto: true,
+            modalFilterHint: LocaleKeys.label_search.tr(),
+            modalFooterBuilder: (context, state) {
+              return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 7.0,
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                    child: EasyButton(
+                      text: LocaleKeys.label_add.tr().toUpperCase(),
+                      icon: Icons.add_location,
+                      onPressed: () => _addLocation,
+                    ),
+                  ));
+            },
+            choiceConfig: S2ChoiceConfig(
+              useDivider: true,
+            ),
+            tileBuilder: (context, state) {
+              return EasyTextField(
+                key: ValueKey(widget.item.location ?? UniqueKey()),
+                labelText: LocaleKeys.label_location,
+                icon: EasyIcons.location,
+                maxLines: 1,
+                initialValue: widget.item.location?.nome,
+                onTap: state.showModal,
+              );
+            });
+  }
+
+  void _getLocations() async {
+    try {
+      setState(() => _loading = true);
+      List<Location> locations = await EasyRest().getLocations();
+      setState(() => _locations = S2Choice.listFrom<Location, dynamic>(
+            source: locations,
+            value: (index, item) => item,
+            title: (index, item) => item.nome,
+            meta: (index, item) => item,
+          ));
+    } catch (e, s) {
+      print(e);
+      print(s);
+    } finally {
+      setState(() => _loading = false);
+    }
+  }
+
+  void _addLocation() {
+    var location = Navigator.pushNamed(context, '/location/add');
+    // TODO
+  }
+}

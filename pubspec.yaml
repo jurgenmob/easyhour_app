@@ -1,0 +1,81 @@
+name: easyhour_app
+description: The timesheet, that's it!
+
+# Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
+
+version: 2.0.0+1
+
+environment:
+  sdk: ">=2.9.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  provider: ^4.3.2+2
+  dio: ^3.0.10
+  package_info: '>=0.4.3 <2.0.0'
+  shared_preferences: '>=0.5.10 <2.0.0'
+  url_launcher: ^5.6.0
+  table_calendar: ^2.2.3
+  double_back_to_close_app: ^1.2.0
+  smart_select: ^4.2.0
+  google_map_location_picker: ^4.0.0
+
+  easy_localization: ^2.3.3
+  easy_localization_loader:
+    git: https://github.com/easyhour/easy_localization_loader.git
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  assets:
+    - assets/translations/
+    - images/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/roboto/Roboto-Italic.ttf
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/roboto/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/roboto/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/roboto/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/roboto/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/fonts/roboto/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic
+    - family: EasyIcons
+      fonts:
+        - asset: assets/fonts/EasyIcons.ttf
