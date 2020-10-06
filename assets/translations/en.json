@@ -31,8 +31,8 @@
   "label_type": "Type",
   "label_client": "Client",
   "label_location": "Location",
-  "label_choose": "Choose one",
-  "label_save": "Save",
+  "label_save_location_as": "Save location as...",
+  "label_enter_location_name": "Location name",
 
   "label_vacations": {
     "one":"Vacation",
@@ -77,6 +77,8 @@
   "label_cancel": "Cancel",
   "label_search": "Search",
   "label_add": "Add",
+  "label_choose": "Choose one",
+  "label_save": "Save",
 
   "message_confirm_app_exit": "Tap back again to quit app"
 }

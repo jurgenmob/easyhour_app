@@ -35,10 +35,38 @@ class Location {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    if (id != null && id > 0) {
+      // Existing location
+      data['id'] = this.id;
+    } else {
+      // New location
+      data['nome'] = this.nome;
+      data['lat'] = this.lat;
+      data['lnt'] = this.lnt;
+    }
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Location{id: $id, nome: $nome, lat: $lat, lnt: $lnt}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Location &&
+          runtimeType == other.runtimeType &&
+          id != null &&
+          id == other.id ||
+      other is Location &&
+          runtimeType == other.runtimeType &&
+          nome != null &&
+          nome == other.nome;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class LocationResponse {

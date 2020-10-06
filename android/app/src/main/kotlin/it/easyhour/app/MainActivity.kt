@@ -1,4 +1,4 @@
-package it.easyhour.easyhour_app
+package it.easyhour.app
 
 import io.flutter.embedding.android.FlutterActivity
 

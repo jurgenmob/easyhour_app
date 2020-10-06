@@ -142,7 +142,7 @@ class _TaskItem extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1
-                            .copyWith(color: Colors.white)),
+                            .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
                     Text(task.nomeProgetto,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,

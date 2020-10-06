@@ -10,11 +10,13 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/button.dart';
+import 'package:easyhour_app/widgets/dialogs.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_select/smart_select.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:smart_select/smart_select.dart';
 
 class SmartWorkingAddScreen extends BaseScreen {
   @override
@@ -117,6 +119,10 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
             modalFilter: true,
             modalFilterAuto: true,
             modalFilterHint: LocaleKeys.label_search.tr(),
+            modalHeaderStyle: S2ModalHeaderStyle(
+              iconTheme: Theme.of(context).iconTheme,
+              actionsIconTheme: Theme.of(context).iconTheme,
+            ),
             modalFooterBuilder: (context, state) {
               return Container(
                   padding: const EdgeInsets.symmetric(
@@ -128,7 +134,7 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
                     child: EasyButton(
                       text: LocaleKeys.label_add.tr().toUpperCase(),
                       icon: Icons.add_location,
-                      onPressed: () => _addLocation,
+                      onPressed: () => _addLocation(state),
                     ),
                   ));
             },
@@ -165,8 +171,45 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
     }
   }
 
-  void _addLocation() {
-    var location = Navigator.pushNamed(context, '/location/add');
-    // TODO
+  void _addLocation(S2State state) async {
+    LocationResult location = await showLocationPicker(
+      context, '' /* map key is in the native project */,
+      initialCenter: LatLng(44.488333, 11.260644),
+      myLocationButtonEnabled: true,
+      // countries: ['IT'],
+      appBarColor: Colors.white,
+      searchBarBoxDecoration: BoxDecoration(),
+      hintText: LocaleKeys.label_search.tr(),
+      language: Localizations.localeOf(context).languageCode,
+      desiredAccuracy: LocationAccuracy.best,
+    );
+    if (location == null) return;
+
+    String locationName = await EasyDialog.textInputDialog(
+      context,
+      title: LocaleKeys.label_save_location_as.tr(),
+      labelText: LocaleKeys.label_enter_location_name.tr(),
+      okBtnText: LocaleKeys.label_save.tr(),
+    );
+
+    if (locationName?.isNotEmpty ?? false) {
+      widget.item.location = Location(
+        nome: locationName,
+        lat: location.latLng.latitude,
+        lnt: location.latLng.longitude,
+      );
+
+      // Add the new location
+      _locations.add(S2Choice(
+        value: widget.item.location,
+        title: widget.item.location.nome,
+        meta: widget.item.location,
+        selected: true,
+      ));
+      state.value = widget.item.location;
+      setState(() => {});
+
+      state.closeModal(confirmed: true);
+    }
   }
 }

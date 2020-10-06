@@ -31,7 +31,6 @@ final appTheme = ThemeData(
       // Nomi dei task e pulsanti (2rem)
       subtitle1: TextStyle(
         fontFamily: 'Roboto',
-        fontWeight: FontWeight.bold,
         fontSize: 22,
         color: Colors.black,
       ),
@@ -58,7 +57,7 @@ final appTheme = ThemeData(
       ),
     ),
     iconTheme: new IconThemeData(
-      color: Colors.red,
+      color: Color(0xFF00ADE6),
     ));
 
 class EasyIcons {

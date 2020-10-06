@@ -57,8 +57,10 @@ class EasyRest {
       onError: (e) async {
         if (e.response?.statusCode == 401) {
           // Ensure we don't get stuck in an infinite loop
-          e.request.data = (e.request.data ?? 0) + 1;
-          if (e.request.data as int <= 2) {
+          e.request.extra.putIfAbsent("eh_retry", () => 0);
+          if (e.request.extra["eh_retry"] <= 2) {
+            e.request.extra["eh_retry"]++;
+
             // Update the access token
             RequestOptions options = e.response.request;
             Response<String> response = await _dio.put<String>('/refresh',
