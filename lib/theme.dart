@@ -46,14 +46,14 @@ final appTheme = ThemeData(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.normal,
         fontSize: 20,
-        color: Color(0xFF999999),
+        color: Color(0xFF888888),
       ),
       // Scritte in piccolo nelle liste
       bodyText2: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w300,
         fontSize: 16,
-        color: Color(0xFF999999),
+        color: Color(0xFF888888),
       ),
     ),
     iconTheme: new IconThemeData(
