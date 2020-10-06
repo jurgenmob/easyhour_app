@@ -91,7 +91,9 @@ class Task with BaseModel, TodayActivity {
   }
 }
 
-mixin TodayActivity on BaseModel {}
+mixin TodayActivity on BaseModel {
+  int get duration => 0;
+}
 
 class TodayActivitiesResponse {
   List<TodayActivity> get items => [

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest_utils.dart';
@@ -30,8 +32,7 @@ class TodayActivitiesScreen extends StatelessWidget {
         type == Vacation || type == Sickness
             ? SizedBox(height: 24)
             : EasySearchBar<TodayActivitiesProvider>(),
-        Text(DateFormat("dd MMMM yyyy").format(DateTime.now()),
-            style: Theme.of(context).textTheme.bodyText2),
+        _TodayActivitiesHeader(model.items),
         SizedBox(height: 8),
         Expanded(
             child: type == Vacation || type == Sickness
@@ -39,6 +40,34 @@ class TodayActivitiesScreen extends StatelessWidget {
                 : _TaskList())
       ]);
     });
+  }
+}
+
+class _TodayActivitiesHeader extends StatelessWidget {
+  final List<TodayActivity> items;
+
+  _TodayActivitiesHeader(this.items);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            child: Text(DateFormat("dd MMMM yyyy").format(DateTime.now()),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText2),
+          ),
+        ),
+        Container(
+            width: 100,
+            child: Text(
+                Duration(minutes: items.fold<int>(0, (p, c) => p + c.duration))
+                    ?.formatDisplay(),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyText2)),
+      ],
+    );
   }
 }
 
@@ -139,10 +168,8 @@ class _TaskItem extends StatelessWidget {
                     Text(task.nomeTask.toUpperCase(),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),
+                        style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
                     Text(task.nomeProgetto,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
