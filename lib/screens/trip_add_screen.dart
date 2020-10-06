@@ -11,6 +11,7 @@ import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
@@ -28,9 +29,11 @@ class _TripForm extends StatefulWidget {
 }
 
 class _TripFormState extends AddEditFormState<Trip, TripProvider> {
+  Trip get item => _item;
   Trip _item;
 
-  Trip get item => _item;
+  String _attachmentsNames;
+  List<PlatformFile> _attachments;
 
   _TripFormState() : super(LocaleKeys.label_trips);
 
@@ -57,6 +60,12 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
               }
             }),
         EasyTextField(
+            key: ValueKey(_attachmentsNames ?? UniqueKey()),
+            labelText: LocaleKeys.label_attachments,
+            icon: EasyIcons.attachment,
+            initialValue: _attachmentsNames,
+            onTap: _openFileExplorer),
+        EasyTextField(
           labelText: LocaleKeys.label_description,
           icon: EasyIcons.description,
           maxLines: 3,
@@ -64,6 +73,50 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
           onSaved: (value) => _item.descrizione = value,
         ),
       ];
+
+  @override
+  void onFormSubmitted(Trip newItem) async {
+    // Send attachments if needed
+    if (_attachments?.isNotEmpty ?? false) {
+      setState(() {
+        loading = true;
+      });
+
+      _attachments.forEach((file) async {
+        await EasyRest().uploadTripAttachment(newItem, file);
+      });
+
+      setState(() {
+        loading = false;
+      });
+    }
+
+    super.onFormSubmitted(newItem);
+  }
+
+  void _openFileExplorer() async {
+    try {
+      FilePickerResult result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: true,
+        withData: true,
+        // allowedExtensions: ['.pdf', '.jpg'],
+      );
+
+      // Set attachments and display name
+      _attachments = result?.files;
+      _attachmentsNames = LocaleKeys.label_attachments_selected
+          .plural(_attachments?.length ?? 0);
+    } catch (e, s) {
+      print(e);
+      print(s);
+
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+    setState(() {});
+  }
 }
 
 class _ClientSelectField extends StatefulWidget {

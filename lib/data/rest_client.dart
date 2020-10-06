@@ -18,6 +18,7 @@ import 'package:easyhour_app/models/user.dart';
 import 'package:easyhour_app/models/user_info.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,9 +50,9 @@ class EasyRest {
       onRequest: (RequestOptions options) {
         return options
           ..headers.addAll({
-            if (_accessToken != null) 'Authorization': 'Bearer $_accessToken',
-            'X-AZIENDA-DOMAIN': '$_domain',
-            'Content-Type': 'application/json',
+            if (_accessToken != null) "Authorization": "Bearer $_accessToken",
+            "X-AZIENDA-DOMAIN": _domain,
+            Headers.contentTypeHeader: Headers.jsonContentType
           });
       },
       onError: (e) async {
@@ -227,6 +228,16 @@ class EasyRest {
     );
 
     return Trip.fromJson(jsonDecode(response.data));
+  }
+
+  Future<Response> uploadTripAttachment(Trip item, PlatformFile file) async {
+    return _dio.post<String>(
+      '/allegatoes/',
+      data: FormData.fromMap({
+        "File": await MultipartFile.fromFile(file.path, filename: file.name),
+        "TrasfertaId": item.id,
+      }),
+    );
   }
 
   Future<Response> deleteTrip(Trip item) async {

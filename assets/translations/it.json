@@ -33,6 +33,12 @@
   "label_location": "Posizione",
   "label_save_location_as": "Salva posizione con nome...",
   "label_enter_location_name": "Nome della posizione",
+  "label_attachments": "Allegati",
+  "label_attachments_selected": {
+    "zero":"Nessun allegato selezionato",
+    "one":"{} allegato selezionato",
+    "other":"{} allegati selezionati"
+  },
 
   "label_vacations": {
     "one":"Ferie",

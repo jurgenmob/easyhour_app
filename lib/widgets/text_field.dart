@@ -46,6 +46,7 @@ class EasyTextField extends StatelessWidget {
         labelText: labelText.tr(),
         helperText: helperText?.tr(),
         suffixIcon: Icon(icon),
+        // contentPadding: EdgeInsets.symmetric(vertical: 25),
         labelStyle: theme.textTheme.bodyText1.copyWith(color: Colors.black),
       ),
       initialValue: formatValue(initialValue),
@@ -60,7 +61,7 @@ class EasyTextField extends StatelessWidget {
       onSaved: onSaved,
       onTap: onTap,
       readOnly: onTap != null,
-      showCursor: true,
+      showCursor: onTap != null,
       validator: (value) {
         if (validator != null) {
           return validator.call(value);

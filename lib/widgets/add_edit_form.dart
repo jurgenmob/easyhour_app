@@ -21,7 +21,8 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
 
   List<Widget> getFormElements();
 
-  bool _loading = false;
+  @protected
+  bool loading = false;
 
   AddEditFormState(this.itemName);
 
@@ -45,7 +46,7 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
       Spacer(flex: 2),
       Container(
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-          child: _loading
+          child: loading
               ? EasyLoader()
               : EasyButton(
                   text: LocaleKeys.label_save.tr().toUpperCase(),
@@ -64,23 +65,28 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
 
       try {
         setState(() {
-          _loading = true;
+          loading = true;
         });
 
         // Add/edit the item
         final provider = Provider.of<P>(context, listen: false);
-        await ((item.isNew) ? provider.add(item) : provider.edit(item));
+        final result = await ((item.isNew) ? provider.add(item) : provider.edit(item));
 
-        // Go back with confirmation message
-        Navigator.pop(context, LocaleKeys.message_add_generic.tr());
+        onFormSubmitted(result);
       } catch (e, s) {
         handleRestError(context, e, s);
       } finally {
         setState(() {
-          _loading = false;
+          loading = false;
         });
       }
     }
+  }
+
+  @protected
+  void onFormSubmitted(T newItem) {
+    // Go back with confirmation message
+    Navigator.pop(context, LocaleKeys.message_add_generic.tr());
   }
 
   @protected

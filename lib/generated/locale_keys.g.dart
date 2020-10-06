@@ -29,6 +29,8 @@ abstract class  LocaleKeys {
   static const label_location = 'label_location';
   static const label_save_location_as = 'label_save_location_as';
   static const label_enter_location_name = 'label_enter_location_name';
+  static const label_attachments = 'label_attachments';
+  static const label_attachments_selected = 'label_attachments_selected';
   static const label_vacations = 'label_vacations';
   static const label_permits = 'label_permits';
   static const label_sicknesses = 'label_sicknesses';

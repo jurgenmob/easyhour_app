@@ -94,6 +94,7 @@ class EasyIcons {
   static const IconData location = _EasyIconsData(0xe997);
   static const IconData position = _EasyIconsData(0xea12);
   static const IconData add = _EasyIconsData(0xe901);
+  static const IconData attachment = _EasyIconsData(0xe902);
 }
 
 class _EasyIconsData extends IconData {

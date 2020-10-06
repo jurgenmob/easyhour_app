@@ -97,7 +97,6 @@ class _EasyMaterialApp extends MaterialApp {
           supportedLocales: context.supportedLocales,
           locale: context.locale,
           initialRoute: isUserLogged ? '/home' : '/login',
-          // initialRoute: '/smartworking/add', // XXX DEBUG
           routes: {
             '/login': (context) => LoginScreen(),
             '/home': (context) => HomeScreen(),

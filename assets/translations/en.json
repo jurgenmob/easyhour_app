@@ -33,6 +33,12 @@
   "label_location": "Location",
   "label_save_location_as": "Save location as...",
   "label_enter_location_name": "Location name",
+  "label_attachments": "Attachments",
+  "label_attachments_selected": {
+    "zero":"No attachment selected",
+    "one":"{} attachment selected",
+    "other":"{} attachments selected"
+  },
 
   "label_vacations": {
     "one":"Vacation",

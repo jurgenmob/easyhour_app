@@ -12,6 +12,12 @@ Android: create a `secure.properties` file starting from `secure.properties.tpl`
 
 iOS: TBD
 
+### Re-generate language keys
+
+```
+flutter pub run easy_localization:generate -f keys -S assets/translations/ -o locale_keys.g.dart
+```
+
 ## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or
