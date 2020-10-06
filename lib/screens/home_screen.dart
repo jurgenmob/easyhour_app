@@ -1,7 +1,7 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/screens/profile_screen.dart';
-import 'package:easyhour_app/screens/today_screen.dart';
+import 'package:easyhour_app/screens/today_activities_screen.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +21,8 @@ class HomeScreen extends StatelessWidget {
             child: Center(
               child: TabBarView(
                 children: [
-                  TodayScreen(),
-                  ActionsScreen(),
+                  TodayActivitiesScreen(),
+                  CompanyActionsScreen(),
                   ProfileScreen(),
                 ],
               ),

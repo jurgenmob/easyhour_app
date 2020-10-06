@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
-class ActionsScreen extends StatefulWidget {
+class CompanyActionsScreen extends StatefulWidget {
   @override
-  createState() => _ActionsScreenState();
+  createState() => _CompanyActionsScreenState();
 }
 
-class _ActionsScreenState
+class _CompanyActionsScreenState
     extends EasyListState<CompanyAction, CompanyActionProvider> {
-  _ActionsScreenState() : super("", refreshEnabled: false);
+  _CompanyActionsScreenState() : super("", refreshEnabled: false);
 
   @override
   StatelessWidget getItem(CompanyAction item) {

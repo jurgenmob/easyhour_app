@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 import '../generated/locale_keys.g.dart';
 
-class TodayScreen extends StatelessWidget {
+class TodayActivitiesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<TodayActivitiesProvider>(
