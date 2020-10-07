@@ -2,19 +2,16 @@ import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/providers/activity_provider.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class ActivityAddEditScreen extends BaseScreen {
+class ActivityAddEditScreen extends BaseAddEditScreen<Activity> {
   @override
   Widget getBody() => _ActivityForm();
-
-  @override
-  EasyAppBarAction getEasyAppBarAction() => null;
 }
 
 class _ActivityForm extends StatefulWidget {
@@ -23,9 +20,8 @@ class _ActivityForm extends StatefulWidget {
 }
 
 class _ActivityFormState extends AddEditFormState<Activity, ActivityProvider> {
-  Activity _item;
-
   Activity get item => _item;
+  Activity _item;
 
   _ActivityFormState() : super(LocaleKeys.label_activities);
 
@@ -80,6 +76,7 @@ class _ActivityFormState extends AddEditFormState<Activity, ActivityProvider> {
         EasyTextField(
           labelText: LocaleKeys.label_type,
           icon: EasyIcons.description,
+          initialValue: item.tipologia,
           maxLines: 1,
           isRequired: false,
           onSaved: (value) => _item.tipologia = value,
@@ -87,6 +84,7 @@ class _ActivityFormState extends AddEditFormState<Activity, ActivityProvider> {
         EasyTextField(
           labelText: LocaleKeys.label_description,
           icon: EasyIcons.description,
+          initialValue: item.descrizione,
           maxLines: 3,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,

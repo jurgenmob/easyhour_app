@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/base_model.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,9 +88,17 @@ abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
   Future<void> _onRefresh() async => fetchData();
 
   @protected
-  void onEdit(T item) {
-    Navigator.pushNamed(context, (EasyAppBarAction.addEditAction(T)?.page),
+  void onEdit(T item) async {
+    final result = await Navigator.pushNamed(
+        context, (EasyRoute.addEdit(T)?.page),
         arguments: item);
+
+    // Show the result message
+    if (result != null) {
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(result)));
+    }
   }
 
   @protected

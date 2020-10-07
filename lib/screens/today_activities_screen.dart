@@ -1,15 +1,14 @@
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
-import 'package:easyhour_app/widgets/duration_picker.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
@@ -60,17 +59,19 @@ class _TodayActivitiesHeader extends StatelessWidget {
           ),
         ),
         Container(
-            width: 100,
-            child: Text(
-                Duration(minutes: items.fold<int>(0, (p, c) => p + c.duration))
-                    ?.formatDisplay(),
+            width: 108,
+            child: Text(_totalDuration().formatDisplay(),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText2)),
       ],
     );
   }
+
+  Duration _totalDuration() =>
+      Duration(minutes: items.fold<int>(0, (p, c) => p + c.duration));
 }
 
+/// Shown when the user is not at work
 class _VacationSicknessContainer extends StatelessWidget {
   final Type _type;
 
@@ -148,7 +149,9 @@ class _TaskItem extends StatelessWidget {
       color: Color(0xFF019CE4),
       margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
       child: InkWell(
-        onTap: () => _showDurationPicker(context),
+        onTap: () {
+          _onEdit(context);
+        },
         child: Row(
           children: <Widget>[
             Expanded(
@@ -206,59 +209,21 @@ class _TaskItem extends StatelessWidget {
     );
   }
 
-  void _showDurationPicker(BuildContext context) async {
-    final TextStyle buttonStyle = Theme.of(context)
-        .textTheme
-        .button
-        .copyWith(color: Theme.of(context).primaryColor);
-    Widget cancelButton = FlatButton(
-      child: Text(LocaleKeys.label_cancel.tr(), style: buttonStyle),
-      onPressed: () => Navigator.of(context).pop(false),
-    );
-    Widget okButton = FlatButton(
-      child: Text(LocaleKeys.label_ok.tr(), style: buttonStyle),
-      onPressed: () => Navigator.of(context).pop(true),
-    );
+  void _onEdit(BuildContext context) async {
+    // Worklog cannot be null, even when creating a new one, because a
+    // reference to the task is always needed
+    final worklog = task.worklogs.length > 0
+        ? task.worklogs.first
+        : Worklog(data: DateTime.now(), task: task);
+    final result = await Navigator.pushNamed(
+        context, (EasyRoute.addEdit(Worklog)?.page),
+        arguments: worklog);
 
-    final picker = EasyDurationPicker(Duration(minutes: task.duration));
-
-    var result = await showModalBottomSheet(
-        context: context,
-        builder: (BuildContext builder) {
-          return Container(
-              height: MediaQuery.of(context).copyWith().size.height / 3,
-              child: Column(
-                children: [
-                  Expanded(child: picker),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [cancelButton, okButton])
-                ],
-              ));
-        });
-
-    if (result ?? false) {
-      final duration = picker.value.inMinutes;
-
-      // Set the duration in the worklog (add if needed)
-      Worklog worklog = task.worklogs?.isEmpty ?? true
-          ? Worklog(data: DateTime.now(), task: WorklogTask.fromTask(task))
-          : task.worklogs.first;
-      worklog.durata = duration;
-
-      final provider =
-          Provider.of<TodayActivitiesProvider>(context, listen: false);
-      try {
-        if (duration == 0) {
-          // Delete worklog
-          if (!worklog.isNew) await provider.deleteWorklog(task, worklog);
-        } else {
-          // Add/edit worklog
-          await provider.addEditWorklog(task, worklog);
-        }
-      } catch (e, s) {
-        handleRestError(context, e, s);
-      }
+    // Show the result message
+    if (result != null) {
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(result)));
     }
   }
 }

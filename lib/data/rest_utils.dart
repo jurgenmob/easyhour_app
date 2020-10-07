@@ -53,7 +53,7 @@ extension ParseTimeUtils on String {
 extension DurationUtils on Duration {
   String twoDigits(int n) => (n >= 10) ? "$n" : "0$n";
 
-  String formatDisplay() => inMilliseconds > 0
+  String formatDisplay() => inMilliseconds >= 0
       ? twoDigits(inHours) + ":" + twoDigits(inMinutes.remainder(60) as int)
       : null;
 

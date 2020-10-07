@@ -9,9 +9,11 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// TODO: refactor as Widget instead of state
 abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
     extends State {
-  final _formKey = GlobalKey<FormState>();
+  @protected
+  final formKey = GlobalKey<FormState>();
 
   T get item;
 
@@ -19,6 +21,10 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
 
   void setItem(T itemToEdit);
 
+  @protected
+  Widget getHeader() => null;
+
+  @protected
   List<Widget> getFormElements();
 
   @protected
@@ -32,12 +38,12 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
     setItem(ModalRoute.of(context).settings.arguments);
 
     return Column(children: [
-      _AddEditFormHeader(itemName),
+      getHeader() ?? _AddEditFormHeader(itemName),
       Spacer(flex: 1),
       Container(
           padding: EdgeInsets.symmetric(horizontal: 40),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: getFormElements(),
@@ -51,13 +57,14 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
               : EasyButton(
                   text: LocaleKeys.label_save.tr().toUpperCase(),
                   icon: EasyIcons.save_filled,
-                  onPressed: _submitForm,
+                  onPressed: submitForm,
                 )),
     ]);
   }
 
-  void _submitForm() async {
-    final form = _formKey.currentState;
+  @protected
+  void submitForm() async {
+    final form = formKey.currentState;
     form.save();
 
     if (form.validate()) {
@@ -69,10 +76,16 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
         });
 
         // Add/edit the item
+        final bool isNew = item.isNew;
         final provider = Provider.of<P>(context, listen: false);
-        final result = await ((item.isNew) ? provider.add(item) : provider.edit(item));
+        final result =
+            await ((isNew) ? provider.add(item) : provider.edit(item));
 
-        onFormSubmitted(result);
+        onFormSubmitted(
+            result,
+            isNew
+                ? LocaleKeys.message_add_generic
+                : LocaleKeys.message_edit_generic);
       } catch (e, s) {
         handleRestError(context, e, s);
       } finally {
@@ -84,9 +97,9 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
   }
 
   @protected
-  void onFormSubmitted(T newItem) {
+  void onFormSubmitted(T newItem, String confirmMsg) {
     // Go back with confirmation message
-    Navigator.pop(context, LocaleKeys.message_add_generic.tr());
+    Navigator.pop(context, confirmMsg.tr());
   }
 
   @protected

@@ -27,6 +27,7 @@
   "label_time_end": "End time",
   "label_date_range": "Date range",
   "label_description": "Description",
+  "label_time_spent": "Time to log",
   "label_medical_certificate": "Medical certificate reference",
   "label_type": "Type",
   "label_client": "Client",
@@ -63,6 +64,10 @@
   "label_smartworkings": {
     "one":"Smart Working",
     "other":"Smart Working"
+  },
+  "label_worklogs": {
+    "one":"Worklog",
+    "other":"Worklogs"
   },
 
   "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",

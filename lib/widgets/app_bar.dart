@@ -1,4 +1,5 @@
 import 'package:easyhour_app/providers/app_bar_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,26 +21,33 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
           if (model.icon != null)
             IconButton(
               icon: Icon(model.icon),
-              onPressed: () async {
-                if (model.page != null) {
-                  final previousAction =
-                      EasyAppBarAction(model.icon, page: model.page);
-                  var result = await Navigator.pushNamed(context, model.page);
-                  if (result != null) {
-                    Scaffold.of(context)
-                      ..removeCurrentSnackBar()
-                      ..showSnackBar(SnackBar(content: Text("$result")));
-                  }
-                  Provider.of<EasyAppBarProvider>(context, listen: false)
-                      .setAction(previousAction);
-                }
-              },
+              onPressed: () => _navigate(model, context),
             ),
         ],
         iconTheme: IconThemeData(color: Colors.white),
         brightness: Brightness.dark,
       );
     });
+  }
+
+  void _navigate(EasyAppBarProvider model, BuildContext context) async {
+    if (model.page == null) return;
+
+    // Save old route
+    final prev = EasyRoute(model.page, icon: model.icon);
+
+    // Navigate to the new route
+    var result = await Navigator.pushNamed(context, model.page);
+
+    // Show the result message
+    if (result != null) {
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(content: Text(result)));
+    }
+
+    // Restore previous action
+    Provider.of<EasyAppBarProvider>(context, listen: false).setAction(prev);
   }
 
   @override

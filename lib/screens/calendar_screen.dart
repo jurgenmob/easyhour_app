@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/worklog.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
@@ -18,7 +18,7 @@ class CalendarScreen extends BaseScreen {
   Widget getBody() => CalendarWidget();
 
   @override
-  EasyAppBarAction getEasyAppBarAction() => null;
+  EasyRoute getAppBarRoute() => EasyRoute.calendar();
 }
 
 class CalendarWidget extends StatefulWidget {

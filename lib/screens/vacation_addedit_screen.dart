@@ -1,7 +1,6 @@
 import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/vacation.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
@@ -9,12 +8,9 @@ import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class VacationAddEditScreen extends BaseScreen {
+class VacationAddEditScreen extends BaseAddEditScreen<Vacation> {
   @override
   Widget getBody() => _VacationForm();
-
-  @override
-  EasyAppBarAction getEasyAppBarAction() => null;
 }
 
 class _VacationForm extends StatefulWidget {
@@ -23,9 +19,8 @@ class _VacationForm extends StatefulWidget {
 }
 
 class _VacationFormState extends AddEditFormState<Vacation, VacationProvider> {
-  Vacation _item;
-
   Vacation get item => _item;
+  Vacation _item;
 
   _VacationFormState() : super(LocaleKeys.label_vacations);
 
@@ -53,6 +48,7 @@ class _VacationFormState extends AddEditFormState<Vacation, VacationProvider> {
         EasyTextField(
           labelText: LocaleKeys.label_description,
           icon: EasyIcons.description,
+          initialValue: item.descrizione,
           maxLines: 3,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,

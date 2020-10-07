@@ -4,7 +4,6 @@ import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/smart_working.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
@@ -18,12 +17,9 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
-class SmartWorkingAddEditScreen extends BaseScreen {
+class SmartWorkingAddEditScreen extends BaseAddEditScreen<SmartWorking> {
   @override
   Widget getBody() => _SmartWorkingForm();
-
-  @override
-  EasyAppBarAction getEasyAppBarAction() => null;
 }
 
 class _SmartWorkingForm extends StatefulWidget {
@@ -33,9 +29,8 @@ class _SmartWorkingForm extends StatefulWidget {
 
 class _SmartWorkingFormState
     extends AddEditFormState<SmartWorking, SmartWorkingProvider> {
-  SmartWorking _item;
-
   SmartWorking get item => _item;
+  SmartWorking _item;
 
   _SmartWorkingFormState() : super(LocaleKeys.label_smartworkings);
 
@@ -64,6 +59,7 @@ class _SmartWorkingFormState
         EasyTextField(
           labelText: LocaleKeys.label_description,
           icon: EasyIcons.description,
+          initialValue: item.descrizione,
           maxLines: 3,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,
@@ -185,7 +181,7 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
     );
     if (location == null) return;
 
-    String locationName = await EasyDialog.textInputDialog(
+    String locationName = await showTextInputDialog(
       context,
       title: LocaleKeys.label_save_location_as.tr(),
       labelText: LocaleKeys.label_enter_location_name.tr(),

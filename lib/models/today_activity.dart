@@ -67,7 +67,7 @@ class Task with BaseModel, TodayActivity {
     if (json['worklogs'] != null) {
       worklogs = new List<Worklog>();
       json['worklogs'].forEach((v) {
-        worklogs.add(new Worklog.fromJson(v));
+        worklogs.add(new Worklog.fromJson(v, task: this));
       });
     }
     serverTime = json['serverTime'];
@@ -83,12 +83,12 @@ class Task with BaseModel, TodayActivity {
     return data;
   }
 
-  Task.fromWorklogTask(WorklogTask task) {
-    nomeTask = task.nome;
-    nomeProgetto = task.progetto?.nome;
-    nomeCliente = task.progetto?.cliente?.nome;
-    idTask = task.id;
-  }
+  // Task.fromWorklogTask(WorklogTask task) {
+  //   nomeTask = task.nome;
+  //   nomeProgetto = task.progetto?.nome;
+  //   nomeCliente = task.progetto?.cliente?.nome;
+  //   idTask = task.id;
+  // }
 }
 
 mixin TodayActivity on BaseModel {

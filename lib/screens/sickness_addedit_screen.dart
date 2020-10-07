@@ -1,7 +1,6 @@
 import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/sickness.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
@@ -9,12 +8,9 @@ import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class SicknessAddEditScreen extends BaseScreen {
+class SicknessAddEditScreen extends BaseAddEditScreen<Sickness> {
   @override
   Widget getBody() => _SicknessForm();
-
-  @override
-  EasyAppBarAction getEasyAppBarAction() => null;
 }
 
 class _SicknessForm extends StatefulWidget {
@@ -23,9 +19,8 @@ class _SicknessForm extends StatefulWidget {
 }
 
 class _SicknessFormState extends AddEditFormState<Sickness, SicknessProvider> {
-  Sickness _item;
-
   Sickness get item => _item;
+  Sickness _item;
 
   _SicknessFormState() : super(LocaleKeys.label_sicknesses);
 
@@ -53,6 +48,7 @@ class _SicknessFormState extends AddEditFormState<Sickness, SicknessProvider> {
         EasyTextField(
           labelText: LocaleKeys.label_medical_certificate,
           icon: EasyIcons.description,
+          initialValue: item.descrizione,
           maxLines: 1,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,

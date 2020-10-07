@@ -1,6 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/models/activity.dart';
+import 'package:easyhour_app/models/permit.dart';
+import 'package:easyhour_app/models/sickness.dart';
+import 'package:easyhour_app/models/smart_working.dart';
+import 'package:easyhour_app/models/trip.dart';
+import 'package:easyhour_app/models/vacation.dart';
+import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/activity_provider.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
@@ -26,10 +33,13 @@ import 'package:easyhour_app/screens/trip_addedit_screen.dart';
 import 'package:easyhour_app/screens/trip_list_screen.dart';
 import 'package:easyhour_app/screens/vacation_addedit_screen.dart';
 import 'package:easyhour_app/screens/vacation_list_screen.dart';
+import 'package:easyhour_app/screens/worklog_addedit_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import 'routes.dart';
 
 void main() async {
   // Force portrait orientation
@@ -96,23 +106,31 @@ class _EasyMaterialApp extends MaterialApp {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          initialRoute: isUserLogged ? '/home' : '/login',
+          initialRoute:
+              isUserLogged ? EasyRoute.home().page : EasyRoute.login().page,
           routes: {
-            '/login': (context) => LoginScreen(),
-            '/home': (context) => HomeScreen(),
-            '/calendar': (context) => CalendarScreen(),
-            '/vacation/list': (context) => VacationListScreen(),
-            '/vacation/add': (context) => VacationAddEditScreen(),
-            '/permit/list': (context) => PermitListScreen(),
-            '/permit/add': (context) => PermitAddEditScreen(),
-            '/sickness/list': (context) => SicknessListScreen(),
-            '/sickness/add': (context) => SicknessAddEditScreen(),
-            '/trip/list': (context) => TripListScreen(),
-            '/trip/add': (context) => TripAddEditScreen(),
-            '/activity/list': (context) => ActivityListScreen(),
-            '/activity/add': (context) => ActivityAddEditScreen(),
-            '/smartworking/list': (context) => SmartWorkingListScreen(),
-            '/smartworking/add': (context) => SmartWorkingAddEditScreen(),
+            EasyRoute.login().page: (context) => LoginScreen(),
+            EasyRoute.home().page: (context) => HomeScreen(),
+            EasyRoute.calendar().page: (context) => CalendarScreen(),
+            EasyRoute.addEdit(Worklog).page: (context) =>
+                WorklogAddEditScreen(),
+            EasyRoute.list(Vacation).page: (context) => VacationListScreen(),
+            EasyRoute.addEdit(Vacation).page: (context) =>
+                VacationAddEditScreen(),
+            EasyRoute.list(Permit).page: (context) => PermitListScreen(),
+            EasyRoute.addEdit(Permit).page: (context) => PermitAddEditScreen(),
+            EasyRoute.list(Sickness).page: (context) => SicknessListScreen(),
+            EasyRoute.addEdit(Sickness).page: (context) =>
+                SicknessAddEditScreen(),
+            EasyRoute.list(Trip).page: (context) => TripListScreen(),
+            EasyRoute.addEdit(Trip).page: (context) => TripAddEditScreen(),
+            EasyRoute.list(Activity).page: (context) => ActivityListScreen(),
+            EasyRoute.addEdit(Activity).page: (context) =>
+                ActivityAddEditScreen(),
+            EasyRoute.list(SmartWorking).page: (context) =>
+                SmartWorkingListScreen(),
+            EasyRoute.addEdit(SmartWorking).page: (context) =>
+                SmartWorkingAddEditScreen(),
           },
         );
 }

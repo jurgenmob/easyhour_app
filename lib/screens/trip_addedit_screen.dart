@@ -4,7 +4,6 @@ import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/client.dart';
 import 'package:easyhour_app/models/trip.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
@@ -15,12 +14,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
-class TripAddEditScreen extends BaseScreen {
+class TripAddEditScreen extends BaseAddEditScreen<Trip> {
   @override
   Widget getBody() => _TripForm();
-
-  @override
-  EasyAppBarAction getEasyAppBarAction() => null;
 }
 
 class _TripForm extends StatefulWidget {
@@ -64,10 +60,12 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
             labelText: LocaleKeys.label_attachments,
             icon: EasyIcons.attachment,
             initialValue: _attachmentsNames,
+            isRequired: false,
             onTap: _openFileExplorer),
         EasyTextField(
           labelText: LocaleKeys.label_description,
           icon: EasyIcons.description,
+          initialValue: item.descrizione,
           maxLines: 3,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,
@@ -75,7 +73,7 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
       ];
 
   @override
-  void onFormSubmitted(Trip newItem) async {
+  void onFormSubmitted(Trip newItem, String confirmMsg) async {
     // Send attachments if needed
     if (_attachments?.isNotEmpty ?? false) {
       setState(() {
@@ -91,7 +89,7 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
       });
     }
 
-    super.onFormSubmitted(newItem);
+    super.onFormSubmitted(newItem, confirmMsg);
   }
 
   void _openFileExplorer() async {

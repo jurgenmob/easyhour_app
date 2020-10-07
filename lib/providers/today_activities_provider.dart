@@ -12,6 +12,8 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
   // Task getTask(Worklog worklog) =>
   //     items.where((e) => e is Task && e.worklogs.contains(worklog)).first;
 
+  Task getTask(int id) => items.where((e) => e is Task && e.id == id).first;
+
   Future<Worklog> addEditWorklog(Task task, Worklog worklog) async {
     Worklog newWorklog = await EasyRest().addEditWorklog(worklog);
     if (newWorklog != null) {

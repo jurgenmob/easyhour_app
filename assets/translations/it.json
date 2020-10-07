@@ -27,6 +27,7 @@
   "label_time_start": "Ora inizio",
   "label_time_end": "Ora fine",
   "label_description": "Descrizione",
+  "label_time_spent": "Ore da segnare",
   "label_medical_certificate": "N. protocollo certificato medico",
   "label_type": "Tipologia",
   "label_client": "Cliente",
@@ -63,6 +64,10 @@
   "label_smartworkings": {
     "one":"Smart Working",
     "other":"Smart Working"
+  },
+  "label_worklogs": {
+    "one":"Tempo lavorato",
+    "other":"Tempo lavorato"
   },
 
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",

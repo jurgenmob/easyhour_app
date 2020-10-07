@@ -153,7 +153,7 @@ class EasyRest {
       options: Options(method: item.isNew ? 'POST' : 'PUT'),
     );
 
-    return Worklog.fromJson(jsonDecode(response.data));
+    return Worklog.fromJson(jsonDecode(response.data), task: item.task);
   }
 
   Future<Response> deleteWorklog(Worklog item) async {

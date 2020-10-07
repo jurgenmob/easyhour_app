@@ -1,7 +1,14 @@
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/company_action.dart';
+import 'package:easyhour_app/models/permit.dart';
+import 'package:easyhour_app/models/sickness.dart';
+import 'package:easyhour_app/models/smart_working.dart';
+import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/models/user_info.dart';
+import 'package:easyhour_app/models/vacation.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 
 import '../generated/locale_keys.g.dart';
@@ -17,29 +24,29 @@ class CompanyActionProvider extends BaseProvider<CompanyAction> {
           CompanyAction(
               text: LocaleKeys.label_vacations,
               icon: EasyIcons.vacations,
-              page: '/vacation/list'),
+              page: EasyRoute.list(Vacation).page),
           CompanyAction(
               text: LocaleKeys.label_permits,
               icon: EasyIcons.permits,
-              page: '/permit/list'),
+              page: EasyRoute.list(Permit).page),
           CompanyAction(
               text: LocaleKeys.label_sicknesses,
               icon: EasyIcons.sickness,
-              page: '/sickness/list'),
+              page: EasyRoute.list(Sickness).page),
           CompanyAction(
               text: LocaleKeys.label_trips,
               icon: EasyIcons.trips,
-              page: '/trip/list'),
+              page: EasyRoute.list(Trip).page),
           if (activeModules.contains(Module(id: activitiesModuleId)))
             CompanyAction(
                 text: LocaleKeys.label_activities,
                 icon: EasyIcons.activities,
-                page: '/activity/list'),
+                page: EasyRoute.list(Activity).page),
           if (activeModules.contains(Module(id: smartWorkingModuleId)))
             CompanyAction(
                 text: LocaleKeys.label_smartworkings,
                 icon: EasyIcons.smartworking,
-                page: '/smartworking/list'),
+                page: EasyRoute.list(SmartWorking).page),
         ]);
   }
 

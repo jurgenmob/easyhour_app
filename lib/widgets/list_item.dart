@@ -54,7 +54,7 @@ class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Icon(EasyIcons.delete, color: Colors.white)),
         confirmDismiss: (DismissDirection direction) async =>
-            await EasyDialog.confirmDeleteDialog(
+            await showConfirmDeleteDialog(
                 context,
                 LocaleKeys.message_delete_confirm
                     .tr(args: [item.listTitle.toLowerCase()])),
