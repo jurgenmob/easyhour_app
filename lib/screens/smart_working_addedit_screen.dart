@@ -18,7 +18,7 @@ import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smart_select/smart_select.dart';
 
-class SmartWorkingAddScreen extends BaseScreen {
+class SmartWorkingAddEditScreen extends BaseScreen {
   @override
   Widget getBody() => _SmartWorkingForm();
 

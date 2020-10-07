@@ -11,20 +11,20 @@ import 'package:easyhour_app/providers/smart_working_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
-import 'package:easyhour_app/screens/activity_add_screen.dart';
+import 'package:easyhour_app/screens/activity_addedit_screen.dart';
 import 'package:easyhour_app/screens/activity_list_screen.dart';
 import 'package:easyhour_app/screens/calendar_screen.dart';
 import 'package:easyhour_app/screens/home_screen.dart';
 import 'package:easyhour_app/screens/login_screen.dart';
-import 'package:easyhour_app/screens/permit_add_screen.dart';
+import 'package:easyhour_app/screens/permit_addedit_screen.dart';
 import 'package:easyhour_app/screens/permit_list_screen.dart';
-import 'package:easyhour_app/screens/sickness_add_screen.dart';
+import 'package:easyhour_app/screens/sickness_addedit_screen.dart';
 import 'package:easyhour_app/screens/sickness_list_screen.dart';
-import 'package:easyhour_app/screens/smart_working_add_screen.dart';
+import 'package:easyhour_app/screens/smart_working_addedit_screen.dart';
 import 'package:easyhour_app/screens/smart_working_list_screen.dart';
-import 'package:easyhour_app/screens/trip_add_screen.dart';
+import 'package:easyhour_app/screens/trip_addedit_screen.dart';
 import 'package:easyhour_app/screens/trip_list_screen.dart';
-import 'package:easyhour_app/screens/vacation_add_screen.dart';
+import 'package:easyhour_app/screens/vacation_addedit_screen.dart';
 import 'package:easyhour_app/screens/vacation_list_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:flutter/material.dart';
@@ -102,17 +102,17 @@ class _EasyMaterialApp extends MaterialApp {
             '/home': (context) => HomeScreen(),
             '/calendar': (context) => CalendarScreen(),
             '/vacation/list': (context) => VacationListScreen(),
-            '/vacation/add': (context) => VacationAddScreen(),
+            '/vacation/add': (context) => VacationAddEditScreen(),
             '/permit/list': (context) => PermitListScreen(),
-            '/permit/add': (context) => PermitAddScreen(),
+            '/permit/add': (context) => PermitAddEditScreen(),
             '/sickness/list': (context) => SicknessListScreen(),
-            '/sickness/add': (context) => SicknessAddScreen(),
+            '/sickness/add': (context) => SicknessAddEditScreen(),
             '/trip/list': (context) => TripListScreen(),
-            '/trip/add': (context) => TripAddScreen(),
+            '/trip/add': (context) => TripAddEditScreen(),
             '/activity/list': (context) => ActivityListScreen(),
-            '/activity/add': (context) => ActivityAddScreen(),
+            '/activity/add': (context) => ActivityAddEditScreen(),
             '/smartworking/list': (context) => SmartWorkingListScreen(),
-            '/smartworking/add': (context) => SmartWorkingAddScreen(),
+            '/smartworking/add': (context) => SmartWorkingAddEditScreen(),
           },
         );
 }

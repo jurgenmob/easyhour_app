@@ -15,7 +15,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
-class TripAddScreen extends BaseScreen {
+class TripAddEditScreen extends BaseScreen {
   @override
   Widget getBody() => _TripForm();
 

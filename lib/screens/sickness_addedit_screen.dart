@@ -9,7 +9,7 @@ import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 
-class SicknessAddScreen extends BaseScreen {
+class SicknessAddEditScreen extends BaseScreen {
   @override
   Widget getBody() => _SicknessForm();
 
