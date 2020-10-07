@@ -8,6 +8,7 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/add_edit_form.dart';
 import 'package:easyhour_app/widgets/dialogs.dart';
+import 'package:easyhour_app/widgets/task_list_item.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,28 +40,8 @@ class _WorklogFormState
         child: Row(
           children: [
             Expanded(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(_item.task.nomeCliente,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text(_item.task.nomeTask.toUpperCase(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(_item.task.nomeProgetto,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            .copyWith(color: Colors.white)),
-                  ]),
+              child: TaskListItem(_item.task,
+                  alignment: CrossAxisAlignment.center),
             )
           ],
         ),

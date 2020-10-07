@@ -11,6 +11,7 @@ import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
+import 'package:easyhour_app/widgets/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -158,30 +159,7 @@ class _TaskItem extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(8),
                 color: Theme.of(context).primaryColor,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Text(task.nomeCliente,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text(task.nomeTask.toUpperCase(),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(task.nomeProgetto,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            .copyWith(color: Colors.white)),
-                  ],
-                ),
+                child: TaskListItem(task),
               ),
             ),
             Container(
