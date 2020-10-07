@@ -76,19 +76,20 @@ class Task with BaseModel, TodayActivity {
     dataModificaTask = json['dataModificaTask'];
   }
 
+  Task.fromCalendarJson(Map<String, dynamic> json) {
+    nomeTask = json['nome'];
+    nomeProgetto = json['progetto']['nome'];
+    nomeCliente = json['progetto']['cliente']['nome'];
+    idTask = json['id'];
+    dataModificaTask = json['lastModifiedDate'];
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
 
     return data;
   }
-
-  // Task.fromWorklogTask(WorklogTask task) {
-  //   nomeTask = task.nome;
-  //   nomeProgetto = task.progetto?.nome;
-  //   nomeCliente = task.progetto?.cliente?.nome;
-  //   idTask = task.id;
-  // }
 }
 
 mixin TodayActivity on BaseModel {

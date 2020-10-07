@@ -90,7 +90,7 @@ abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
   @protected
   void onEdit(T item) async {
     final result = await Navigator.pushNamed(
-        context, (EasyRoute.addEdit(T)?.page),
+        context, (EasyRoute.addEdit(item.runtimeType)?.page),
         arguments: item);
 
     // Show the result message

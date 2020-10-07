@@ -1,4 +1,5 @@
 import 'package:easyhour_app/models/base_model.dart';
+import 'package:easyhour_app/models/today_activity.dart';
 import 'package:flutter/material.dart';
 
 import 'activity.dart';
@@ -34,7 +35,8 @@ class Calendar {
     if (json['worklogs'] != null) {
       worklogs = new List<Worklog>();
       json['worklogs'].forEach((v) {
-        worklogs.add(new Worklog.fromJson(v));
+        worklogs.add(
+            new Worklog.fromJson(v, task: Task.fromCalendarJson(v['task'])));
       });
     }
     if (json['malattias'] != null) {
