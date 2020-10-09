@@ -144,7 +144,7 @@ class _TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final duration = Duration(minutes: task.duration)?.formatDisplay();
+    final duration = Duration(minutes: task.duration).formatDisplay();
 
     return Card(
       color: Color(0xFF019CE4),
@@ -172,13 +172,13 @@ class _TaskItem extends StatelessWidget {
                       size: 48,
                       color: Colors.white,
                     ),
-                    if (duration != null) SizedBox(height: 8),
-                    if (duration != null)
-                      Text(duration,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              .copyWith(color: Colors.white))
+                    SizedBox(height: 8),
+                    Text(duration,
+                        style: Theme.of(context).textTheme.bodyText2.copyWith(
+                            color: Colors.white,
+                            fontWeight: task.duration > 0
+                                ? FontWeight.bold
+                                : FontWeight.normal))
                   ],
                 )),
           ],

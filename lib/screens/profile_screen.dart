@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest_utils.dart';
@@ -74,8 +75,8 @@ class _ProfileScreen extends StatelessWidget {
             Text("${user.userDTO.firstName} ${user.userDTO.lastName}",
                 style: Theme.of(context).textTheme.headline1),
             SizedBox(height: 8),
-            Text(user.userDTO.email,
-                style: Theme.of(context).textTheme.bodyText1),
+            AutoSizeText(user.userDTO.email,
+                maxLines: 1, style: Theme.of(context).textTheme.bodyText1),
             Spacer(flex: 1),
             FlatButton(
               child:

@@ -4,7 +4,7 @@ description: The timesheet, that's it!
 # Remove this line if you wish to publish to pub.dev
 publish_to: 'none'
 
-version: 2.0.0+1
+version: 2.0.0+1002000
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
@@ -20,9 +20,11 @@ dependencies:
   url_launcher: ^5.6.0
   table_calendar: ^2.2.3
   double_back_to_close_app: ^1.2.0
-  smart_select: ^4.2.0
+  smart_select: ^4.2.1
   google_map_location_picker: ^4.0.0
-  file_picker: ^2.0.6
+  file_picker: ^2.0.7
+  auto_size_text: ^2.1.0
+  keyboard_visibility: any
 
   easy_localization: ^2.3.3
   easy_localization_loader:
