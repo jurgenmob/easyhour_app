@@ -46,3 +46,5 @@ app.*.map.json
 
 # Password, API keys and other secure stuff
 secure.properties
+easyhour.keystore
+android/key.properties
