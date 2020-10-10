@@ -132,13 +132,14 @@ class CalendarResponse {
   Calendar _calendar;
 
   List<CalendarEvent> get items => [
-        ..._calendar.worklogs.where((e) => e.durata > 0),
-        ..._calendar.malattias,
-        ..._calendar.feries,
-        ..._calendar.permessos,
-        ..._calendar.trasfertas,
-        ..._calendar.attivitas,
-        ..._calendar.holidays,
+        if (_calendar.worklogs != null)
+          ..._calendar.worklogs?.where((e) => e.durata > 0),
+        if (_calendar.malattias != null) ..._calendar.malattias,
+        if (_calendar.feries != null) ..._calendar.feries,
+        if (_calendar.permessos != null) ..._calendar.permessos,
+        if (_calendar.trasfertas != null) ..._calendar.trasfertas,
+        if (_calendar.attivitas != null) ..._calendar.attivitas,
+        if (_calendar.holidays != null) ..._calendar.holidays,
       ];
 
   CalendarResponse.fromJson(Map<String, dynamic> json) {
