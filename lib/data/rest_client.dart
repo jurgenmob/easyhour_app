@@ -25,6 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class EasyRest {
   static final EasyRest _instance = EasyRest._internal();
 
+  static int _retry = 0;
+
   factory EasyRest() {
     return _instance;
   }
@@ -46,35 +48,32 @@ class EasyRest {
     initClient();
 
     // Add auth token to each request
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options) {
-        return options
-          ..headers.addAll({
-            if (_accessToken != null) "Authorization": "Bearer $_accessToken",
-            "X-AZIENDA-DOMAIN": _domain,
-            Headers.contentTypeHeader: Headers.jsonContentType
-          });
-      },
-      onError: (e) async {
-        if (e.response?.statusCode == 401) {
-          // Ensure we don't get stuck in an infinite loop
-          e.request.extra.putIfAbsent("eh_retry", () => 0);
-          if (e.request.extra["eh_retry"] <= 2) {
-            e.request.extra["eh_retry"]++;
-
-            // Update the access token
-            RequestOptions options = e.response.request;
-            Response<String> response = await _dio.put<String>('/refresh',
-                data: RefreshTokenRequest(_refreshToken).toJson());
-            saveTokens(LoginResponse.fromJson(jsonDecode(response.data)));
-            options.headers['Authorization'] = 'Bearer $_accessToken';
-            return _dio.request(options.path, options: options);
-          }
+    _dio.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+      return options
+        ..headers.addAll({
+          if (_accessToken != null) "Authorization": "Bearer $_accessToken",
+          "X-AZIENDA-DOMAIN": _domain,
+          Headers.contentTypeHeader: Headers.jsonContentType
+        });
+    }, onError: (e) async {
+      if (e.response?.statusCode == 401) {
+        // Ensure we don't get stuck in an infinite loop
+        if (_retry++ < 2) {
+          // Update the access token
+          RequestOptions options = e.response.request;
+          Response<String> response = await _dio.put<String>('/refresh',
+              data: RefreshTokenRequest(_refreshToken).toJson());
+          saveTokens(LoginResponse.fromJson(jsonDecode(response.data)));
+          options.headers['Authorization'] = 'Bearer $_accessToken';
+          return _dio.request(options.path, options: options);
         }
+      }
 
-        return e;
-      },
-    ));
+      return e;
+    }, onResponse: (e) {
+      _retry = 0;
+    }));
   }
 
   void initClient() async {
