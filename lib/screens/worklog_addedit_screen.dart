@@ -33,6 +33,16 @@ class _WorklogFormState
   Worklog get item => _item;
   Worklog _item;
 
+  @override
+  void initState() {
+    super.initState();
+
+    // Show hours picker at startup if modifying an existing worklog
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_item.isNew) _openDurationPicker(context);
+    });
+  }
+
   _WorklogFormState() : super(LocaleKeys.label_worklogs);
 
   @override
@@ -75,14 +85,7 @@ class _WorklogFormState
             labelText: LocaleKeys.label_time_spent,
             icon: EasyIcons.timer_off,
             initialValue: Duration(minutes: _item.durata ?? 0).formatDisplay(),
-            onTap: () async {
-              Duration picked = await _openDurationPicker(context);
-              if (picked != null) {
-                setState(() {
-                  item.durata = picked.inMinutes;
-                });
-              }
-            },
+            onTap: () => _openDurationPicker(context),
             validator: (value) {
               // Allow 0 hours only when editing, it's a shortcut for delete
               return (item.durata == null || item.durata == 0) && item.isNew
@@ -99,9 +102,14 @@ class _WorklogFormState
         ),
       ];
 
-  Future<Duration> _openDurationPicker(BuildContext context) async {
-    return showDurationDialog(
+  void _openDurationPicker(BuildContext context) async {
+    Duration picked = await showDurationDialog(
         context: context, initialValue: Duration(minutes: item.durata ?? 0));
+    if (picked != null) {
+      setState(() {
+        item.durata = picked.inMinutes;
+      });
+    }
   }
 
   @override
