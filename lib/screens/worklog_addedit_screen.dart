@@ -39,7 +39,7 @@ class _WorklogFormState
 
     // Show hours picker at startup if modifying an existing worklog
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!_item.isNew) _openDurationPicker(context);
+      if (_item.task != null) _openDurationPicker(context);
     });
   }
 
@@ -126,29 +126,41 @@ class _WorklogFormState
         });
 
         // Add/edit the item
-        final provider = Provider.of<TaskProvider>(context, listen: false);
-        if (provider.items.isEmpty) {
-          await provider.get(); // may have never been initialized
+        final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+        if (taskProvider.items.isEmpty) {
+          await taskProvider.get(); // may have never been initialized
         }
-        final Task task = provider.getTask(item.task.id);
+        final calProvider =
+            Provider.of<CalendarProvider>(context, listen: false);
+        final actProvider =
+            Provider.of<TodayActivitiesProvider>(context, listen: false);
+        final Task task = taskProvider.getTask(item.task.id);
         final bool isNew = item.isNew;
         try {
           if (item.durata == 0) {
-            // Delete worklog
-            if (!isNew) await provider.deleteWorklog(task, item);
+            if (!isNew) {
+              // Delete worklog
+              await taskProvider.deleteWorklog(task, item);
+              // Also add the item to calendar and today activities
+              calProvider.delete(item);
+              actProvider.get();
+            }
             onFormSubmitted(null, LocaleKeys.message_delete_generic);
           } else {
             // Add/edit worklog
-            final result = await provider.addEditWorklog(task, item);
+            final Worklog result =
+                await taskProvider.addEditWorklog(task, item);
+            if (result != null) {
+              // Also add the item to calendar and today activities
+              calProvider.add(item);
+              actProvider.get();
+            }
+
             onFormSubmitted(
                 result,
                 isNew
                     ? LocaleKeys.message_add_generic
                     : LocaleKeys.message_edit_generic);
-
-            // Also add the item to calendar and today activities
-            Provider.of<CalendarProvider>(context, listen: false).add(item);
-            Provider.of<TodayActivitiesProvider>(context, listen: false).get();
           }
         } catch (e, s) {
           handleRestError(context, e, s);
