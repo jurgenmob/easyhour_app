@@ -3,9 +3,11 @@ import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/models/sickness.dart';
+import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
+import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
@@ -128,7 +130,7 @@ class _TaskList extends StatefulWidget {
 }
 
 class _TaskListState
-    extends EasyListState<TodayActivity, TodayActivitiesProvider> {
+    extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider> {
   _TaskListState() : super(LocaleKeys.empty_list_tasks.tr());
 
   @override
@@ -203,5 +205,9 @@ class _TaskItem extends StatelessWidget {
         ..removeCurrentSnackBar()
         ..showSnackBar(SnackBar(content: Text(result)));
     }
+
+    // Restore the appbar icon
+    Provider.of<EasyAppBarProvider>(context, listen: false).action =
+        EasyRoute.calendar();
   }
 }

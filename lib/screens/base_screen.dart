@@ -14,8 +14,8 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
   Widget build(BuildContext context) {
     // Set AppBar action
     WidgetsBinding.instance.addPostFrameCallback((_) =>
-        Provider.of<EasyAppBarProvider>(context, listen: false)
-            .setAction(getAppBarRoute()));
+        Provider.of<EasyAppBarProvider>(context, listen: false).action =
+            getAppBarRoute());
 
     return SafeArea(
       child: Scaffold(

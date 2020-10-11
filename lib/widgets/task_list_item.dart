@@ -1,4 +1,4 @@
-import 'package:easyhour_app/models/today_activity.dart';
+import 'package:easyhour_app/models/task.dart';
 import 'package:flutter/material.dart';
 
 class TaskListItem extends StatelessWidget {

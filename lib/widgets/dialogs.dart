@@ -118,3 +118,23 @@ Future<Duration> showDurationDialog(
             ));
       });
 }
+
+Future showCustomDialog(BuildContext context,
+    {String title, @required Widget content}) {
+  return showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(title ?? ""),
+        content: content,
+        actions: [
+          FlatButton(
+            child: Text(LocaleKeys.label_cancel.tr()),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+    },
+  );
+}

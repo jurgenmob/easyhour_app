@@ -16,7 +16,8 @@ class _TripListScreen extends StatefulWidget {
   createState() => _TripListScreenState();
 }
 
-class _TripListScreenState extends EasyListState<Trip, TripProvider> {
+class _TripListScreenState
+    extends EasyListState<_TripListScreen, Trip, TripProvider> {
   _TripListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_trips));
 }

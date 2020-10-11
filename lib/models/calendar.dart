@@ -1,10 +1,10 @@
 import 'package:easyhour_app/models/base_model.dart';
-import 'package:easyhour_app/models/today_activity.dart';
 import 'package:flutter/material.dart';
 
 import 'activity.dart';
 import 'permit.dart';
 import 'sickness.dart';
+import 'task.dart';
 import 'timer.dart';
 import 'trip.dart';
 import 'vacation.dart';
@@ -35,8 +35,7 @@ class Calendar {
     if (json['worklogs'] != null) {
       worklogs = new List<Worklog>();
       json['worklogs'].forEach((v) {
-        worklogs.add(
-            new Worklog.fromJson(v, task: Task.fromCalendarJson(v['task'])));
+        worklogs.add(new Worklog.fromJson(v, task: Task.fromJson(v['task'])));
       });
     }
     if (json['malattias'] != null) {
@@ -102,8 +101,7 @@ class Holiday with BaseModel, CalendarEvent {
   bool get dismissible => false;
 
   @override
-  DateTimeRange get dateRange =>
-      date != null ? DateTimeRange(start: date, end: date) : null;
+  DateTimeRange get dateRange => date != null ? dateRangeFromDate(date) : null;
 
   @override
   provider(BuildContext context) => null;

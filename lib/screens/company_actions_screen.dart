@@ -13,8 +13,8 @@ class CompanyActionsScreen extends StatefulWidget {
   createState() => _CompanyActionsScreenState();
 }
 
-class _CompanyActionsScreenState
-    extends EasyListState<CompanyAction, CompanyActionProvider> {
+class _CompanyActionsScreenState extends EasyListState<CompanyActionsScreen,
+    CompanyAction, CompanyActionProvider> {
   _CompanyActionsScreenState() : super("", refreshEnabled: false);
 
   @override
@@ -51,8 +51,8 @@ class _CompanyActionButton extends StatelessWidget {
           ),
           onPressed: () async {
             await Navigator.pushNamed(context, item.page);
-            Provider.of<EasyAppBarProvider>(context, listen: false)
-                .setAction(EasyRoute.calendar());
+            Provider.of<EasyAppBarProvider>(context, listen: false).action =
+                EasyRoute.calendar();
           },
         ),
       ),

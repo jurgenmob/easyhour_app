@@ -31,6 +31,7 @@
   "label_medical_certificate": "N. protocollo certificato medico",
   "label_type": "Tipologia",
   "label_client": "Cliente",
+  "label_task": "Task",
   "label_location": "Posizione",
   "label_save_location_as": "Salva posizione con nome...",
   "label_enter_location_name": "Nome della posizione",
@@ -78,6 +79,7 @@
   "message_edit_generic": "Il contenuto è stato modificato correttamente.",
   "message_no_clients": "Nessun cliente disponibile.",
   "message_no_locations": "Nessuna località disponibile.",
+  "message_pick_task": "Scegli il task a cui associare le ore.",
 
   "label_my_places": "Le mie posizioni",
   "label_help_videos": "Video di aiuto",

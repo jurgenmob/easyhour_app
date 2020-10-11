@@ -16,7 +16,8 @@ class _PermitListScreen extends StatefulWidget {
   createState() => _PermitListScreenState();
 }
 
-class _PermitListScreenState extends EasyListState<Permit, PermitProvider> {
+class _PermitListScreenState
+    extends EasyListState<_PermitListScreen, Permit, PermitProvider> {
   _PermitListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_permits));
 }

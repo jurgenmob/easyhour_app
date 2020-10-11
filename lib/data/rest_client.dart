@@ -12,6 +12,7 @@ import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
+import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/models/user.dart';
@@ -131,12 +132,18 @@ class EasyRest {
   Future<List<TodayActivity>> getTodayActivities() async {
     Response<String> response = await _dio.get('/today-activities');
 
-    TodayActivitiesResponse activities =
-        TodayActivitiesResponse.fromJson(jsonDecode(response.data));
+    TodayActivityResponse activities =
+        TodayActivityResponse.fromJson(jsonDecode(response.data));
 
     return activities.malattia != null
         ? [activities.malattia]
         : (activities.ferie != null ? [activities.ferie] : activities.tasks);
+  }
+
+  Future<List<Task>> getTasks() async {
+    Response<String> response = await _dio.get('/user-tasks');
+
+    return TaskResponse.fromJson(jsonDecode(response.data)).items;
   }
 
   Future<List<Activity>> getActivities() async {

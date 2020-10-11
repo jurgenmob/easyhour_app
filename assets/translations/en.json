@@ -31,6 +31,7 @@
   "label_medical_certificate": "Medical certificate reference",
   "label_type": "Type",
   "label_client": "Client",
+  "label_task": "Task",
   "label_location": "Location",
   "label_save_location_as": "Save location as...",
   "label_enter_location_name": "Location name",
@@ -78,6 +79,7 @@
   "message_edit_generic": "The content has been modified successfully.",
   "message_no_clients": "Sorry, no clients available.",
   "message_no_locations": "Sorry, no locations available.",
+  "message_pick_task": "Pick a task for the worklog.",
 
   "label_my_places": "My places",
   "label_help_videos": "Help videos",

@@ -46,8 +46,7 @@ class Permit with BaseModel, CalendarEvent {
   bool get editable => false;
 
   @override
-  DateTimeRange get dateRange =>
-      data != null ? DateTimeRange(start: data, end: data) : null;
+  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   PermitProvider provider(BuildContext context) =>

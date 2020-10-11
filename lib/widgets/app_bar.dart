@@ -18,9 +18,9 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
           height: 40,
         ),
         actions: <Widget>[
-          if (model.icon != null)
+          if (model.action?.icon != null)
             IconButton(
-              icon: Icon(model.icon),
+              icon: Icon(model.action.icon),
               onPressed: () => _navigate(model, context),
             ),
         ],
@@ -31,13 +31,14 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   void _navigate(EasyAppBarProvider model, BuildContext context) async {
-    if (model.page == null) return;
+    if (model.action?.page == null) return;
 
     // Save old route
-    final prev = EasyRoute(model.page, icon: model.icon);
+    final prev = model.action; //EasyRoute(model.action.page, icon: model.action.icon);
 
-    // Navigate to the new route
-    var result = await Navigator.pushNamed(context, model.page);
+    // Navigate to the new route or call the callback
+    var result = await Navigator.pushNamed(context, model.action.page,
+        arguments: model.action.arguments);
 
     // Show the result message
     if (result != null) {
@@ -47,7 +48,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
     }
 
     // Restore previous action
-    Provider.of<EasyAppBarProvider>(context, listen: false).setAction(prev);
+    Provider.of<EasyAppBarProvider>(context, listen: false).action = prev;
   }
 
   @override

@@ -1,10 +1,10 @@
 import 'package:easyhour_app/data/rest_utils.dart';
-import 'package:easyhour_app/models/today_activity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'base_model.dart';
 import 'calendar.dart';
+import 'task.dart';
 import 'user.dart';
 
 class Worklog with BaseModel, CalendarEvent {
@@ -50,8 +50,7 @@ class Worklog with BaseModel, CalendarEvent {
   bool get dismissible => true;
 
   @override
-  DateTimeRange get dateRange =>
-      data != null ? DateTimeRange(start: data, end: data) : null;
+  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   Provider provider(BuildContext context) => null;

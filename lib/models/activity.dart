@@ -44,8 +44,7 @@ class Activity with BaseModel, CalendarEvent {
   String get listDetailsBtm => "$oraInizio - $oraFine";
 
   @override
-  DateTimeRange get dateRange =>
-      data != null ? DateTimeRange(start: data, end: data) : null;
+  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   ActivityProvider provider(BuildContext context) =>

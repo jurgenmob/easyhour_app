@@ -17,7 +17,7 @@ class _VacationListScreen extends StatefulWidget {
 }
 
 class _VacationListScreenState
-    extends EasyListState<Vacation, VacationProvider> {
+    extends EasyListState<_VacationListScreen, Vacation, VacationProvider> {
   _VacationListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_vacations));
 }

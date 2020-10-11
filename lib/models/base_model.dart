@@ -19,6 +19,11 @@ mixin BaseModel<T, P> {
 
   DateTimeRange get dateRange;
 
+  @protected
+  DateTimeRange dateRangeFromDate(DateTime date) => DateTimeRange(
+      start: DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0),
+      end: DateTime(date.year, date.month, date.day, 23, 59, 59, 0, 0));
+
   /// True if the element can be deleted by the user
   bool get dismissible => true;
 

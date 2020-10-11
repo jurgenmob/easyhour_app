@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
-import 'package:easyhour_app/providers/today_activities_provider.dart';
+import 'package:easyhour_app/providers/task_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
@@ -13,17 +13,22 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../generated/locale_keys.g.dart';
 
+final _calendarWidgetKey = GlobalKey<_CalendarWidgetState>();
+
 class CalendarScreen extends BaseScreen {
   @override
-  Widget getBody() => CalendarWidget();
+  Widget getBody() => CalendarWidget(key: _calendarWidgetKey);
 
   @override
-  EasyRoute getAppBarRoute() => EasyRoute.calendar();
+  EasyRoute getAppBarRoute() => EasyRoute.addEdit(Worklog,
+      arguments: () => Worklog(data: _calendarWidgetKey.currentState._today));
 }
 
 class CalendarWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _CalendarWidgetState();
+
+  CalendarWidget({Key key}) : super(key: key);
 }
 
 class _CalendarWidgetState extends State<CalendarWidget>
@@ -31,6 +36,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
   Map<DateTime, List> _events;
   Map<DateTime, List> _holidays;
   CalendarProvider _provider;
+  DateTime _today = DateTime.now();
 
   // List _selectedEvents;
   AnimationController _animationController;
@@ -63,6 +69,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
   }
 
   void _onDaySelected(DateTime day, List events) {
+    _today = day;
     _provider.filter = day;
     setState(() {});
   }
@@ -145,7 +152,8 @@ class _EventList extends StatefulWidget {
   createState() => _EventListState();
 }
 
-class _EventListState extends EasyListState<BaseModel, CalendarProvider> {
+class _EventListState
+    extends EasyListState<_EventList, BaseModel, CalendarProvider> {
   _EventListState() : super(LocaleKeys.empty_list_calendar.tr());
 
   @override
@@ -153,8 +161,7 @@ class _EventListState extends EasyListState<BaseModel, CalendarProvider> {
     // Delete the item from its own provider
     if (item is Worklog) {
       // Due to server constraints worklogs need a special treatment
-      final provider =
-          Provider.of<TodayActivitiesProvider>(context, listen: false);
+      final provider = Provider.of<TaskProvider>(context, listen: false);
       provider.deleteWorklog(/*provider.getTask(item)*/ null, item);
     } else {
       item.provider(context).delete(item);

@@ -27,6 +27,7 @@ abstract class  LocaleKeys {
   static const label_medical_certificate = 'label_medical_certificate';
   static const label_type = 'label_type';
   static const label_client = 'label_client';
+  static const label_task = 'label_task';
   static const label_location = 'label_location';
   static const label_save_location_as = 'label_save_location_as';
   static const label_enter_location_name = 'label_enter_location_name';
@@ -47,6 +48,7 @@ abstract class  LocaleKeys {
   static const message_edit_generic = 'message_edit_generic';
   static const message_no_clients = 'message_no_clients';
   static const message_no_locations = 'message_no_locations';
+  static const message_pick_task = 'message_pick_task';
   static const label_my_places = 'label_my_places';
   static const label_help_videos = 'label_help_videos';
   static const label_reset_password = 'label_reset_password';

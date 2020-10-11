@@ -15,6 +15,7 @@ import 'package:easyhour_app/providers/company_action_provider.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
+import 'package:easyhour_app/providers/task_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
@@ -79,6 +80,7 @@ class _EasyAppState extends State<EasyApp> {
                   create: (context) => CompanyActionProvider()),
               ChangeNotifierProvider(
                   create: (context) => TodayActivitiesProvider()),
+              ChangeNotifierProvider(create: (context) => TaskProvider()),
               ChangeNotifierProvider(create: (context) => VacationProvider()),
               ChangeNotifierProvider(create: (context) => PermitProvider()),
               ChangeNotifierProvider(create: (context) => SicknessProvider()),

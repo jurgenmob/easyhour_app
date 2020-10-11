@@ -11,8 +11,9 @@ import '../generated/locale_keys.g.dart';
 import 'list_item.dart';
 
 // TODO: refactor as Widget instead of state
-abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
-    extends State with AutomaticKeepAliveClientMixin {
+abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
+        P extends BaseProvider> extends State<W>
+    with AutomaticKeepAliveClientMixin {
   final String emptyText;
   final bool refreshEnabled;
 
