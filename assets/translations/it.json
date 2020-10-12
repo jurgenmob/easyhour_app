@@ -32,7 +32,6 @@
   "label_type": "Tipologia",
   "label_client": "Cliente",
   "label_task": "Task",
-  "label_location": "Posizione",
   "label_save_location_as": "Salva posizione con nome...",
   "label_enter_location_name": "Nome della posizione",
   "label_attachments": "Allegati",
@@ -69,6 +68,10 @@
   "label_worklogs": {
     "one":"Tempo lavorato",
     "other":"Tempo lavorato"
+  },
+  "label_locations": {
+    "one":"Posizione",
+    "other":"Posizioni"
   },
 
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",

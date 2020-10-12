@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/activity.dart';
+import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
@@ -12,6 +13,7 @@ import 'package:easyhour_app/providers/activity_provider.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/providers/company_action_provider.dart';
+import 'package:easyhour_app/providers/location_provider.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
@@ -19,10 +21,12 @@ import 'package:easyhour_app/providers/task_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/activity_addedit_screen.dart';
 import 'package:easyhour_app/screens/activity_list_screen.dart';
 import 'package:easyhour_app/screens/calendar_screen.dart';
 import 'package:easyhour_app/screens/home_screen.dart';
+import 'package:easyhour_app/screens/location_list_screen.dart';
 import 'package:easyhour_app/screens/login_screen.dart';
 import 'package:easyhour_app/screens/permit_addedit_screen.dart';
 import 'package:easyhour_app/screens/permit_list_screen.dart';
@@ -39,8 +43,6 @@ import 'package:easyhour_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import 'routes.dart';
 
 void main() async {
   // Force portrait orientation
@@ -89,6 +91,7 @@ class _EasyAppState extends State<EasyApp> {
               ChangeNotifierProvider(
                   create: (context) => SmartWorkingProvider()),
               ChangeNotifierProvider(create: (context) => CalendarProvider()),
+              ChangeNotifierProvider(create: (context) => LocationProvider()),
             ],
             child: FutureBuilder<bool>(
               future: EasyRest().isUserLogged(),
@@ -133,6 +136,7 @@ class _EasyMaterialApp extends MaterialApp {
                 SmartWorkingListScreen(),
             EasyRoute.addEdit(SmartWorking).page: (context) =>
                 SmartWorkingAddEditScreen(),
+            EasyRoute.list(Location).page: (context) => LocationListScreen(),
           },
         );
 }

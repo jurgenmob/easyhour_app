@@ -1,8 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/user_info.dart';
+import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';
 import 'package:easyhour_app/widgets/loader.dart';
@@ -81,7 +83,8 @@ class _ProfileScreen extends StatelessWidget {
             FlatButton(
               child:
                   Text(LocaleKeys.label_my_places.tr(), style: flatButtonStyle),
-              onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
+              onPressed: () =>
+                  Navigator.pushNamed(context, EasyRoute.list(Location).page),
             ),
             FlatButton(
               child: Text(LocaleKeys.label_help_videos.tr(),

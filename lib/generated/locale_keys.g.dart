@@ -28,7 +28,6 @@ abstract class  LocaleKeys {
   static const label_type = 'label_type';
   static const label_client = 'label_client';
   static const label_task = 'label_task';
-  static const label_location = 'label_location';
   static const label_save_location_as = 'label_save_location_as';
   static const label_enter_location_name = 'label_enter_location_name';
   static const label_attachments = 'label_attachments';
@@ -40,6 +39,7 @@ abstract class  LocaleKeys {
   static const label_activities = 'label_activities';
   static const label_smartworkings = 'label_smartworkings';
   static const label_worklogs = 'label_worklogs';
+  static const label_locations = 'label_locations';
   static const empty_list_tasks = 'empty_list_tasks';
   static const empty_list_generic = 'empty_list_generic';
   static const empty_list_calendar = 'empty_list_calendar';

@@ -32,7 +32,6 @@
   "label_type": "Type",
   "label_client": "Client",
   "label_task": "Task",
-  "label_location": "Location",
   "label_save_location_as": "Save location as...",
   "label_enter_location_name": "Location name",
   "label_attachments": "Attachments",
@@ -69,6 +68,10 @@
   "label_worklogs": {
     "one":"Worklog",
     "other":"Worklogs"
+  },
+  "label_locations": {
+    "one":"Location",
+    "other":"Locations"
   },
 
   "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",

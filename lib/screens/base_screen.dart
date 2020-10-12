@@ -26,5 +26,6 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
 }
 
 abstract class BaseAddEditScreen<T extends BaseModel> extends BaseScreen<T> {
+  @override
   EasyRoute getAppBarRoute() => null;
 }

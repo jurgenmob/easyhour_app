@@ -321,6 +321,20 @@ class EasyRest {
 
     return LocationResponse.fromJson(jsonDecode(response.data)).items;
   }
+
+  Future<Location> addEditLocation(Location item) async {
+    Response<String> response = await _dio.request<String>(
+      '/user-locations',
+      data: item.toJson(),
+      options: Options(method: item.isNew ? 'POST' : 'PUT'),
+    );
+
+    return Location.fromJson(jsonDecode(response.data));
+  }
+
+  Future<Response> deleteLocation(Location item) async {
+    return _dio.delete('/locations/${item.id}');
+  }
 }
 
 String handleRestError(BuildContext context, e, s) {

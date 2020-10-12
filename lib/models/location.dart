@@ -1,7 +1,12 @@
 import 'package:easyhour_app/models/company.dart';
 import 'package:easyhour_app/models/user.dart';
+import 'package:easyhour_app/providers/location_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class Location {
+import 'base_model.dart';
+
+class Location with BaseModel {
   int id;
   String descrizione;
   String nome;
@@ -20,6 +25,25 @@ class Location {
       this.attivo,
       this.user,
       this.azienda});
+
+  @override
+  String get listTitle => nome;
+
+  @override
+  String get listSubtitle => descrizione;
+
+  @override
+  bool get approved => attivo;
+
+  @override
+  bool get editable => false;
+
+  @override
+  DateTimeRange get dateRange => null;
+
+  @override
+  LocationProvider provider(BuildContext context) =>
+      context.read<LocationProvider>();
 
   Location.fromJson(Map<String, dynamic> json) {
     id = json['id'];
