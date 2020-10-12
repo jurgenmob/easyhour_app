@@ -17,7 +17,7 @@ class _SicknessListScreen extends StatefulWidget {
 }
 
 class _SicknessListScreenState
-    extends EasyListState<_SicknessListScreen, Sickness, SicknessProvider> {
+    extends EasyListState<Sickness, SicknessProvider> {
   _SicknessListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_sicknesses));
 }

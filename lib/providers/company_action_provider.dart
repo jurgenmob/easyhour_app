@@ -1,5 +1,5 @@
-import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/company_action.dart';
 import 'package:easyhour_app/models/permit.dart';
@@ -16,7 +16,6 @@ import 'base_provider.dart';
 
 class CompanyActionProvider extends BaseProvider<CompanyAction> {
   Future<List<CompanyAction>> getActions() async {
-    // FIXME: should use proxy provider?
     List<Module> activeModules =
         (await EasyRest().getUserInfo()).configurazioneAzienda.modulos;
 

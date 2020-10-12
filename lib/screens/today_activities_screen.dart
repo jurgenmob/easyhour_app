@@ -130,7 +130,7 @@ class _TaskList extends StatefulWidget {
 }
 
 class _TaskListState
-    extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider> {
+    extends EasyListState<TodayActivity, TodayActivitiesProvider> {
   _TaskListState() : super(LocaleKeys.empty_list_tasks.tr());
 
   @override

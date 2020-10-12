@@ -9,7 +9,6 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// TODO: refactor as Widget instead of state
 abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
     extends State {
   @protected

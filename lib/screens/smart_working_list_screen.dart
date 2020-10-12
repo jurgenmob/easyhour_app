@@ -16,8 +16,8 @@ class _SmartWorkingListScreen extends StatefulWidget {
   createState() => _SmartWorkingListScreenState();
 }
 
-class _SmartWorkingListScreenState extends EasyListState<
-    _SmartWorkingListScreen, SmartWorking, SmartWorkingProvider> {
+class _SmartWorkingListScreenState
+    extends EasyListState<SmartWorking, SmartWorkingProvider> {
   _SmartWorkingListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_smartworkings));
 }

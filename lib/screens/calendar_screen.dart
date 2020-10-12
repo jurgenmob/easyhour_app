@@ -152,8 +152,7 @@ class _EventList extends StatefulWidget {
   createState() => _EventListState();
 }
 
-class _EventListState
-    extends EasyListState<_EventList, BaseModel, CalendarProvider> {
+class _EventListState extends EasyListState<BaseModel, CalendarProvider> {
   _EventListState() : super(LocaleKeys.empty_list_calendar.tr());
 
   @override

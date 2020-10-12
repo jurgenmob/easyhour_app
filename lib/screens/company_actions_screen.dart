@@ -13,8 +13,8 @@ class CompanyActionsScreen extends StatefulWidget {
   createState() => _CompanyActionsScreenState();
 }
 
-class _CompanyActionsScreenState extends EasyListState<CompanyActionsScreen,
-    CompanyAction, CompanyActionProvider> {
+class _CompanyActionsScreenState
+    extends EasyListState<CompanyAction, CompanyActionProvider> {
   _CompanyActionsScreenState() : super("", refreshEnabled: false);
 
   @override
