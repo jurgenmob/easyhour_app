@@ -10,13 +10,14 @@ class CompanyAction with BaseModel {
   final IconData icon;
   final String page;
 
-  int get id => text.hashCode;
+  @override
+  get id => text.hashCode;
 
   @override
-  String get listTitle => text;
+  get listTitle => text;
 
   @override
-  DateTimeRange get dateRange => null;
+  get dateRange => null;
 
   @override
   CompanyActionProvider provider(BuildContext context) =>

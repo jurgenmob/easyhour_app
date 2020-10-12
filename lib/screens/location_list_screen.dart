@@ -22,6 +22,6 @@ class _LocationListScreen extends StatefulWidget {
 }
 
 class _LocationListScreenState
-    extends EasyListState<Location, LocationProvider> {
+    extends EasyListState<_LocationListScreen, Location, LocationProvider> {
   _LocationListScreenState() : super(LocaleKeys.message_no_locations.tr());
 }

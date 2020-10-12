@@ -95,13 +95,13 @@ class Holiday with BaseModel, CalendarEvent {
   get id => date.millisecondsSinceEpoch;
 
   @override
-  String get listTitle => description;
+  get listTitle => description;
 
   @override
-  bool get dismissible => false;
+  get dismissible => false;
 
   @override
-  DateTimeRange get dateRange => date != null ? dateRangeFromDate(date) : null;
+  get dateRange => date != null ? dateRangeFromDate(date) : null;
 
   @override
   provider(BuildContext context) => null;

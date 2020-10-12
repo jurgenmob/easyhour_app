@@ -31,22 +31,22 @@ class Permit with BaseModel, CalendarEvent {
       this.azienda});
 
   @override
-  String get listTitle => LocaleKeys.label_permits.plural(1).toUpperCase();
+  get listTitle => LocaleKeys.label_permits.plural(1).toUpperCase();
 
   @override
-  String get listDetailsTop => data.formatDisplay();
+  get listDetailsTop => data.formatDisplay();
 
   @override
-  String get listDetailsBtm => "$oraInizio - $oraFine";
+  get listDetailsBtm => "$oraInizio - $oraFine";
 
   @override
-  bool get approved => stato == approvedValue;
+  get approved => stato == approvedValue;
 
   @override
-  bool get editable => false;
+  get editable => false;
 
   @override
-  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
+  get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   PermitProvider provider(BuildContext context) =>

@@ -162,7 +162,7 @@ class Module {
       other is Module && runtimeType == other.runtimeType && id == other.id;
 
   @override
-  int get hashCode => id.hashCode;
+  get hashCode => id.hashCode;
 }
 
 class UserExtra {

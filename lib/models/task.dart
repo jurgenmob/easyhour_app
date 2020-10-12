@@ -31,24 +31,24 @@ class Task with BaseModel, TodayActivity {
       this.dataModificaTask});
 
   @override
-  int get id => idTask;
+  get id => idTask;
 
   @override
-  DateTimeRange get dateRange => null;
+  get dateRange => null;
 
   @override
-  bool filter(dynamic filter) =>
+  filter(dynamic filter) =>
       nomeTask?.containsIgnoreCase(filter.toString()) == true ||
       nomeProgetto?.containsIgnoreCase(filter.toString()) == true ||
       nomeCliente?.containsIgnoreCase(filter.toString()) == true;
 
   @override
-  String get listTitle => nomeTask;
+  get listTitle => nomeTask;
 
   @override
-  bool get dismissible => false;
+  get dismissible => false;
 
-  int get duration => worklogs.fold(0, (p, c) => p + c.durata);
+  get duration => worklogs.fold(0, (p, c) => p + c.durata);
 
   @override
   Provider provider(BuildContext context) => null;

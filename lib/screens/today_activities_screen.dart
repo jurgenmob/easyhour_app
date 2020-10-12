@@ -12,16 +12,20 @@ import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
+import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
 import 'package:easyhour_app/widgets/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../generated/locale_keys.g.dart';
 
 class TodayActivitiesScreen extends StatelessWidget {
+  final _prefs = SharedPreferences.getInstance();
+
   @override
   Widget build(BuildContext context) {
     return Consumer<TodayActivitiesProvider>(
@@ -39,7 +43,12 @@ class TodayActivitiesScreen extends StatelessWidget {
         Expanded(
             child: type == Vacation || type == Sickness
                 ? _VacationSicknessContainer(type)
-                : _TaskList())
+                : FutureBuilder<SharedPreferences>(
+                    future: _prefs,
+                    builder: (context, snapshot) =>
+                        snapshot?.connectionState == ConnectionState.done
+                            ? _TaskList(snapshot.data)
+                            : EasyLoader()))
       ]);
     });
   }
@@ -124,66 +133,99 @@ class _VacationSicknessContainer extends StatelessWidget {
   }
 }
 
+final _taskListKey = GlobalKey<_TaskListState>();
+
 class _TaskList extends StatefulWidget {
+  static final _flaggedTaskPrefKey = 'flaggedTasks';
+
+  final SharedPreferences prefs;
+  final List<String> _flaggedTasks;
+
+  bool isFlagged(Task task) => _flaggedTasks.contains(task.id.toString());
+
+  void toggleFlagged(Task task) {
+    if (isFlagged(task)) {
+      _flaggedTasks.remove(task.id.toString());
+    } else {
+      _flaggedTasks.add(task.id.toString());
+    }
+    prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
+  }
+
+  _TaskList(this.prefs)
+      : _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
+        super(key: _taskListKey);
+
   @override
   createState() => _TaskListState();
 }
 
 class _TaskListState
-    extends EasyListState<TodayActivity, TodayActivitiesProvider> {
+    extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider> {
   _TaskListState() : super(LocaleKeys.empty_list_tasks.tr());
 
   @override
-  StatelessWidget getItem(TodayActivity item) {
-    return _TaskItem(item as Task);
+  Widget getItem(TodayActivity item) {
+    return _TaskItem(widget, item as Task);
   }
-}
-
-class _TaskItem extends StatelessWidget {
-  final Task task;
-
-  const _TaskItem(this.task, {Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final duration = Duration(minutes: task.duration).formatDisplay();
+  Comparator comparator() =>
+      (a, b) => widget.isFlagged(a) && widget.isFlagged(b)
+          ? 0
+          : widget.isFlagged(a)
+              ? 1
+              : widget.isFlagged(b)
+                  ? -1
+                  : 0;
+}
 
-    return Card(
-      color: Color(0xFF019CE4),
-      margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
-      child: InkWell(
-        onTap: () {
-          _onEdit(context);
-        },
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.all(8),
-                color: Theme.of(context).primaryColor,
-                child: TaskListItem(task),
-              ),
+class _TaskItem extends StatefulWidget {
+  final Task task;
+  final _TaskList list;
+
+  const _TaskItem(this.list, this.task);
+
+  @override
+  State<StatefulWidget> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<_TaskItem> {
+  @override
+  Widget build(BuildContext context) {
+    return Dismissible(
+      key: ValueKey("${widget.task.id}-${widget.list.isFlagged(widget.task)}"),
+      direction: DismissDirection.startToEnd,
+      confirmDismiss: (direction) {
+        // Toggle the flagged state
+        widget.list.toggleFlagged(widget.task);
+        setState(() => {}); // set semi-transparent
+        _taskListKey.currentState.setState(() {}); // update sorting
+        return Future.value(false);
+      },
+      dismissThresholds: {DismissDirection.startToEnd: 0.2},
+      child: Opacity(
+        opacity: widget.list.isFlagged(widget.task) ? 0.5 : 1.0,
+        child: Card(
+          color: Color(0xFF019CE4),
+          margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
+          child: InkWell(
+            onTap: () {
+              _onEdit(context);
+            },
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    color: Theme.of(context).primaryColor,
+                    child: TaskListItem(widget.task),
+                  ),
+                ),
+                _TimerWidget(widget.task)
+              ],
             ),
-            Container(
-                width: 100,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Icon(
-                      EasyIcons.timer_off,
-                      size: 48,
-                      color: Colors.white,
-                    ),
-                    SizedBox(height: 8),
-                    Text(duration,
-                        style: Theme.of(context).textTheme.bodyText2.copyWith(
-                            color: Colors.white,
-                            fontWeight: task.duration > 0
-                                ? FontWeight.bold
-                                : FontWeight.normal))
-                  ],
-                )),
-          ],
+          ),
         ),
       ),
     );
@@ -192,9 +234,9 @@ class _TaskItem extends StatelessWidget {
   void _onEdit(BuildContext context) async {
     // Worklog cannot be null, even when creating a new one, because a
     // reference to the task is always needed
-    final worklog = task.worklogs.length > 0
-        ? task.worklogs.first
-        : Worklog(data: DateTime.now(), task: task);
+    final worklog = widget.task.worklogs.length > 0
+        ? widget.task.worklogs.first
+        : Worklog(data: DateTime.now(), task: widget.task);
     final result = await Navigator.pushNamed(
         context, (EasyRoute.addEdit(Worklog)?.page),
         arguments: worklog);
@@ -208,5 +250,34 @@ class _TaskItem extends StatelessWidget {
 
     // Restore the appbar icon
     context.read<EasyAppBarProvider>().action = EasyRoute.calendar();
+  }
+}
+
+class _TimerWidget extends StatelessWidget {
+  final Task task;
+
+  _TimerWidget(this.task);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(
+              EasyIcons.timer_off,
+              size: 48,
+              color: Colors.white,
+            ),
+            SizedBox(height: 8),
+            Text(Duration(minutes: task.duration).formatDisplay(),
+                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    color: Colors.white,
+                    fontWeight: task.duration > 0
+                        ? FontWeight.bold
+                        : FontWeight.normal))
+          ],
+        ));
   }
 }

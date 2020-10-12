@@ -27,19 +27,19 @@ class Location with BaseModel {
       this.azienda});
 
   @override
-  String get listTitle => nome;
+  get listTitle => nome;
 
   @override
-  String get listSubtitle => descrizione;
+  get listSubtitle => descrizione;
 
   @override
-  bool get approved => attivo;
+  get approved => attivo;
 
   @override
-  bool get editable => false;
+  get editable => false;
 
   @override
-  DateTimeRange get dateRange => null;
+  get dateRange => null;
 
   @override
   LocationProvider provider(BuildContext context) =>
@@ -90,7 +90,7 @@ class Location with BaseModel {
           nome == other.nome;
 
   @override
-  int get hashCode => id.hashCode;
+  get hashCode => id.hashCode;
 }
 
 class LocationResponse {

@@ -31,19 +31,19 @@ class Trip with BaseModel, CalendarEvent {
       this.cliente});
 
   @override
-  String get listTitle => LocaleKeys.label_trips.plural(1).toUpperCase();
+  get listTitle => LocaleKeys.label_trips.plural(1).toUpperCase();
 
   @override
-  String get listSubtitle => cliente?.nome ?? "";
+  get listSubtitle => cliente?.nome ?? "";
 
   @override
-  String get listDetailsTop => dataInizio.formatDisplay();
+  get listDetailsTop => dataInizio.formatDisplay();
 
   @override
-  String get listDetailsBtm => dataFine.formatDisplay();
+  get listDetailsBtm => dataFine.formatDisplay();
 
   @override
-  DateTimeRange get dateRange => dataInizio != null && dataFine != null
+  get dateRange => dataInizio != null && dataFine != null
       ? DateTimeRange(start: dataInizio, end: dataFine)
       : null;
 

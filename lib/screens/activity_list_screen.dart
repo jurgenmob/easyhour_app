@@ -17,7 +17,7 @@ class _ActivityListScreen extends StatefulWidget {
 }
 
 class _ActivityListScreenState
-    extends EasyListState<Activity, ActivityProvider> {
+    extends EasyListState<_ActivityListScreen, Activity, ActivityProvider> {
   _ActivityListScreenState()
       : super(EasyListState.defaultEmptyText(LocaleKeys.label_activities));
 }

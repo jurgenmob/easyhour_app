@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 import '../generated/locale_keys.g.dart';
 import 'list_item.dart';
 
-abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
-    extends State with AutomaticKeepAliveClientMixin {
+abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
+        P extends BaseProvider> extends State<W>
+    with AutomaticKeepAliveClientMixin {
   final String emptyText;
   final bool refreshEnabled;
 
@@ -27,6 +28,9 @@ abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
 
   Widget getItem(T item) =>
       EasyListItem<T>(item, onEdit: onEdit, onDelete: onDelete);
+
+  @protected
+  Comparator<T> comparator() => null;
 
   void fetchData() async {
     try {
@@ -70,12 +74,16 @@ abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
         return _EmptyList(text: _error ?? emptyText, onRefresh: _onRefresh);
       }
 
+      // Allow subclasses to sort items
+      final items = List.of(provider.items);
+      if (comparator() != null) items.sort(comparator());
+
       // All good, create the list
       final Widget listView = ListView.builder(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemCount: provider.items.length,
-          itemBuilder: (_, index) => getItem(provider.items[index]));
+          itemBuilder: (_, index) => getItem(items[index]));
 
       // Show the list
       return refreshEnabled
@@ -117,7 +125,7 @@ abstract class EasyListState<T extends BaseModel, P extends BaseProvider>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  get wantKeepAlive => true;
 }
 
 class _EmptyList extends StatelessWidget {

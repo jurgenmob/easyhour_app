@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  get wantKeepAlive => true;
 }
 
 class _ProfileScreen extends StatelessWidget {

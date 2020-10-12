@@ -32,10 +32,10 @@ class EasyRest {
     return _instance;
   }
 
-  String get username => _username;
+  get username => _username;
   String _username;
 
-  String get domain => _domain;
+  get domain => _domain;
   String _domain;
   String _accessToken;
   String _refreshToken;

@@ -32,26 +32,25 @@ class SmartWorking with BaseModel {
       this.azienda});
 
   @override
-  String get listTitle =>
-      LocaleKeys.label_smartworkings.plural(1).toUpperCase();
+  get listTitle => LocaleKeys.label_smartworkings.plural(1).toUpperCase();
 
   @override
-  String get listSubtitle => location?.nome;
+  get listSubtitle => location?.nome;
 
   @override
-  String get listDetailsTop => dataInizio.formatDisplay();
+  get listDetailsTop => dataInizio.formatDisplay();
 
   @override
-  String get listDetailsBtm => dataFine.formatDisplay();
+  get listDetailsBtm => dataFine.formatDisplay();
 
   @override
-  bool get approved => stato == approvedValue;
+  get approved => stato == approvedValue;
 
   @override
-  bool get editable => false;
+  get editable => false;
 
   @override
-  DateTimeRange get dateRange => dataInizio != null && dataFine != null
+  get dateRange => dataInizio != null && dataFine != null
       ? DateTimeRange(start: dataInizio, end: dataFine)
       : null;
 

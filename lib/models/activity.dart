@@ -32,19 +32,19 @@ class Activity with BaseModel, CalendarEvent {
       this.azienda});
 
   @override
-  String get listTitle => LocaleKeys.label_activities.plural(1);
+  get listTitle => LocaleKeys.label_activities.plural(1);
 
   @override
-  String get listSubtitle => tipologia;
+  get listSubtitle => tipologia;
 
   @override
-  String get listDetailsTop => data.formatDisplay();
+  get listDetailsTop => data.formatDisplay();
 
   @override
-  String get listDetailsBtm => "$oraInizio - $oraFine";
+  get listDetailsBtm => "$oraInizio - $oraFine";
 
   @override
-  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
+  get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   ActivityProvider provider(BuildContext context) =>

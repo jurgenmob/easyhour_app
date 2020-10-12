@@ -45,7 +45,7 @@ class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-        key: Key(item.id.toString()),
+        key: ValueKey(item.id),
         direction:
             item.dismissible != null ? DismissDirection.endToStart : null,
         background: Container(

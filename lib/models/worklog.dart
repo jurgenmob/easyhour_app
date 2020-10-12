@@ -26,31 +26,31 @@ class Worklog with BaseModel, CalendarEvent {
       this.fase});
 
   @override
-  String get listTitle => task?.nomeTask;
+  get listTitle => task?.nomeTask;
 
   @override
-  String get listSuptitle => task?.nomeCliente;
+  get listSuptitle => task?.nomeCliente;
 
   @override
-  String get listSubtitle => task?.nomeProgetto;
+  get listSubtitle => task?.nomeProgetto;
 
   @override
-  String get listDetailsTop => data.formatDisplay();
+  get listDetailsTop => data.formatDisplay();
 
   @override
-  String get listDetailsBtm => durationString;
+  get listDetailsBtm => durationString;
 
-  String get durationString {
+  get durationString {
     final int hour = durata ~/ 60;
     final int minutes = durata % 60;
     return '${hour.toString().padLeft(2, "0")}:${minutes.toString().padLeft(2, "0")}';
   }
 
   @override
-  bool get dismissible => true;
+  get dismissible => true;
 
   @override
-  DateTimeRange get dateRange => data != null ? dateRangeFromDate(data) : null;
+  get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
   Provider provider(BuildContext context) => null;
