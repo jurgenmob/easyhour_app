@@ -17,12 +17,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_select/smart_select.dart';
 
+final _worklogFormKey = GlobalKey<_WorklogFormState>();
+
 class WorklogAddEditScreen extends BaseAddEditScreen<Worklog> {
   @override
   Widget getBody() => _WorklogForm();
 }
 
 class _WorklogForm extends StatefulWidget {
+  _WorklogForm() : super(key: _worklogFormKey);
+
   @override
   createState() => _WorklogFormState();
 }
@@ -193,8 +197,10 @@ class _TaskSelectFieldState extends State<_TaskSelectField> {
             title: LocaleKeys.label_task.tr(),
             placeholder: LocaleKeys.label_choose.tr(),
             value: widget.item.task,
-            onChange: (state) =>
-                {setState(() => widget.item.task = state.value)},
+            onChange: (state) {
+              setState(() => widget.item.task = state.value);
+              _worklogFormKey.currentState.setState(() {});
+            },
             choiceItems: _tasks,
             choiceStyle: S2ChoiceStyle(
               titleStyle: Theme.of(context)
