@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
@@ -207,7 +207,6 @@ class _TaskItem extends StatelessWidget {
     }
 
     // Restore the appbar icon
-    Provider.of<EasyAppBarProvider>(context, listen: false).action =
-        EasyRoute.calendar();
+    context.read<EasyAppBarProvider>().action = EasyRoute.calendar();
   }
 }

@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/providers/activity_provider.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +48,7 @@ class Activity with BaseModel, CalendarEvent {
 
   @override
   ActivityProvider provider(BuildContext context) =>
-      Provider.of<ActivityProvider>(context, listen: false);
+      context.read<ActivityProvider>();
 
   Activity.fromJson(Map<String, dynamic> json) {
     id = json['id'];

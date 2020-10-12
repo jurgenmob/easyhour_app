@@ -77,7 +77,7 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
 
         // Add/edit the item
         final bool isNew = item.isNew;
-        final provider = Provider.of<P>(context, listen: false);
+        final provider = context.read<P>();
         final result =
             await ((isNew) ? provider.add(item) : provider.edit(item));
 

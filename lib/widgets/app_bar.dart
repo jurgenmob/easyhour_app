@@ -1,5 +1,4 @@
 import 'package:easyhour_app/providers/app_bar_provider.dart';
-import 'package:easyhour_app/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
     if (model.action?.page == null) return;
 
     // Save old route
-    final prev = model.action; //EasyRoute(model.action.page, icon: model.action.icon);
+    final prev = model.action;
 
     // Navigate to the new route or call the callback
     var result = await Navigator.pushNamed(context, model.action.page,
@@ -48,7 +47,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
     }
 
     // Restore previous action
-    Provider.of<EasyAppBarProvider>(context, listen: false).action = prev;
+    context.read<EasyAppBarProvider>().action = prev;
   }
 
   @override

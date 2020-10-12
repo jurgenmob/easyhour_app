@@ -28,7 +28,7 @@ class _EasySearchBarState<P extends BaseProvider>
   @override
   Widget build(BuildContext context) {
     _controller.addListener(() {
-      Provider.of<P>(context, listen: false).filter = _controller.text;
+      context.read<P>().filter = _controller.text;
       setState(() {});
     });
 

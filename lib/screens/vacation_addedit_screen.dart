@@ -1,4 +1,4 @@
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';

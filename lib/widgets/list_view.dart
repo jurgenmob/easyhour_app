@@ -38,7 +38,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
       });
 
       // Get the items
-      await Provider.of<P>(context, listen: false).get();
+      await context.read<P>().get();
 
       setState(() {
         _error = null;
@@ -106,7 +106,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   void onDelete(T item) async {
     try {
       // Delete the item
-      bool result = await Provider.of<P>(context, listen: false).delete(item);
+      bool result = await context.read<P>().delete(item);
       if (result) {
         Scaffold.of(context)
           ..removeCurrentSnackBar()

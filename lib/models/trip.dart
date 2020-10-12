@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +48,7 @@ class Trip with BaseModel, CalendarEvent {
       : null;
 
   @override
-  TripProvider provider(BuildContext context) =>
-      Provider.of<TripProvider>(context, listen: false);
+  TripProvider provider(BuildContext context) => context.read<TripProvider>();
 
   @override
   String toString() {

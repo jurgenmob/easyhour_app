@@ -79,14 +79,6 @@ class Task with BaseModel, TodayActivity {
     dataModificaTask = json['lastModifiedDate'] ?? json['dataModificaTask'];
   }
 
-  // Task.fromCalendarJson(Map<String, dynamic> json) {
-  //   nomeTask = json['nome'];
-  //   nomeProgetto = json['progetto']['nome'];
-  //   nomeCliente = json['progetto']['cliente']['nome'];
-  //   idTask = json['id'];
-  //   dataModificaTask = json['lastModifiedDate'];
-  // }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;

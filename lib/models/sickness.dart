@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +43,7 @@ class Sickness with BaseModel, TodayActivity, CalendarEvent {
 
   @override
   SicknessProvider provider(BuildContext context) =>
-      Provider.of<SicknessProvider>(context, listen: false);
+      context.read<SicknessProvider>();
 
   Sickness.fromJson(Map<String, dynamic> json) {
     id = json['id'];

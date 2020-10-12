@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +55,7 @@ class Vacation with BaseModel, TodayActivity, CalendarEvent {
 
   @override
   VacationProvider provider(BuildContext context) =>
-      Provider.of<VacationProvider>(context, listen: false);
+      context.read<VacationProvider>();
 
   @override
   Vacation.fromJson(Map<String, dynamic> json) {

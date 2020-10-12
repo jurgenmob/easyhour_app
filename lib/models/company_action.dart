@@ -20,7 +20,7 @@ class CompanyAction with BaseModel {
 
   @override
   CompanyActionProvider provider(BuildContext context) =>
-      Provider.of<CompanyActionProvider>(context, listen: false);
+      context.read<CompanyActionProvider>();
 
   CompanyAction(
       {@required this.text, @required this.icon, @required this.page});

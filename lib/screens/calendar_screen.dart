@@ -46,7 +46,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
   void initState() {
     super.initState();
 
-    _provider = Provider.of<CalendarProvider>(context, listen: false);
+    _provider = context.read<CalendarProvider>();
 
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _provider.filter = DateTime.now());
@@ -161,13 +161,12 @@ class _EventListState
     // Delete the item from its own provider
     if (item is Worklog) {
       // Due to server constraints worklogs need a special treatment
-      final provider = Provider.of<TaskProvider>(context, listen: false);
-      provider.deleteWorklog(/*provider.getTask(item)*/ null, item);
+      context.read<TaskProvider>().deleteWorklog(context, item.task, item);
     } else {
       item.provider(context).delete(item);
     }
 
     // Also delete the item from calendar
-    Provider.of<CalendarProvider>(context, listen: false).delete(item);
+    context.read<CalendarProvider>().delete(item);
   }
 }

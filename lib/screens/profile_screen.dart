@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/user_info.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';

@@ -1,5 +1,5 @@
 import 'package:easyhour_app/data/rest_client.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/company_action.dart';
 import 'package:easyhour_app/models/permit.dart';

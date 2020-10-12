@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class Permit with BaseModel, CalendarEvent {
 
   @override
   PermitProvider provider(BuildContext context) =>
-      Provider.of<PermitProvider>(context, listen: false);
+      context.read<PermitProvider>();
 
   Permit.fromJson(Map<String, dynamic> json) {
     id = json['id'];

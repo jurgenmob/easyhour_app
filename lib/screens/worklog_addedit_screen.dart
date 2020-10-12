@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/data/rest_client.dart';
-import 'package:easyhour_app/data/rest_utils.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/worklog.dart';
-import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/providers/task_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
@@ -126,36 +125,23 @@ class _WorklogFormState
         });
 
         // Add/edit the item
-        final taskProvider = Provider.of<TaskProvider>(context, listen: false);
-        if (taskProvider.items.isEmpty) {
-          await taskProvider.get(); // may have never been initialized
+        final provider = context.read<TaskProvider>();
+        if (provider.items.isEmpty) {
+          await provider.get(); // may have never been initialized
         }
-        final calProvider =
-            Provider.of<CalendarProvider>(context, listen: false);
-        final actProvider =
-            Provider.of<TodayActivitiesProvider>(context, listen: false);
-        final Task task = taskProvider.getTask(item.task.id);
+        final Task task = provider.getTask(item.task.id);
         final bool isNew = item.isNew;
         try {
           if (item.durata == 0) {
+            // Delete worklog
             if (!isNew) {
-              // Delete worklog
-              await taskProvider.deleteWorklog(task, item);
-              // Also add the item to calendar and today activities
-              calProvider.delete(item);
-              actProvider.get();
+              await provider.deleteWorklog(context, task, item);
             }
             onFormSubmitted(null, LocaleKeys.message_delete_generic);
           } else {
             // Add/edit worklog
             final Worklog result =
-                await taskProvider.addEditWorklog(task, item);
-            if (result != null) {
-              // Also add the item to calendar and today activities
-              calProvider.add(item);
-              actProvider.get();
-            }
-
+                await provider.addEditWorklog(context, task, item);
             onFormSubmitted(
                 result,
                 isNew
@@ -177,7 +163,7 @@ class _WorklogFormState
 }
 
 class _TaskSelectField extends StatefulWidget {
-  Worklog item;
+  final Worklog item;
 
   _TaskSelectField(this.item);
 
