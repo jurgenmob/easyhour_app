@@ -69,7 +69,7 @@ abstract class BaseProvider<T extends BaseModel> extends ChangeNotifier {
     T item = await restCall;
     if (item != null) {
       final pos = _items.indexOf(item);
-      _items.setRange(pos, pos, [item]);
+      _items.setRange(pos, pos + 1, [item]);
     }
 
     notifyListeners();

@@ -15,7 +15,7 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
     final activityTask = getTask(worklog.task);
     final pos = activityTask.worklogs.indexOf(worklog);
     if (pos >= 0) {
-      activityTask.worklogs.setRange(pos, pos, [worklog]);
+      activityTask.worklogs.setRange(pos, pos + 1, [worklog]);
     } else {
       activityTask.worklogs.add(worklog);
     }

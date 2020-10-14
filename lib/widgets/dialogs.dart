@@ -1,10 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/locale_keys.g.dart';
 
-Future<bool> showConfirmDeleteDialog(BuildContext context, String message) =>
+Future<bool> showConfirmDialog(BuildContext context, String message) =>
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -104,7 +105,7 @@ Future<Duration> showDurationDialog(
                 Expanded(
                   child: CupertinoTimerPicker(
                     mode: CupertinoTimerPickerMode.hm,
-                    minuteInterval: 5,
+                    minuteInterval: worklogMinuteInterval,
                     initialTimerDuration: initialValue,
                     onTimerDurationChanged: (Duration value) {
                       result = value;

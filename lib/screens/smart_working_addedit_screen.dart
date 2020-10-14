@@ -202,7 +202,7 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
         selected: true,
       ));
       state.value = widget.item.location;
-      setState(() => {});
+      setState(() {});
 
       state.closeModal(confirmed: true);
     }

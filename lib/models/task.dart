@@ -50,6 +50,8 @@ class Task with BaseModel, TodayActivity {
 
   get duration => worklogs.fold(0, (p, c) => p + c.durata);
 
+  get hasTimer => timer?.active ?? false;
+
   @override
   Provider provider(BuildContext context) => null;
 

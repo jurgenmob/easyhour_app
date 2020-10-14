@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
@@ -10,11 +12,11 @@ import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
-import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
 import 'package:easyhour_app/widgets/task_list_item.dart';
+import 'package:easyhour_app/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -24,8 +26,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../generated/locale_keys.g.dart';
 
 class TodayActivitiesScreen extends StatelessWidget {
-  final _prefs = SharedPreferences.getInstance();
-
   @override
   Widget build(BuildContext context) {
     return Consumer<TodayActivitiesProvider>(
@@ -43,12 +43,16 @@ class TodayActivitiesScreen extends StatelessWidget {
         Expanded(
             child: type == Vacation || type == Sickness
                 ? _VacationSicknessContainer(type)
-                : FutureBuilder<SharedPreferences>(
-                    future: _prefs,
-                    builder: (context, snapshot) =>
-                        snapshot?.connectionState == ConnectionState.done
-                            ? _TaskList(snapshot.data)
-                            : EasyLoader()))
+                : FutureProvider<List>(
+                    create: (_) => Future.wait([
+                          SharedPreferences.getInstance(),
+                          EasyRest().getUserInfo()
+                        ]),
+                    child: Consumer<List>(
+                      builder: (_, value, __) => value != null
+                          ? _TaskList(value[0], value[1].hasTimerModule)
+                          : EasyLoader(),
+                    )))
       ]);
     });
   }
@@ -138,8 +142,12 @@ final _taskListKey = GlobalKey<_TaskListState>();
 class _TaskList extends StatefulWidget {
   static final _flaggedTaskPrefKey = 'flaggedTasks';
 
+  final bool hasTimerModule;
   final SharedPreferences prefs;
   final List<String> _flaggedTasks;
+
+  @override
+  createState() => _TaskListState();
 
   bool isFlagged(Task task) => _flaggedTasks.contains(task.id.toString());
 
@@ -152,17 +160,17 @@ class _TaskList extends StatefulWidget {
     prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
   }
 
-  _TaskList(this.prefs)
+  _TaskList(this.prefs, this.hasTimerModule)
       : _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
         super(key: _taskListKey);
-
-  @override
-  createState() => _TaskListState();
 }
 
 class _TaskListState
-    extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider> {
+    extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider>
+    with TimerCoordinator {
   _TaskListState() : super(LocaleKeys.empty_list_tasks.tr());
+
+  bool _timerActive = false;
 
   @override
   Widget getItem(TodayActivity item) {
@@ -178,13 +186,31 @@ class _TaskListState
               : widget.isFlagged(b)
                   ? -1
                   : 0;
+
+  @override
+  bool confirmStart(BuildContext context) {
+    if (_timerActive) {
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(
+            SnackBar(content: Text(LocaleKeys.message_timer_active.tr())));
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  onStart() => _timerActive = true;
+
+  @override
+  onStop() => _timerActive = false;
 }
 
 class _TaskItem extends StatefulWidget {
   final Task task;
   final _TaskList list;
 
-  const _TaskItem(this.list, this.task);
+  _TaskItem(this.list, this.task);
 
   @override
   State<StatefulWidget> createState() => _TaskItemState();
@@ -199,7 +225,7 @@ class _TaskItemState extends State<_TaskItem> {
       confirmDismiss: (direction) {
         // Toggle the flagged state
         widget.list.toggleFlagged(widget.task);
-        setState(() => {}); // set semi-transparent
+        setState(() {}); // set semi-transparent
         _taskListKey.currentState.setState(() {}); // update sorting
         return Future.value(false);
       },
@@ -222,7 +248,9 @@ class _TaskItemState extends State<_TaskItem> {
                     child: TaskListItem(widget.task),
                   ),
                 ),
-                _TimerWidget(widget.task)
+                EasyTimer(widget.task,
+                    onEdit: widget.list.hasTimerModule ? null : _onEdit,
+                    coordinator: _taskListKey.currentState)
               ],
             ),
           ),
@@ -250,34 +278,5 @@ class _TaskItemState extends State<_TaskItem> {
 
     // Restore the appbar icon
     context.read<EasyAppBarProvider>().action = EasyRoute.calendar();
-  }
-}
-
-class _TimerWidget extends StatelessWidget {
-  final Task task;
-
-  _TimerWidget(this.task);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: 100,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              EasyIcons.timer_off,
-              size: 48,
-              color: Colors.white,
-            ),
-            SizedBox(height: 8),
-            Text(Duration(minutes: task.duration).formatDisplay(),
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
-                    color: Colors.white,
-                    fontWeight: task.duration > 0
-                        ? FontWeight.bold
-                        : FontWeight.normal))
-          ],
-        ));
   }
 }

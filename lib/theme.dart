@@ -12,21 +12,21 @@ final appTheme = ThemeData(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.bold,
         fontSize: 32,
-        color: Color(0xFF666666),
+        color: const Color(0xFF666666),
       ),
       // Icone bottom bar (3rem)
       headline2: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.normal,
         fontSize: 42,
-        color: Color(0xFFFFFFFF),
+        color: Colors.white,
       ),
       // Es. i pulsanti "Ferie", "Malattia", etc. (2.5rem)
       headline3: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.normal,
         fontSize: 26,
-        color: Color(0xFFFFFFFF),
+        color: Colors.white,
       ),
       // Nomi dei task e pulsanti (2rem)
       subtitle1: TextStyle(
@@ -46,18 +46,18 @@ final appTheme = ThemeData(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.normal,
         fontSize: 20,
-        color: Color(0xFF888888),
+        color: const Color(0xFF888888),
       ),
       // Scritte in piccolo nelle liste
       bodyText2: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w300,
         fontSize: 16,
-        color: Color(0xFF888888),
+        color: const Color(0xFF888888),
       ),
     ),
     iconTheme: new IconThemeData(
-      color: Color(0xFF00ADE6),
+      color: const Color(0xFF00ADE6),
     ));
 
 class EasyIcons {

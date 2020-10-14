@@ -83,6 +83,8 @@
   "message_no_clients": "Sorry, no clients available.",
   "message_no_locations": "Sorry, no locations available.",
   "message_pick_task": "Pick a task for the worklog.",
+  "message_stop_timer": "Are you sure you want to stop the timer?",
+  "message_timer_active": "You already have an active timer, deactivate it before starting a new one.",
 
   "label_my_places": "My places",
   "label_help_videos": "Help videos",

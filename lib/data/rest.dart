@@ -9,8 +9,11 @@ const String baseUrl =
 const String restDateFormat = "yyyy-MM-dd";
 const String displayDateFormat = "dd/MM/yyyy";
 
+// Modules constants
+const int timerModuleId = 1;
 const int smartWorkingModuleId = 2;
 const int activitiesModuleId = 3;
+const int phasesModuleId = 7;
 const String approvedValue = "APPROVATO";
 
 // Profile links
@@ -18,6 +21,9 @@ const helpVideosUrl =
     'https://www.youtube.com/channel/UCXoLKcYQOyRKmgOziIpm9CQ';
 const resetPasswordUrl = '$baseUrl/webapp/#/auth/login';
 const privacyUrl = '$baseUrl/informativa-privacy';
+
+/// Minute interval for worklogs
+const worklogMinuteInterval = 5;
 
 /// Validates an email address.
 bool validateEmail(String email) => RegExp(
@@ -53,9 +59,13 @@ extension ParseTimeUtils on String {
 extension DurationUtils on Duration {
   String twoDigits(int n) => (n >= 10) ? "$n" : "0$n";
 
-  String formatDisplay() => inMilliseconds >= 0
-      ? twoDigits(inHours) + ":" + twoDigits(inMinutes.remainder(60) as int)
-      : null;
+  String formatDisplay({bool showSeconds = false, bool showZero = true}) =>
+      (inMilliseconds > 0 || (showZero && inMilliseconds >= 0))
+          ? twoDigits(inHours) +
+              ":" +
+              twoDigits(inMinutes.remainder(60)) +
+              (showSeconds ? ":" + twoDigits(inSeconds.remainder(60)) : "")
+          : null;
 
   int formatRest() => inMinutes;
 }

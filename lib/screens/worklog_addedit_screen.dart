@@ -35,6 +35,7 @@ class _WorklogFormState
     extends AddEditFormState<Worklog, TodayActivitiesProvider> {
   Worklog get item => _item;
   Worklog _item;
+  bool editableTask = true;
 
   @override
   void initState() {
@@ -42,7 +43,10 @@ class _WorklogFormState
 
     // Show hours picker at startup if modifying an existing worklog
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_item.task != null) _openDurationPicker(context);
+      if (_item.task != null) {
+        _openDurationPicker(context);
+        editableTask = false;
+      }
     });
   }
 
@@ -69,7 +73,7 @@ class _WorklogFormState
 
   @override
   List<Widget> getFormElements() => [
-        _TaskSelectField(_item),
+        _TaskSelectField(_item, editable: editableTask),
         EasyTextField(
             key: ValueKey(_item.data ?? UniqueKey()),
             labelText: LocaleKeys.label_date,
@@ -168,8 +172,9 @@ class _WorklogFormState
 
 class _TaskSelectField extends StatefulWidget {
   final Worklog item;
+  final bool editable;
 
-  _TaskSelectField(this.item);
+  _TaskSelectField(this.item, {this.editable = true});
 
   @override
   _TaskSelectFieldState createState() => _TaskSelectFieldState();
@@ -221,13 +226,16 @@ class _TaskSelectFieldState extends State<_TaskSelectField> {
               useDivider: true,
             ),
             tileBuilder: (context, state) {
-              return EasyTextField(
-                key: ValueKey(widget.item.task ?? UniqueKey()),
-                labelText: LocaleKeys.label_task,
-                icon: EasyIcons.profile,
-                maxLines: 1,
-                initialValue: widget.item.task?.nomeTask,
-                onTap: state.showModal,
+              return Opacity(
+                opacity: widget.editable ? 1.0 : 0.5,
+                child: EasyTextField(
+                  key: ValueKey(widget.item.task ?? UniqueKey()),
+                  labelText: LocaleKeys.label_task,
+                  icon: EasyIcons.profile,
+                  maxLines: 1,
+                  initialValue: widget.item.task?.nomeTask,
+                  onTap: widget.editable ? state.showModal : () {},
+                ),
               );
             });
   }

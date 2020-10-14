@@ -21,7 +21,7 @@ class TaskProvider extends BaseProvider<Task> {
     if (newWorklog != null) {
       final pos = task.worklogs.indexOf(newWorklog);
       if (pos >= 0) {
-        task.worklogs.setRange(pos, pos, [newWorklog]);
+        task.worklogs.setRange(pos, pos + 1, [newWorklog]);
       } else {
         task.worklogs.add(newWorklog);
       }

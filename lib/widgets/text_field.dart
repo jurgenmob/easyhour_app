@@ -61,7 +61,7 @@ class EasyTextField extends StatelessWidget {
       onSaved: onSaved,
       onTap: onTap,
       readOnly: onTap != null,
-      showCursor: onTap != null,
+      showCursor: onTap == null,
       validator: (value) {
         if (validator != null) {
           return validator.call(value);

@@ -83,6 +83,8 @@
   "message_no_clients": "Nessun cliente disponibile.",
   "message_no_locations": "Nessuna località disponibile.",
   "message_pick_task": "Scegli il task a cui associare le ore.",
+  "message_stop_timer": "Sei sicuro di voler interrompere il timer?",
+  "message_timer_active": "Un altro timer è attivo, disattivalo prima di attivarne un altro.",
 
   "label_my_places": "Le mie posizioni",
   "label_help_videos": "Video di aiuto",

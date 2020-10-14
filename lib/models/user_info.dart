@@ -1,3 +1,5 @@
+import 'package:easyhour_app/data/rest.dart';
+
 import 'company.dart';
 
 // https://javiercbk.github.io/json_to_dart/
@@ -6,7 +8,7 @@ class UserInfo {
   Company azienda;
   ConfigurazioneAzienda configurazioneAzienda;
   UserExtra userExtra;
-  String serverTime;
+  DateTime serverTime;
   List<String> authorities;
   List<String> modulos;
 
@@ -23,6 +25,15 @@ class UserInfo {
     this.dayOfTheWeek,
   });
 
+  bool get hasTimerModule =>
+      configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
+
+  bool get hasSmartWorkingModule =>
+      configurazioneAzienda.modulos.contains(Module(id: smartWorkingModuleId));
+
+  bool get hasActivitiesModule =>
+      configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
+
   UserInfo.fromJson(Map<String, dynamic> json) {
     userDTO =
         json['userDTO'] != null ? new UserDTO.fromJson(json['userDTO']) : null;
@@ -34,7 +45,7 @@ class UserInfo {
     userExtra = json['userExtra'] != null
         ? new UserExtra.fromJson(json['userExtra'])
         : null;
-    serverTime = json['serverTime'];
+    serverTime = DateTime.parse(json['serverTime']);
     authorities = json['authorities'].cast<String>();
     modulos = json['modulos'].cast<String>();
     dayOfTheWeek = json['dayOfTheWeek'];

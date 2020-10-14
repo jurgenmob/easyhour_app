@@ -1,4 +1,3 @@
-import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/company_action.dart';
@@ -16,8 +15,7 @@ import 'base_provider.dart';
 
 class CompanyActionProvider extends BaseProvider<CompanyAction> {
   Future<List<CompanyAction>> getActions() async {
-    List<Module> activeModules =
-        (await EasyRest().getUserInfo()).configurazioneAzienda.modulos;
+    UserInfo info = await EasyRest().getUserInfo();
 
     return Future<List<CompanyAction>>(() => [
           CompanyAction(
@@ -36,12 +34,12 @@ class CompanyActionProvider extends BaseProvider<CompanyAction> {
               text: LocaleKeys.label_trips,
               icon: EasyIcons.trips,
               page: EasyRoute.list(Trip).page),
-          if (activeModules.contains(Module(id: activitiesModuleId)))
+          if (info.hasActivitiesModule)
             CompanyAction(
                 text: LocaleKeys.label_activities,
                 icon: EasyIcons.activities,
                 page: EasyRoute.list(Activity).page),
-          if (activeModules.contains(Module(id: smartWorkingModuleId)))
+          if (info.hasSmartWorkingModule)
             CompanyAction(
                 text: LocaleKeys.label_smartworkings,
                 icon: EasyIcons.smartworking,

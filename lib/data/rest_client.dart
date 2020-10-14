@@ -13,6 +13,7 @@ import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/models/task.dart';
+import 'package:easyhour_app/models/timer.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/models/user.dart';
@@ -43,6 +44,8 @@ class EasyRest {
   Dio _dio = Dio()
     ..options.baseUrl = '$baseUrl/easyhour/api'
     ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
+  UserInfo _userInfoCache;
 
   EasyRest._internal() {
     // Initialize logged user tokens from prefs
@@ -291,13 +294,15 @@ class EasyRest {
   }
 
   Future<UserInfo> getUserInfo() async {
-    Response<String> response = await _dio.get('/user-info');
+    // Cache the result since it's used by all tabs
+    if (_userInfoCache == null ||
+        DateTime.now().difference(_userInfoCache.serverTime).inMinutes > 60) {
+      Response<String> response = await _dio.get('/user-info');
+      _userInfoCache =
+          UserInfoResponse.fromJson(jsonDecode(response.data)).info;
+    }
 
-    return UserInfoResponse.fromJson(jsonDecode(response.data)).info;
-  }
-
-  Future<List<Module>> getActiveModules() async {
-    return (await getUserInfo()).configurazioneAzienda.modulos;
+    return Future.value(_userInfoCache);
   }
 
   Future<List<CalendarEvent>> getCalendarEvents(
@@ -334,6 +339,20 @@ class EasyRest {
 
   Future<Response> deleteLocation(Location item) async {
     return _dio.delete('/locations/${item.id}');
+  }
+
+  Future<Timer> startTimer(Task task, Worklog worklog) async {
+    Response<String> response = await _dio.post<String>('/start-timer',
+        data: TimerStartRequest(task, worklog).toJson());
+
+    return Timer.fromJson(jsonDecode(response.data));
+  }
+
+  Future<Timer> stopTimer(Timer timer) async {
+    Response<String> response = await _dio.put<String>('/stop-timer',
+        data: TimerStopRequest(timer).toJson());
+
+    return Timer.fromJson(jsonDecode(response.data));
   }
 }
 
