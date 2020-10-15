@@ -140,7 +140,6 @@
 				E2C65139F8D0A680FC202F18 /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				A171881E25386C3A0023831B /* ShellScript */,
-				A17188432538A3900023831B /* ShellScript */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
@@ -148,6 +147,7 @@
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				176C9BD58C9CBA129F154190 /* [CP] Embed Pods Frameworks */,
 				5B6E85D013D3D8370DB68E5D /* [CP] Copy Pods Resources */,
+				A17188432538A3900023831B /* ShellScript */,
 			);
 			buildRules = (
 			);
