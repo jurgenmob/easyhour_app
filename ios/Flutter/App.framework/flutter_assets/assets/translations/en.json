@@ -1,0 +1,102 @@
+{
+  "app_version": "App version: {}",
+
+  "api_generic_error": "An error occurred while getting your data, please try again shortly.",
+
+  "message_login_failed": "Wrong credentials, please double check username and password and try again.",
+  "message_login_expired": "Your session has expired, you must login again.",
+  "message_delete_confirm": "Are you sure you want to delete {}?",
+
+  "message_happy_holidays": "Happy Holidays",
+  "message_send_postcard": "Send us a postcard",
+  "message_get_well_soon": "Get well soon",
+  "message_missing_you": "We're missing you",
+
+  "field_is_required": "This field is required.",
+  "field_email_invalid": "The e-mail address you provided is not valid.",
+
+  "label_domain": "Domain",
+  "help_domain": "The .easyhour.app domain belonging your company.",
+  "label_username": "E-mail",
+  "label_password": "Password",
+  "label_login": "Login",
+  "label_logout": "Logout",
+
+  "label_date": "Date",
+  "label_time_start": "Start time",
+  "label_time_end": "End time",
+  "label_date_range": "Date range",
+  "label_description": "Description",
+  "label_time_spent": "Time to log",
+  "label_medical_certificate": "Medical certificate reference",
+  "label_type": "Type",
+  "label_client": "Client",
+  "label_task": "Task",
+  "label_save_location_as": "Save location as...",
+  "label_enter_location_name": "Location name",
+  "label_attachments": "Attachments",
+  "label_attachments_selected": {
+    "zero":"No attachment selected",
+    "one":"{} attachment selected",
+    "other":"{} attachments selected"
+  },
+
+  "label_vacations": {
+    "one":"Vacation",
+    "other":"Vacation"
+  },
+  "label_permits": {
+    "one":"Permit",
+    "other":"Permits"
+  },
+  "label_sicknesses": {
+    "one":"Sickness",
+    "other":"Sickness"
+  },
+  "label_trips": {
+    "one":"Trip",
+    "other":"Trips"
+  },
+  "label_activities": {
+    "one":"Activity",
+    "other":"Activities"
+  },
+  "label_smartworkings": {
+    "one":"Smart Working",
+    "other":"Smart Working"
+  },
+  "label_worklogs": {
+    "one":"Worklog",
+    "other":"Worklogs"
+  },
+  "label_locations": {
+    "one":"Location",
+    "other":"Locations"
+  },
+
+  "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",
+  "empty_list_generic": "No {} planned.\nStart by clicking on the icon in the top-right corner.",
+  "empty_list_calendar": "No activities for selected date.",
+  "message_delete_generic": "The selected content has been deleted successfully.",
+  "message_add_generic": "The new content has been added successfully.",
+  "message_edit_generic": "The content has been modified successfully.",
+  "message_no_clients": "Sorry, no clients available.",
+  "message_no_locations": "Sorry, no locations available.",
+  "message_pick_task": "Pick a task for the worklog.",
+  "message_stop_timer": "Are you sure you want to stop the timer?",
+  "message_timer_active": "You already have an active timer, deactivate it before starting a new one.",
+
+  "label_my_places": "My places",
+  "label_help_videos": "Help videos",
+  "label_reset_password": "Reset password",
+  "label_privacy_policy": "Privacy policy",
+
+  "label_ok": "OK",
+  "label_cancel": "Cancel",
+  "label_search": "Search",
+  "label_add": "Add",
+  "label_choose": "Choose one",
+  "label_save": "Save",
+
+  "message_confirm_app_exit": "Tap back again to quit app"
+}
