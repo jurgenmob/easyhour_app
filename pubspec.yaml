@@ -26,6 +26,10 @@ dependencies:
   auto_size_text: ^2.1.0
   keyboard_visibility: any
 
+  firebase_core: "^0.5.0+1"
+  firebase_crashlytics: "^0.2.1+1"
+  firebase_messaging: ^7.0.3
+
   easy_localization: ^2.3.3
   easy_localization_loader:
     git: https://github.com/easyhour/easy_localization_loader.git

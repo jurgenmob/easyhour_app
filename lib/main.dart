@@ -40,7 +40,9 @@ import 'package:easyhour_app/screens/vacation_addedit_screen.dart';
 import 'package:easyhour_app/screens/vacation_list_screen.dart';
 import 'package:easyhour_app/screens/worklog_addedit_screen.dart';
 import 'package:easyhour_app/theme.dart';
-import 'package:easyhour_app/widgets/loader.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -49,8 +51,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart';
 
 void main() async {
-  // Force portrait orientation
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Init Crashlytics
+  await Firebase.initializeApp();
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(!kDebugMode);
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+  // Force portrait orientation
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // Set colors for system UI
@@ -105,7 +113,8 @@ class _EasyAppState extends State<EasyApp> {
 
                     return _EasyMaterialApp(context);
                   }
-                  return EasyLoader(showLogo: true);
+                  // return EasyLoader(showLogo: true);
+                  return Container();
                 })));
   }
 }

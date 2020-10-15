@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "539986682516",
+    "firebase_url": "https://easyhour-app.firebaseio.com",
+    "project_id": "easyhour-app",
+    "storage_bucket": "easyhour-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539986682516:android:accdd08852a4ac3b6bca81",
+        "android_client_info": {
+          "package_name": "it.easyhour.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539986682516-9ffqatja8fj5432r4irn2c1im9kch2e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1mY9Wv6KxYaAoj8fjc9w4bRwX40H7ACQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539986682516-9ffqatja8fj5432r4irn2c1im9kch2e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

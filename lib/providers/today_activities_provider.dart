@@ -2,6 +2,7 @@ import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/worklog.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../globals.dart';
 import 'base_provider.dart';
@@ -15,6 +16,10 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
     // main.dart leads to a poor ux because multiple loaders are shown
     // and we also need to handle non-logged users separately.
     userInfo = await EasyRest().getUserInfo();
+
+    // Also set the Crashlytics ID here
+    FirebaseCrashlytics.instance
+        .setUserIdentifier(userInfo.userDTO.id?.toString());
 
     return restGet(EasyRest().getTodayActivities());
   }

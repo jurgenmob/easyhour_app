@@ -5,6 +5,8 @@ import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+final scaffoldKey = GlobalKey<ScaffoldState>();
+
 abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
   Widget getBody();
 
@@ -18,6 +20,7 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
+        key: scaffoldKey,
         appBar: EasyAppBar(),
         body: getBody(),
       ),
