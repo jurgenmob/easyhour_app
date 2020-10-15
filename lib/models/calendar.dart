@@ -11,7 +11,7 @@ import 'vacation.dart';
 import 'worklog.dart';
 
 class Calendar {
-  List<Worklog> worklogs;
+  List<WorkLog> worklogs;
   List<Sickness> malattias;
   List<Vacation> feries;
   List<Permit> permessos;
@@ -22,9 +22,9 @@ class Calendar {
 
   Calendar.fromJson(Map<String, dynamic> json) {
     if (json['worklogs'] != null) {
-      worklogs = new List<Worklog>();
+      worklogs = new List<WorkLog>();
       json['worklogs'].forEach((v) {
-        worklogs.add(new Worklog.fromJson(v, task: Task.fromJson(v['task'])));
+        worklogs.add(new WorkLog.fromJson(v, task: Task.fromJson(v['task'])));
       });
     }
     if (json['malattias'] != null) {

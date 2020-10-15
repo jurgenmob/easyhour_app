@@ -9,10 +9,12 @@ class UserInfo {
   CompanyConfig configurazioneAzienda;
   UserExtra userExtra;
   DateTime serverTime;
+  int dayOfTheWeek;
   List<String> authorities;
   List<String> modulos;
-
-  int dayOfTheWeek;
+  List<WorkShift> turniAzienda;
+  List<WorkShift> turniUser;
+  WorkShift turnoOggi;
 
   bool get hasTimerModule =>
       configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
@@ -38,6 +40,21 @@ class UserInfo {
     authorities = json['authorities'].cast<String>();
     modulos = json['modulos'].cast<String>();
     dayOfTheWeek = json['dayOfTheWeek'];
+    if (json['turniAzienda'] != null) {
+      turniAzienda = new List<WorkShift>();
+      json['turniAzienda'].forEach((v) {
+        turniAzienda.add(new WorkShift.fromJson(v));
+      });
+    }
+    if (json['turniUser'] != null) {
+      turniUser = new List<Null>();
+      json['turniUser'].forEach((v) {
+        turniUser.add(new WorkShift.fromJson(v));
+      });
+    }
+    turnoOggi = json['turnoOggi'] != null
+        ? new WorkShift.fromJson(json['turnoOggi'])
+        : null;
   }
 }
 
@@ -165,6 +182,63 @@ class UserExtra {
     dataNascita = json['dataNascita'];
     dataAssunzione = json['dataAssunzione'];
     tariffa = json['tariffa'];
+  }
+}
+
+class WorkShift {
+  int id;
+  int giorno;
+  String t1Inizio;
+  String t1Fine;
+  String t2Inizio;
+  String t2Fine;
+  String t3Inizio;
+  String t3Fine;
+  String t4Inizio;
+  String t4Fine;
+  bool lavorativo;
+
+  WorkShift(
+      {this.id,
+      this.giorno,
+      this.t1Inizio,
+      this.t1Fine,
+      this.t2Inizio,
+      this.t2Fine,
+      this.t3Inizio,
+      this.t3Fine,
+      this.t4Inizio,
+      this.t4Fine,
+      this.lavorativo});
+
+  WorkShift.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    giorno = json['giorno'];
+    t1Inizio = json['t1Inizio'];
+    t1Fine = json['t1Fine'];
+    t2Inizio = json['t2Inizio'];
+    t2Fine = json['t2Fine'];
+    t3Inizio = json['t3Inizio'];
+    t3Fine = json['t3Fine'];
+    t4Inizio = json['t4Inizio'];
+    t4Fine = json['t4Fine'];
+    lavorativo = json['lavorativo'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['giorno'] = this.giorno;
+    data['t1Inizio'] = this.t1Inizio;
+    data['t1Fine'] = this.t1Fine;
+    data['t2Inizio'] = this.t2Inizio;
+    data['t2Fine'] = this.t2Fine;
+    data['t3Inizio'] = this.t3Inizio;
+    data['t3Fine'] = this.t3Fine;
+    data['t4Inizio'] = this.t4Inizio;
+    data['t4Fine'] = this.t4Fine;
+    data['lavorativo'] = this.lavorativo;
+    return data;
   }
 }
 

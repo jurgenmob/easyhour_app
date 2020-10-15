@@ -15,9 +15,9 @@ class TaskProvider extends BaseProvider<Task> {
 
   Task getTask(int id) => items.where((e) => e is Task && e.id == id).first;
 
-  Future<Worklog> addEditWorklog(
-      BuildContext context, Task task, Worklog worklog) async {
-    Worklog newWorklog = await EasyRest().addEditWorklog(worklog);
+  Future<WorkLog> addEditWorklog(
+      BuildContext context, Task task, WorkLog worklog) async {
+    WorkLog newWorklog = await EasyRest().addEditWorklog(worklog);
     if (newWorklog != null) {
       final pos = task.worklogs.indexOf(newWorklog);
       if (pos >= 0) {
@@ -37,7 +37,7 @@ class TaskProvider extends BaseProvider<Task> {
   }
 
   Future<bool> deleteWorklog(
-      BuildContext context, Task task, Worklog worklog) async {
+      BuildContext context, Task task, WorkLog worklog) async {
     Response response = await EasyRest().deleteWorklog(worklog);
     final bool resultOk = response.statusCode == 200;
     if (resultOk) {

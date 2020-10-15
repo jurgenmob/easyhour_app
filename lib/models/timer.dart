@@ -8,7 +8,7 @@ class Timer {
   DateTime startTime;
   DateTime endTime;
   bool registrato;
-  Worklog worklog;
+  WorkLog worklog;
   Company azienda;
 
   Timer(
@@ -34,7 +34,7 @@ class Timer {
     }
     registrato = json['registrato'];
     if (json['worklog'] != null) {
-      worklog = Worklog.fromJson(json['worklog']);
+      worklog = WorkLog.fromJson(json['worklog']);
     }
     if (json['azienda'] != null) {
       azienda = Company.fromJson(json['azienda']);
@@ -44,7 +44,7 @@ class Timer {
 
 class TimerStartRequest {
   Task task;
-  Worklog worklog;
+  WorkLog worklog;
 
   TimerStartRequest(this.task, this.worklog);
 

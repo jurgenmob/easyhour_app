@@ -20,8 +20,8 @@ class CalendarScreen extends BaseScreen {
   Widget getBody() => CalendarWidget(key: _calendarWidgetKey);
 
   @override
-  EasyRoute getAppBarRoute() => EasyRoute.addEdit(Worklog,
-      arguments: () => Worklog(data: _calendarWidgetKey.currentState._today));
+  EasyRoute getAppBarRoute() => EasyRoute.addEdit(WorkLog,
+      arguments: () => WorkLog(data: _calendarWidgetKey.currentState._today));
 }
 
 class CalendarWidget extends StatefulWidget {
@@ -159,7 +159,7 @@ class _EventListState
   @override
   void onDelete(BaseModel item) {
     // Delete the item from its own provider
-    if (item is Worklog) {
+    if (item is WorkLog) {
       // Due to server constraints worklogs need a special treatment
       context.read<TaskProvider>().deleteWorklog(context, item.task, item);
     } else {

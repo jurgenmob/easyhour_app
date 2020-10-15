@@ -140,7 +140,7 @@ class _TimerWidgetState extends State<EasyTimer> {
             (widget.task.timer.duration.inMinutes / i).round() * i
         ..task = widget.task;
       final result = await Navigator.pushNamed(
-          context, (EasyRoute.addEdit(Worklog)?.page),
+          context, (EasyRoute.addEdit(WorkLog)?.page),
           arguments: widget.task.timer.worklog);
 
       // Show the result message

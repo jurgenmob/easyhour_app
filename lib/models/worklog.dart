@@ -7,7 +7,7 @@ import 'calendar.dart';
 import 'task.dart';
 import 'user.dart';
 
-class Worklog with BaseModel, CalendarEvent {
+class WorkLog with BaseModel, CalendarEvent {
   int id;
   String descrizione;
   DateTime data;
@@ -16,7 +16,7 @@ class Worklog with BaseModel, CalendarEvent {
   Task task;
   String fase;
 
-  Worklog(
+  WorkLog(
       {this.id,
       this.descrizione,
       this.data,
@@ -60,7 +60,7 @@ class Worklog with BaseModel, CalendarEvent {
     return 'Worklog{data: $data, durata: $durata, task: $task}';
   }
 
-  Worklog.fromJson(Map<String, dynamic> json, {Task task}) {
+  WorkLog.fromJson(Map<String, dynamic> json, {Task task}) {
     id = json['id'];
     descrizione = json['descrizione'];
     data = DateTime.parse(json['data']);

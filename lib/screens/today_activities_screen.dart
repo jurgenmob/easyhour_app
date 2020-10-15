@@ -250,9 +250,9 @@ class _TaskItemState extends State<_TaskItem> {
     // reference to the task is always needed
     final worklog = widget.task.worklogs.length > 0
         ? widget.task.worklogs.first
-        : Worklog(data: DateTime.now(), task: widget.task);
+        : WorkLog(data: DateTime.now(), task: widget.task);
     final result = await Navigator.pushNamed(
-        context, (EasyRoute.addEdit(Worklog)?.page),
+        context, (EasyRoute.addEdit(WorkLog)?.page),
         arguments: worklog);
 
     // Show the result message

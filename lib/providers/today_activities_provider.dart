@@ -21,7 +21,7 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
 
   Task getTask(Task task) => allItems.where((e) => e == task).first as Task;
 
-  void addEditWorklog(Worklog worklog) {
+  void addEditWorklog(WorkLog worklog) {
     final activityTask = getTask(worklog.task);
     final pos = activityTask.worklogs.indexOf(worklog);
     if (pos >= 0) {
@@ -33,7 +33,7 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
     notifyListeners();
   }
 
-  void deleteWorklog(Worklog worklog) {
+  void deleteWorklog(WorkLog worklog) {
     getTask(worklog.task).worklogs.remove(worklog);
 
     notifyListeners();

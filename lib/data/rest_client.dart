@@ -148,17 +148,17 @@ class EasyRest {
     return ActivityResponse.fromJson(jsonDecode(response.data)).items;
   }
 
-  Future<Worklog> addEditWorklog(Worklog item) async {
+  Future<WorkLog> addEditWorklog(WorkLog item) async {
     Response<String> response = await _dio.request<String>(
       '/worklogs',
       data: item.toJson(),
       options: Options(method: item.isNew ? 'POST' : 'PUT'),
     );
 
-    return Worklog.fromJson(jsonDecode(response.data), task: item.task);
+    return WorkLog.fromJson(jsonDecode(response.data), task: item.task);
   }
 
-  Future<Response> deleteWorklog(Worklog item) async {
+  Future<Response> deleteWorklog(WorkLog item) async {
     return _dio.delete('/worklogs/${item.id}');
   }
 
@@ -335,7 +335,7 @@ class EasyRest {
     return _dio.delete('/locations/${item.id}');
   }
 
-  Future<Timer> startTimer(Task task, Worklog worklog) async {
+  Future<Timer> startTimer(Task task, WorkLog worklog) async {
     Response<String> response = await _dio.post<String>('/start-timer',
         data: TimerStartRequest(task, worklog).toJson());
 

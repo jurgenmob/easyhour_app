@@ -19,7 +19,7 @@ import 'package:smart_select/smart_select.dart';
 
 final _worklogFormKey = GlobalKey<_WorklogFormState>();
 
-class WorklogAddEditScreen extends BaseAddEditScreen<Worklog> {
+class WorklogAddEditScreen extends BaseAddEditScreen<WorkLog> {
   @override
   Widget getBody() => _WorklogForm();
 }
@@ -32,9 +32,9 @@ class _WorklogForm extends StatefulWidget {
 }
 
 class _WorklogFormState
-    extends AddEditFormState<Worklog, TodayActivitiesProvider> {
-  Worklog get item => _item;
-  Worklog _item;
+    extends AddEditFormState<WorkLog, TodayActivitiesProvider> {
+  WorkLog get item => _item;
+  WorkLog _item;
   bool editableTask = true;
   TextEditingController _descrController = TextEditingController();
   List<Widget> _suggestedDescriptions;
@@ -61,7 +61,7 @@ class _WorklogFormState
   _WorklogFormState() : super(LocaleKeys.label_worklogs);
 
   @override
-  void setItem(Worklog itemToEdit) {
+  void setItem(WorkLog itemToEdit) {
     _item = itemToEdit;
     _descrController.text = _item.descrizione;
   }
@@ -161,7 +161,7 @@ class _WorklogFormState
             onFormSubmitted(null, LocaleKeys.message_delete_generic);
           } else {
             // Add/edit worklog
-            final Worklog result =
+            final WorkLog result =
                 await provider.addEditWorklog(context, task, item);
             onFormSubmitted(
                 result,
@@ -184,7 +184,7 @@ class _WorklogFormState
 }
 
 class _TaskSelectField extends StatefulWidget {
-  final Worklog item;
+  final WorkLog item;
   final bool editable;
 
   _TaskSelectField(this.item, {this.editable = true});

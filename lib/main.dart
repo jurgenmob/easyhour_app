@@ -125,7 +125,7 @@ class _EasyMaterialApp extends MaterialApp {
             EasyRoute.login().page: (context) => LoginScreen(),
             EasyRoute.home().page: (context) => HomeScreen(),
             EasyRoute.calendar().page: (context) => CalendarScreen(),
-            EasyRoute.addEdit(Worklog).page: (context) =>
+            EasyRoute.addEdit(WorkLog).page: (context) =>
                 WorklogAddEditScreen(),
             EasyRoute.list(Vacation).page: (context) => VacationListScreen(),
             EasyRoute.addEdit(Vacation).page: (context) =>

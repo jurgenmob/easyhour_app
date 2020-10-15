@@ -13,7 +13,7 @@ class Task with BaseModel, TodayActivity {
   String nomeProgetto;
   String nomeCliente;
   int idTask;
-  List<Worklog> worklogs;
+  List<WorkLog> worklogs;
   String serverTime;
   Timer timer;
   int durata = 0;
@@ -69,10 +69,10 @@ class Task with BaseModel, TodayActivity {
         ? json['progetto']['cliente']['nome']
         : json['nome_cliente'];
     idTask = json['id'] ?? json['id_task'];
-    worklogs = new List<Worklog>();
+    worklogs = new List<WorkLog>();
     if (json['worklogs'] != null) {
       json['worklogs'].forEach((v) {
-        worklogs.add(new Worklog.fromJson(v, task: this));
+        worklogs.add(new WorkLog.fromJson(v, task: this));
       });
     }
     serverTime = json['serverTime'];

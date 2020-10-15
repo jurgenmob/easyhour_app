@@ -39,7 +39,6 @@ class EasyTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final focus = FocusScope.of(context);
     final theme = Theme.of(context);
 
     return TextFormField(
@@ -60,11 +59,11 @@ class EasyTextField extends StatelessWidget {
       textInputAction: maxLines > 1
           ? TextInputAction.newline
           : (isLast ? TextInputAction.done : TextInputAction.next),
-      // onFieldSubmitted: (_) => isLast ? focus.unfocus() : focus.nextFocus(),
       onSaved: onSaved,
       onTap: onTap,
       readOnly: onTap != null,
       showCursor: onTap == null,
+      enableInteractiveSelection: onTap == null,
       validator: (value) {
         if (validator != null) {
           return validator.call(value);
