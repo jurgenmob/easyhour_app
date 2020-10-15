@@ -61,8 +61,9 @@ class _LoginFormState extends State<_LoginForm> {
             keyboardType: TextInputType.emailAddress,
             icon: EasyIcons.profile,
             initialValue: EasyRest().username,
-            validator: (value) =>
-                validateEmail(value) ? null : LocaleKeys.field_email_invalid,
+            validator: (value) => validateEmail(value)
+                ? null
+                : LocaleKeys.field_email_invalid.tr(),
             onSaved: (value) => _username = value,
           ),
           EasyTextField(
