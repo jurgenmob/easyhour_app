@@ -1,13 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/location.dart';
-import 'package:easyhour_app/models/user_info.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';
-import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,15 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return SafeArea(
-        child: Scaffold(
-            body: FutureBuilder<UserInfo>(
-      future: EasyRest().getUserInfo(),
-      builder: (context, snapshot) =>
-          snapshot?.connectionState == ConnectionState.done
-              ? _ProfileScreen(snapshot.data)
-              : EasyLoader(),
-    )));
+    return SafeArea(child: Scaffold(body: _ProfileScreen()));
   }
 
   @override
@@ -41,10 +31,6 @@ class _ProfileScreenState extends State<ProfileScreen>
 }
 
 class _ProfileScreen extends StatelessWidget {
-  final UserInfo user;
-
-  _ProfileScreen(this.user);
-
   @override
   Widget build(BuildContext context) {
     final flatButtonStyle = Theme.of(context)
@@ -74,10 +60,10 @@ class _ProfileScreen extends StatelessWidget {
                       BoxShadow(blurRadius: 7.0, color: Colors.black)
                     ]),
                 child: Image.asset('images/logo.png')),
-            Text("${user.userDTO.firstName} ${user.userDTO.lastName}",
+            Text("${userInfo.userDTO.firstName} ${userInfo.userDTO.lastName}",
                 style: Theme.of(context).textTheme.headline1),
             SizedBox(height: 8),
-            AutoSizeText(user.userDTO.email,
+            AutoSizeText(userInfo.userDTO.email,
                 maxLines: 1, style: Theme.of(context).textTheme.bodyText1),
             Spacer(flex: 1),
             FlatButton(

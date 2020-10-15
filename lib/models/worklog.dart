@@ -1,4 +1,4 @@
-import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

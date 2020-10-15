@@ -40,9 +40,13 @@ import 'package:easyhour_app/screens/vacation_addedit_screen.dart';
 import 'package:easyhour_app/screens/vacation_list_screen.dart';
 import 'package:easyhour_app/screens/worklog_addedit_screen.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'globals.dart';
 
 void main() async {
   // Force portrait orientation
@@ -93,26 +97,30 @@ class _EasyAppState extends State<EasyApp> {
               ChangeNotifierProvider(create: (context) => CalendarProvider()),
               ChangeNotifierProvider(create: (context) => LocationProvider()),
             ],
-            child: FutureBuilder<bool>(
-              future: EasyRest().isUserLogged(),
-              builder: (context, snapshot) =>
-                  snapshot?.connectionState == ConnectionState.done
-                      ? _EasyMaterialApp(context, isUserLogged: snapshot.data)
-                      : Container(),
-            )));
+            child: FutureBuilder<SharedPreferences>(
+                future: SharedPreferences.getInstance(),
+                builder: (context, snapshot) {
+                  if (snapshot?.connectionState == ConnectionState.done) {
+                    prefs = snapshot.data;
+
+                    return _EasyMaterialApp(context);
+                  }
+                  return EasyLoader(showLogo: true);
+                })));
   }
 }
 
 class _EasyMaterialApp extends MaterialApp {
-  _EasyMaterialApp(BuildContext context, {@required bool isUserLogged})
+  _EasyMaterialApp(BuildContext context)
       : super(
           title: 'EasyHour',
           theme: appTheme,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          initialRoute:
-              isUserLogged ? EasyRoute.home().page : EasyRoute.login().page,
+          initialRoute: EasyRest().isUserLogged()
+              ? EasyRoute.home().page
+              : EasyRoute.login().page,
           routes: {
             EasyRoute.login().page: (context) => LoginScreen(),
             EasyRoute.home().page: (context) => HomeScreen(),

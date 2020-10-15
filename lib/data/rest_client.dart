@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/models/client.dart';
@@ -44,8 +44,6 @@ class EasyRest {
   Dio _dio = Dio()
     ..options.baseUrl = '$baseUrl/easyhour/api'
     ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
-
-  UserInfo _userInfoCache;
 
   EasyRest._internal() {
     // Initialize logged user tokens from prefs
@@ -93,7 +91,6 @@ class EasyRest {
     _accessToken = response?.accessToken;
     _refreshToken = response?.refreshToken;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('domain', _domain);
     await prefs.setString('username', _username);
     await prefs.setString('accessToken', _accessToken);
@@ -126,11 +123,7 @@ class EasyRest {
     return saveTokens(null);
   }
 
-  Future<bool> isUserLogged() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    return prefs.getString('accessToken')?.isNotEmpty ?? false;
-  }
+  bool isUserLogged() => prefs.getString('accessToken')?.isNotEmpty ?? false;
 
   Future<List<TodayActivity>> getTodayActivities() async {
     Response<String> response = await _dio.get('/today-activities');
@@ -294,15 +287,9 @@ class EasyRest {
   }
 
   Future<UserInfo> getUserInfo() async {
-    // Cache the result since it's used by all tabs
-    if (_userInfoCache == null ||
-        DateTime.now().difference(_userInfoCache.serverTime).inMinutes > 60) {
-      Response<String> response = await _dio.get('/user-info');
-      _userInfoCache =
-          UserInfoResponse.fromJson(jsonDecode(response.data)).info;
-    }
+    Response<String> response = await _dio.get('/user-info');
 
-    return Future.value(_userInfoCache);
+    return UserInfoResponse.fromJson(jsonDecode(response.data)).info;
   }
 
   Future<List<CalendarEvent>> getCalendarEvents(

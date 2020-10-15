@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/locale_keys.g.dart';
@@ -57,7 +57,7 @@ class EasyTextField extends StatelessWidget {
       textInputAction: maxLines > 1
           ? TextInputAction.newline
           : (isLast ? TextInputAction.done : TextInputAction.next),
-      onFieldSubmitted: (_) => isLast ? focus.unfocus() : focus.nextFocus(),
+      // onFieldSubmitted: (_) => isLast ? focus.unfocus() : focus.nextFocus(),
       onSaved: onSaved,
       onTap: onTap,
       readOnly: onTap != null,

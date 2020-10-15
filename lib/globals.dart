@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/models/user_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Swtich between DEV and PROD environments
 const String baseUrl =
@@ -29,6 +31,12 @@ const worklogMinuteInterval = 5;
 bool validateEmail(String email) => RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
     .hasMatch(email);
+
+/// Access to shared preferences
+SharedPreferences prefs;
+
+/// User and company info and config
+UserInfo userInfo;
 
 extension DateTimeUtils on DateTime {
   String formatDisplay() => DateFormat(displayDateFormat).format(this);

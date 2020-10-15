@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
-import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';
 import 'package:easyhour_app/widgets/loader.dart';
@@ -61,9 +61,8 @@ class _LoginFormState extends State<_LoginForm> {
             keyboardType: TextInputType.emailAddress,
             icon: EasyIcons.profile,
             initialValue: EasyRest().username,
-            validator: (value) => validateEmail(value)
-                ? null
-                : LocaleKeys.field_email_invalid,
+            validator: (value) =>
+                validateEmail(value) ? null : LocaleKeys.field_email_invalid,
             onSaved: (value) => _username = value,
           ),
           EasyTextField(

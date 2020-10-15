@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest.dart';
-import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
@@ -13,7 +12,6 @@ import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
-import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
 import 'package:easyhour_app/widgets/task_list_item.dart';
 import 'package:easyhour_app/widgets/timer.dart';
@@ -21,7 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../generated/locale_keys.g.dart';
 
@@ -43,16 +40,7 @@ class TodayActivitiesScreen extends StatelessWidget {
         Expanded(
             child: type == Vacation || type == Sickness
                 ? _VacationSicknessContainer(type)
-                : FutureProvider<List>(
-                    create: (_) => Future.wait([
-                          SharedPreferences.getInstance(),
-                          EasyRest().getUserInfo()
-                        ]),
-                    child: Consumer<List>(
-                      builder: (_, value, __) => value != null
-                          ? _TaskList(value[0], value[1].hasTimerModule)
-                          : EasyLoader(),
-                    )))
+                : _TaskList())
       ]);
     });
   }
@@ -142,8 +130,6 @@ final _taskListKey = GlobalKey<_TaskListState>();
 class _TaskList extends StatefulWidget {
   static final _flaggedTaskPrefKey = 'flaggedTasks';
 
-  final bool hasTimerModule;
-  final SharedPreferences prefs;
   final List<String> _flaggedTasks;
 
   @override
@@ -160,7 +146,7 @@ class _TaskList extends StatefulWidget {
     prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
   }
 
-  _TaskList(this.prefs, this.hasTimerModule)
+  _TaskList()
       : _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
         super(key: _taskListKey);
 }
@@ -249,7 +235,7 @@ class _TaskItemState extends State<_TaskItem> {
                   ),
                 ),
                 EasyTimer(widget.task,
-                    onEdit: widget.list.hasTimerModule ? null : _onEdit,
+                    onEdit: userInfo.hasTimerModule ? null : _onEdit,
                     coordinator: _taskListKey.currentState)
               ],
             ),

@@ -1,5 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/data/rest.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
 import 'package:flutter/material.dart';
