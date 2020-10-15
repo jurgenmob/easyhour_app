@@ -8,11 +8,12 @@ class EasyTextField extends StatelessWidget {
   final Key key;
   final String labelText;
   final String helperText;
+  final IconData icon;
   final dynamic initialValue;
   final bool isLast;
   final bool isRequired;
   final bool obscureText;
-  final IconData icon;
+  final TextEditingController controller;
   final int maxLines;
   final TextInputType keyboardType;
   final FormFieldValidator<String> validator;
@@ -23,13 +24,14 @@ class EasyTextField extends StatelessWidget {
     this.key,
     @required this.labelText,
     this.helperText,
-    this.initialValue,
     this.icon,
-    this.maxLines = 1,
-    this.keyboardType = TextInputType.text,
+    this.initialValue,
     this.isLast = false,
     this.isRequired = true,
     this.obscureText = false,
+    this.controller,
+    this.maxLines = 1,
+    this.keyboardType = TextInputType.text,
     this.validator,
     this.onSaved,
     this.onTap,
@@ -49,10 +51,11 @@ class EasyTextField extends StatelessWidget {
         // contentPadding: EdgeInsets.symmetric(vertical: 25),
         labelStyle: theme.textTheme.bodyText1.copyWith(color: Colors.black),
       ),
-      initialValue: formatValue(initialValue),
-      maxLines: maxLines,
       style: theme.textTheme.bodyText1.copyWith(color: theme.primaryColor),
+      initialValue: controller == null ? formatValue(initialValue) : null,
       obscureText: obscureText,
+      controller: controller,
+      maxLines: maxLines,
       keyboardType: maxLines == 1 ? keyboardType : TextInputType.multiline,
       textInputAction: maxLines > 1
           ? TextInputAction.newline

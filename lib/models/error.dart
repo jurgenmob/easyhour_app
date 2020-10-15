@@ -8,16 +8,6 @@ class ErrorResponse {
   String detail;
   String params;
 
-  ErrorResponse(
-      {this.entityName,
-      this.errorKey,
-      this.type,
-      this.title,
-      this.status,
-      this.message,
-      this.detail,
-      this.params});
-
   ErrorResponse.fromJson(Map<String, dynamic> json) {
     entityName = json['entityName'];
     errorKey = json['errorKey'];

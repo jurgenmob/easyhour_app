@@ -68,8 +68,6 @@ class Sickness with BaseModel, TodayActivity, CalendarEvent {
 class SicknessResponse {
   List<Sickness> items;
 
-  SicknessResponse({this.items});
-
   SicknessResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Sickness>();

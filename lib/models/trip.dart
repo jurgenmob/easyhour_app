@@ -83,8 +83,6 @@ class Trip with BaseModel, CalendarEvent {
 class TripResponse {
   List<Trip> items;
 
-  TripResponse({this.items});
-
   TripResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Trip>();

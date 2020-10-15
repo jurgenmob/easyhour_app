@@ -92,8 +92,6 @@ class Task with BaseModel, TodayActivity {
 class TaskResponse {
   List<Task> items;
 
-  TaskResponse({this.items});
-
   TaskResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Task>();

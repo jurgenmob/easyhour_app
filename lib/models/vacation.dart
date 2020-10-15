@@ -87,8 +87,6 @@ class Vacation with BaseModel, TodayActivity, CalendarEvent {
 class VacationResponse {
   List<Vacation> items;
 
-  VacationResponse({this.items});
-
   VacationResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Vacation>();

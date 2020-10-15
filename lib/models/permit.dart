@@ -78,8 +78,6 @@ class Permit with BaseModel, CalendarEvent {
 class PermitResponse {
   List<Permit> items;
 
-  PermitResponse({this.items});
-
   PermitResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Permit>();

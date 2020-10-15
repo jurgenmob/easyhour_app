@@ -6,24 +6,13 @@ import 'company.dart';
 class UserInfo {
   UserDTO userDTO;
   Company azienda;
-  ConfigurazioneAzienda configurazioneAzienda;
+  CompanyConfig configurazioneAzienda;
   UserExtra userExtra;
   DateTime serverTime;
   List<String> authorities;
   List<String> modulos;
 
   int dayOfTheWeek;
-
-  UserInfo({
-    this.userDTO,
-    this.azienda,
-    this.configurazioneAzienda,
-    this.userExtra,
-    this.serverTime,
-    this.authorities,
-    this.modulos,
-    this.dayOfTheWeek,
-  });
 
   bool get hasTimerModule =>
       configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
@@ -40,7 +29,7 @@ class UserInfo {
     azienda =
         json['azienda'] != null ? new Company.fromJson(json['azienda']) : null;
     configurazioneAzienda = json['configurazioneAzienda'] != null
-        ? new ConfigurazioneAzienda.fromJson(json['configurazioneAzienda'])
+        ? new CompanyConfig.fromJson(json['configurazioneAzienda'])
         : null;
     userExtra = json['userExtra'] != null
         ? new UserExtra.fromJson(json['userExtra'])
@@ -62,17 +51,6 @@ class UserDTO {
   bool activated;
   String langKey;
   List<String> authorities;
-
-  UserDTO(
-      {this.id,
-      this.login,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.imageUrl,
-      this.activated,
-      this.langKey,
-      this.authorities});
 
   UserDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -101,7 +79,7 @@ class UserDTO {
   }
 }
 
-class ConfigurazioneAzienda {
+class CompanyConfig {
   int id;
   String tipoAuth;
   int stepMinuti;
@@ -110,15 +88,7 @@ class ConfigurazioneAzienda {
 
   List<Module> modulos;
 
-  ConfigurazioneAzienda(
-      {this.id,
-      this.tipoAuth,
-      this.stepMinuti,
-      this.langKey,
-      this.straordinari,
-      this.modulos});
-
-  ConfigurazioneAzienda.fromJson(Map<String, dynamic> json) {
+  CompanyConfig.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     tipoAuth = json['tipoAuth'];
     stepMinuti = json['stepMinuti'];
@@ -186,16 +156,6 @@ class UserExtra {
   String dataAssunzione;
   int tariffa;
 
-  UserExtra(
-      {this.id,
-      this.incarico,
-      this.reparto,
-      this.manager,
-      this.tipoAuth,
-      this.dataNascita,
-      this.dataAssunzione,
-      this.tariffa});
-
   UserExtra.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     incarico = json['incarico'];
@@ -210,8 +170,6 @@ class UserExtra {
 
 class UserInfoResponse {
   UserInfo info;
-
-  UserInfoResponse({this.info});
 
   UserInfoResponse.fromJson(Map<String, dynamic> json) {
     info = UserInfo.fromJson(json);

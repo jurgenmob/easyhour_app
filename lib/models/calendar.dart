@@ -20,17 +20,6 @@ class Calendar {
   List<Activity> attivitas;
   List<Timer> timers;
 
-  Calendar({
-    this.worklogs,
-    this.malattias,
-    this.feries,
-    this.permessos,
-    this.trasfertas,
-    this.holidays,
-    this.attivitas,
-    this.timers,
-  });
-
   Calendar.fromJson(Map<String, dynamic> json) {
     if (json['worklogs'] != null) {
       worklogs = new List<Worklog>();

@@ -162,6 +162,13 @@ class EasyRest {
     return _dio.delete('/worklogs/${item.id}');
   }
 
+  Future<List<String>> getSuggestedDescriptions(Task task) async {
+    Response<String> response =
+        await _dio.get('/suggested-descriptions/${task.id}');
+
+    return jsonDecode(response.data).cast<String>();
+  }
+
   Future<Activity> addEditActivity(Activity item) async {
     Response<String> response = await _dio.request<String>(
       '/attivitas',

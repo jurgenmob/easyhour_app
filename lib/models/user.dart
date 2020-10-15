@@ -73,8 +73,6 @@ class LoginResponse {
   String accessToken;
   String refreshToken;
 
-  LoginResponse({this.accessToken});
-
   LoginResponse.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];
     refreshToken = json['refreshToken'];

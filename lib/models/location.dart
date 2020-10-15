@@ -96,8 +96,6 @@ class Location with BaseModel {
 class LocationResponse {
   List<Location> items;
 
-  LocationResponse({this.items});
-
   LocationResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Location>();

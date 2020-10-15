@@ -4,8 +4,6 @@ class Company {
   String domain;
   bool activated;
 
-  Company({this.id, this.name, this.domain, this.activated});
-
   Company.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];

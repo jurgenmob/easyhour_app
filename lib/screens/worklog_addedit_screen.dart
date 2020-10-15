@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/task_provider.dart';
@@ -36,13 +36,21 @@ class _WorklogFormState
   Worklog get item => _item;
   Worklog _item;
   bool editableTask = true;
+  TextEditingController _descrController = TextEditingController();
+  List<Widget> _suggestedDescriptions;
 
   @override
   void initState() {
     super.initState();
 
-    // Show hours picker at startup if modifying an existing worklog
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Load suggested descriptions for this task
+      EasyRest().getSuggestedDescriptions(_item.task).then((value) => setState(
+          () => _suggestedDescriptions = value
+              .map((e) => SuggestedDescription(e, _descrController))
+              .toList()));
+
+      // Show hours picker at startup if modifying an existing worklog
       if (_item.task != null) {
         _openDurationPicker(context);
         editableTask = false;
@@ -53,7 +61,10 @@ class _WorklogFormState
   _WorklogFormState() : super(LocaleKeys.label_worklogs);
 
   @override
-  void setItem(Worklog itemToEdit) => _item = itemToEdit;
+  void setItem(Worklog itemToEdit) {
+    _item = itemToEdit;
+    _descrController.text = _item.descrizione;
+  }
 
   @override
   Widget getHeader() => _item.task != null
@@ -104,9 +115,11 @@ class _WorklogFormState
           icon: EasyIcons.description,
           initialValue: item.descrizione,
           maxLines: 3,
+          controller: _descrController,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,
         ),
+        if (_suggestedDescriptions != null) ..._suggestedDescriptions
       ];
 
   void _openDurationPicker(BuildContext context) async {
@@ -258,5 +271,25 @@ class _TaskSelectFieldState extends State<_TaskSelectField> {
     } finally {
       setState(() => _loading = false);
     }
+  }
+}
+
+class SuggestedDescription extends StatelessWidget {
+  final String text;
+  final TextEditingController controller;
+
+  SuggestedDescription(this.text, this.controller);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: Text(text,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodyText2),
+      onPressed: () async {
+        controller.text = text;
+      },
+    );
   }
 }

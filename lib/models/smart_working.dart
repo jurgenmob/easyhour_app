@@ -88,8 +88,6 @@ class SmartWorking with BaseModel {
 class SmartWorkingResponse {
   List<SmartWorking> items;
 
-  SmartWorkingResponse({this.items});
-
   SmartWorkingResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<SmartWorking>();

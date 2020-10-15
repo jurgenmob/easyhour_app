@@ -77,8 +77,6 @@ class Activity with BaseModel, CalendarEvent {
 class ActivityResponse {
   List<Activity> items;
 
-  ActivityResponse({this.items});
-
   ActivityResponse.fromJson(List<dynamic> json) {
     if (json != null) {
       items = new List<Activity>();

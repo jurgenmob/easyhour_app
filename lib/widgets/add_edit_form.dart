@@ -38,19 +38,20 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
 
     return Column(children: [
       getHeader() ?? _AddEditFormHeader(itemName),
-      Spacer(flex: 1),
+      Expanded(
+        child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                shrinkWrap: true,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: getFormElements(),
+              ),
+            )),
+      ),
       Container(
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          child: Form(
-            key: formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: getFormElements(),
-            ),
-          )),
-      Spacer(flex: 2),
-      Container(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 24),
           child: loading
               ? EasyLoader()
               : EasyButton(

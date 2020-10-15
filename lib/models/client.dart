@@ -5,14 +5,6 @@ class Client {
   String descrizione;
   bool attivo;
 
-  Client({
-    this.id,
-    this.nome,
-    this.codice,
-    this.descrizione,
-    this.attivo,
-  });
-
   @override
   String toString() {
     return 'Cliente{id: $id, nome: $nome}';
@@ -36,8 +28,6 @@ class Client {
 
 class ClientResponse {
   List<Client> items;
-
-  ClientResponse({this.items});
 
   ClientResponse.fromJson(List<dynamic> json) {
     if (json != null) {
