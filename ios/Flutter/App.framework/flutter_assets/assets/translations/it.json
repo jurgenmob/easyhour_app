@@ -1,0 +1,102 @@
+{
+  "app_version": "Versione app: {}",
+
+  "api_generic_error": "Si è verificato un errore durante il caricamento dei dati, si prega di riprovare.",
+
+  "message_login_failed": "Credenziali errate, si prega di verificare username e password e riprovare.",
+  "message_login_expired": "La tua sessione di lavoro è scaduta, devi effettuare nuovamente il login.",
+  "message_delete_confirm": "Sei sicuro di voler eliminare {}?",
+
+  "message_happy_holidays": "Buone Vacanze",
+  "message_send_postcard": "Mandaci una cartolina",
+  "message_get_well_soon": "Rimettiti presto",
+  "message_missing_you": "Ti aspettiamo",
+
+  "field_is_required": "Questo campo è obbligatorio.",
+  "field_email_invalid": "L'indirizzo e-mail inserito non è valido.",
+
+  "label_domain": "Dominio",
+  "help_domain": "Il dominio .easyhour.app della tua azienda.",
+  "label_username": "E-mail",
+  "label_password": "Password",
+  "label_login": "Entra",
+  "label_logout": "Logout",
+
+  "label_date": "Data",
+  "label_date_range": "Date di inizio e fine",
+  "label_time_start": "Ora inizio",
+  "label_time_end": "Ora fine",
+  "label_description": "Descrizione",
+  "label_time_spent": "Ore da segnare",
+  "label_medical_certificate": "N. protocollo certificato medico",
+  "label_type": "Tipologia",
+  "label_client": "Cliente",
+  "label_task": "Task",
+  "label_save_location_as": "Salva posizione con nome...",
+  "label_enter_location_name": "Nome della posizione",
+  "label_attachments": "Allegati",
+  "label_attachments_selected": {
+    "zero":"Nessun allegato selezionato",
+    "one":"{} allegato selezionato",
+    "other":"{} allegati selezionati"
+  },
+
+  "label_vacations": {
+    "one":"Ferie",
+    "other":"Ferie"
+  },
+  "label_permits": {
+    "one":"Permesso",
+    "other":"Permessi"
+  },
+  "label_sicknesses": {
+    "one":"Malattia",
+    "other":"Malattia"
+  },
+  "label_trips": {
+    "one":"Trasferta",
+    "other":"Trasferte"
+  },
+  "label_activities": {
+    "one":"Attività",
+    "other":"Attività"
+  },
+  "label_smartworkings": {
+    "one":"Smart Working",
+    "other":"Smart Working"
+  },
+  "label_worklogs": {
+    "one":"Tempo lavorato",
+    "other":"Tempo lavorato"
+  },
+  "label_locations": {
+    "one":"Posizione",
+    "other":"Posizioni"
+  },
+
+  "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",
+  "empty_list_generic": "Non hai ancora inserito {}.\nClicca sull'icona in alto a destra per farlo.",
+  "empty_list_calendar": "Nessuna attività inserita per questa data.",
+  "message_delete_generic": "Il contenuto è stato eliminato correttamente.",
+  "message_add_generic": "Il contenuto è stato aggiunto correttamente.",
+  "message_edit_generic": "Il contenuto è stato modificato correttamente.",
+  "message_no_clients": "Nessun cliente disponibile.",
+  "message_no_locations": "Nessuna località disponibile.",
+  "message_pick_task": "Scegli il task a cui associare le ore.",
+  "message_stop_timer": "Sei sicuro di voler interrompere il timer?",
+  "message_timer_active": "Un altro timer è attivo, disattivalo prima di attivarne un altro.",
+
+  "label_my_places": "Le mie posizioni",
+  "label_help_videos": "Video di aiuto",
+  "label_reset_password": "Modifica password",
+  "label_privacy_policy": "Informativa privacy",
+
+  "label_ok": "OK",
+  "label_cancel": "Annulla",
+  "label_search": "Cerca",
+  "label_add": "Aggiungi",
+  "label_choose": "Scegli",
+  "label_save": "Salva",
+
+  "message_confirm_app_exit": "Premi indietro di nuovo per uscire dall'app"
+}

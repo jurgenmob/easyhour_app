@@ -168,7 +168,8 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
 
   void _addLocation(S2State state) async {
     LocationResult location = await showLocationPicker(
-      context, '' /* map key is in the native project */,
+      context,
+      String.fromEnvironment('GOOGLE_MAPS_API_KEY', defaultValue: ''),
       initialCenter: LatLng(44.488333, 11.260644),
       myLocationButtonEnabled: true,
       // countries: ['IT'],
