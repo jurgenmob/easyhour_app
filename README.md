@@ -8,7 +8,8 @@ TODO
 
 ### Setting the Google Maps API key
 
-Android: create a `secure.properties` file starting from `secure.properties.tpl` and set the map key.
+1. Create a `secure.properties` file starting from `secure.properties.tpl` and set the map keys for iOS and Android.
+2. In your IDE (or from CLI) specify as build/run parameter: `--dart-define="GOOGLE_MAPS_API_KEY=..."`
 
 iOS: TBD
 
