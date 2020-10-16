@@ -6,7 +6,6 @@ import 'package:easyhour_app/screens/company_actions_screen.dart';
 import 'package:easyhour_app/screens/profile_screen.dart';
 import 'package:easyhour_app/screens/today_activities_screen.dart';
 import 'package:easyhour_app/widgets/tab_bar.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/locale_keys.g.dart';
@@ -46,31 +45,11 @@ class HomeScreen extends BaseScreen {
   }
 
   void _initPushNotifications() {
-    final firebaseMessaging = FirebaseMessaging();
-
     firebaseMessaging.requestNotificationPermissions();
 
     firebaseMessaging.getToken().then((String token) {
-      print("Push token: $token");
+      // TODO: sent token to server when API will be available
+      print("*** Push token ***: $token");
     });
-
-    void showMessage(String message) {
-      scaffoldKey.currentState
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(message)));
-    }
-
-    firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("Push onMessage: $message");
-        showMessage(message['notification']['body']);
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("Push onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("Push onResume: $message");
-      },
-    );
   }
 }
