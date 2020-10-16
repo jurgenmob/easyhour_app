@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
@@ -141,7 +141,6 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
                 key: ValueKey(widget.item.location ?? UniqueKey()),
                 labelText: LocaleKeys.label_locations.plural(1),
                 icon: EasyIcons.location,
-                maxLines: 1,
                 initialValue: widget.item.location?.nome,
                 onTap: state.showModal,
               );
@@ -166,10 +165,18 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
     }
   }
 
+  String _googleMapsApiKey;
+
   void _addLocation(S2State state) async {
+    // Read maps key
+    if (_googleMapsApiKey == null) {
+      _googleMapsApiKey = await googleMapsApyKey;
+    }
+
+    // Show location picker
     LocationResult location = await showLocationPicker(
       context,
-      String.fromEnvironment('GOOGLE_MAPS_API_KEY', defaultValue: ''),
+      _googleMapsApiKey,
       initialCenter: LatLng(44.488333, 11.260644),
       myLocationButtonEnabled: true,
       // countries: ['IT'],
@@ -202,8 +209,9 @@ class _LocationSelectFieldState extends State<_LocationSelectField> {
         meta: widget.item.location,
         selected: true,
       ));
-      state.value = widget.item.location;
-      setState(() {});
+      setState(() {
+        state.changes.commit(widget.item.location, selected: true);
+      });
 
       state.closeModal(confirmed: true);
     }
