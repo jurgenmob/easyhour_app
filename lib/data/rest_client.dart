@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -22,6 +23,7 @@ import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EasyRest {
@@ -41,9 +43,16 @@ class EasyRest {
   String _accessToken;
   String _refreshToken;
 
+  PackageInfo packageInfo;
+
   Dio _dio = Dio()
     ..options.baseUrl = '$baseUrl/easyhour/api'
     ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+
+  String get userAgent =>
+      "EasyHourApp/${packageInfo?.version} " +
+      "(${Platform.operatingSystem}/${Platform.operatingSystemVersion}; " +
+      "${packageInfo?.appName}/${packageInfo?.buildNumber})";
 
   EasyRest._internal() {
     // Initialize logged user tokens from prefs
@@ -56,7 +65,8 @@ class EasyRest {
         ..headers.addAll({
           if (_accessToken != null) "Authorization": "Bearer $_accessToken",
           "X-AZIENDA-DOMAIN": _domain,
-          Headers.contentTypeHeader: Headers.jsonContentType
+          Headers.contentTypeHeader: Headers.jsonContentType,
+          HttpHeaders.userAgentHeader: userAgent,
         });
     }, onError: (e) async {
       if (e.response?.statusCode == 401) {
@@ -80,6 +90,7 @@ class EasyRest {
 
   void initClient() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    packageInfo = await PackageInfo.fromPlatform();
 
     _domain = prefs.getString('domain');
     _username = prefs.getString('username');
