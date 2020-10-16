@@ -263,6 +263,6 @@ class _TaskItemState extends State<_TaskItem> {
     }
 
     // Restore the appbar icon
-    context.read<EasyAppBarProvider>().action = EasyRoute.calendar();
+    context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
   }
 }

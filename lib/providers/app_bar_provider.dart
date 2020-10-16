@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class EasyAppBarProvider extends ChangeNotifier {
-  EasyRoute _action;
+  List<EasyRoute> _actions;
 
-  get action => _action;
+  List<EasyRoute> get actions => _actions;
 
-  set action(EasyRoute action) {
-    _action = action;
+  set actions(List<EasyRoute> actions) {
+    _actions = actions;
 
     notifyListeners();
   }

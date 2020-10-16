@@ -39,9 +39,6 @@ class Location with BaseModel {
   get editable => false;
 
   @override
-  get dateRange => null;
-
-  @override
   LocationProvider provider(BuildContext context) =>
       context.read<LocationProvider>();
 

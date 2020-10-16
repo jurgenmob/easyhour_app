@@ -25,6 +25,11 @@ class UserInfo {
   bool get hasActivitiesModule =>
       configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
 
+  bool get isReporter =>
+      authorities?.contains(roleReporter) ?? false || isAdmin;
+
+  bool get isAdmin => authorities?.contains(roleAdmin) ?? false;
+
   UserInfo.fromJson(Map<String, dynamic> json) {
     userDTO =
         json['userDTO'] != null ? new UserDTO.fromJson(json['userDTO']) : null;

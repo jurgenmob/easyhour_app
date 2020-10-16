@@ -129,7 +129,7 @@ class _EasyListItem extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: 8),
                     child: Text(item.listSubtitle,
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context)
                             .textTheme

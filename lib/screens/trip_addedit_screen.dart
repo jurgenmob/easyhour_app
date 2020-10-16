@@ -173,7 +173,6 @@ class _ClientSelectFieldState extends State<_ClientSelectField> {
                 key: ValueKey(widget.item.cliente ?? UniqueKey()),
                 labelText: LocaleKeys.label_client,
                 icon: EasyIcons.profile,
-                maxLines: 1,
                 initialValue: widget.item.cliente?.nome,
                 onTap: state.showModal,
               );

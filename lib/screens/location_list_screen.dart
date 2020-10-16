@@ -10,7 +10,7 @@ import '../generated/locale_keys.g.dart';
 
 class LocationListScreen extends BaseScreen<Location> {
   @override
-  EasyRoute getAppBarRoute() => null;
+  List<EasyRoute> getAppBarRoutes() => null;
 
   @override
   Widget getBody() => _LocationListScreen();

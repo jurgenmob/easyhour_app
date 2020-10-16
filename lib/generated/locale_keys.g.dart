@@ -12,6 +12,7 @@ abstract class  LocaleKeys {
   static const message_missing_you = 'message_missing_you';
   static const field_is_required = 'field_is_required';
   static const field_email_invalid = 'field_email_invalid';
+  static const field_int_number_invalid = 'field_int_number_invalid';
   static const label_domain = 'label_domain';
   static const help_domain = 'help_domain';
   static const label_username = 'label_username';
@@ -32,6 +33,9 @@ abstract class  LocaleKeys {
   static const label_enter_location_name = 'label_enter_location_name';
   static const label_attachments = 'label_attachments';
   static const label_attachments_selected = 'label_attachments_selected';
+  static const label_office_name = 'label_office_name';
+  static const label_workplaces_number = 'label_workplaces_number';
+  static const label_workplaces_prefix = 'label_workplaces_prefix';
   static const label_vacations = 'label_vacations';
   static const label_permits = 'label_permits';
   static const label_sicknesses = 'label_sicknesses';
@@ -40,6 +44,9 @@ abstract class  LocaleKeys {
   static const label_smartworkings = 'label_smartworkings';
   static const label_worklogs = 'label_worklogs';
   static const label_locations = 'label_locations';
+  static const label_bookings = 'label_bookings';
+  static const label_workplaces = 'label_workplaces';
+  static const label_offices = 'label_offices';
   static const empty_list_tasks = 'empty_list_tasks';
   static const empty_list_generic = 'empty_list_generic';
   static const empty_list_calendar = 'empty_list_calendar';
@@ -48,6 +55,7 @@ abstract class  LocaleKeys {
   static const message_edit_generic = 'message_edit_generic';
   static const message_no_clients = 'message_no_clients';
   static const message_no_locations = 'message_no_locations';
+  static const message_no_workplaces = 'message_no_workplaces';
   static const message_pick_task = 'message_pick_task';
   static const message_stop_timer = 'message_stop_timer';
   static const message_timer_active = 'message_timer_active';

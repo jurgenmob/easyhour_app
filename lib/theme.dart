@@ -74,7 +74,8 @@ class EasyIcons {
   static const IconData sickness = _EasyIconsData(0xe995);
   static const IconData trips = _EasyIconsData(0xe9e8);
   static const IconData activities = _EasyIconsData(0xe911);
-  static const IconData smartworking = _EasyIconsData(0xe9d5);
+  static const IconData smartworkings = _EasyIconsData(0xe9d5);
+  static const IconData workplaces = _EasyIconsData(0xe94e);
 
   // Misc
   static const IconData login = _EasyIconsData(0xe98d);
@@ -95,6 +96,8 @@ class EasyIcons {
   static const IconData position = _EasyIconsData(0xea12);
   static const IconData add = _EasyIconsData(0xe901);
   static const IconData attachment = _EasyIconsData(0xe902);
+  static const IconData workplaces_filled = _EasyIconsData(0xe949);
+  static const IconData settings = _EasyIconsData(0xe977);
 }
 
 class _EasyIconsData extends IconData {

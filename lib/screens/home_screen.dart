@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import '../generated/locale_keys.g.dart';
 
 class HomeScreen extends BaseScreen {
-  EasyRoute getAppBarRoute() => EasyRoute.calendar();
+  List<EasyRoute> getAppBarRoutes() => [EasyRoute.calendar()];
 
   HomeScreen() {
     // Init push notifications

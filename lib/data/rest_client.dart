@@ -6,10 +6,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/activity.dart';
+import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/models/client.dart';
 import 'package:easyhour_app/models/error.dart';
 import 'package:easyhour_app/models/location.dart';
+import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
@@ -21,6 +23,7 @@ import 'package:easyhour_app/models/user.dart';
 import 'package:easyhour_app/models/user_info.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
+import 'package:easyhour_app/models/workplace.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
@@ -358,6 +361,82 @@ class EasyRest {
         data: TimerStopRequest(timer).toJson());
 
     return Timer.fromJson(jsonDecode(response.data));
+  }
+
+  Future<List<Booking>> getBookings() async {
+    // TODO
+    // Response<String> response = await _dio.get('/user-feries');
+    //
+    // return WorkPlaceResponse.fromJson(jsonDecode(response.data)).items;
+
+    List<WorkPlace> workPlaces = await getWorkPlaces();
+    return List.generate(
+        20,
+        (i) => Booking(
+            id: i,
+            dataInizio: DateTime.parse("2020-01-${i.padLeft(2)}"),
+            dataFine: DateTime.parse("2020-01-${(i + 1).padLeft(2)}"),
+            postazione: (workPlaces..shuffle()).first));
+  }
+
+  Future<Response> deleteBooking(Booking item) async {
+    return _dio.delete('/user-prenotaziones/${item.id}');
+  }
+
+  Future<Booking> addEditWorkPlace(Booking item) async {
+    // TODO
+    // Response<String> response = await _dio.request<String>(
+    //   '/feries',
+    //   data: item.toJson(),
+    //   options: Options(method: item.isNew ? 'POST' : 'PUT'),
+    // );
+    //
+    // return WorkPlace.fromJson(jsonDecode(response.data));
+  }
+
+  Future<Response> deleteWorkPlace(Booking item) async {
+    // TODO
+    // return _dio.delete('/feries/${item.id}');
+  }
+
+  Future<List<WorkPlace>> getWorkPlaces() async {
+    // TODO
+    // Response<String> response = await _dio.get('/user-feries');
+    //
+    // return WorkPlaceResponse.fromJson(jsonDecode(response.data)).items;
+
+    return List.generate(
+        20,
+        (i) => WorkPlace(
+            id: i,
+            nome: "Scrivania luuuunga ${i + 1}",
+            ufficio:
+                Office(id: i % 3, nome: "Ufficio lungo lungo ${i % 3 + 1}")));
+  }
+
+  Future<List<Office>> getOffices() async {
+    // TODO
+    // Response<String> response = await _dio.get('/user-permessos');
+    //
+    // return OfficeResponse.fromJson(jsonDecode(response.data)).items;
+
+    return List.generate(3, (i) => Office(id: i, nome: "Ufficio ${i + 1}"));
+  }
+
+  Future<Office> addEditOffice(Office item) async {
+    // TODO
+    // Response<String> response = await _dio.request<String>(
+    //   '/permessos',
+    //   data: item.toJson(),
+    //   options: Options(method: item.isNew ? 'POST' : 'PUT'),
+    // );
+    //
+    // return Office.fromJson(jsonDecode(response.data));
+  }
+
+  Future<Response> deleteOffice(Office item) async {
+    // TODO
+    // return _dio.delete('/permessos/${item.id}');
   }
 }
 

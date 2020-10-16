@@ -6,6 +6,7 @@ import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/models/vacation.dart';
+import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 
@@ -39,8 +40,12 @@ class CompanyActionProvider extends BaseProvider<CompanyAction> {
             if (userInfo.hasSmartWorkingModule)
               CompanyAction(
                   text: LocaleKeys.label_smartworkings,
-                  icon: EasyIcons.smartworking,
+                  icon: EasyIcons.smartworkings,
                   page: EasyRoute.list(SmartWorking).page),
+            CompanyAction(
+                text: LocaleKeys.label_bookings,
+                icon: EasyIcons.workplaces,
+                page: EasyRoute.list(Booking).page),
           ]);
 
   @override

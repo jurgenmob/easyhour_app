@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/activity.dart';
+import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/location.dart';
+import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
@@ -11,9 +13,11 @@ import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/activity_provider.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
+import 'package:easyhour_app/providers/booking_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/providers/company_action_provider.dart';
 import 'package:easyhour_app/providers/location_provider.dart';
+import 'package:easyhour_app/providers/office_provider.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
@@ -24,10 +28,14 @@ import 'package:easyhour_app/providers/vacation_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/activity_addedit_screen.dart';
 import 'package:easyhour_app/screens/activity_list_screen.dart';
+import 'package:easyhour_app/screens/booking_addedit_screen.dart';
+import 'package:easyhour_app/screens/booking_list_screen.dart';
 import 'package:easyhour_app/screens/calendar_screen.dart';
 import 'package:easyhour_app/screens/home_screen.dart';
 import 'package:easyhour_app/screens/location_list_screen.dart';
 import 'package:easyhour_app/screens/login_screen.dart';
+import 'package:easyhour_app/screens/office_addedit_screen.dart';
+import 'package:easyhour_app/screens/office_list_screen.dart';
 import 'package:easyhour_app/screens/permit_addedit_screen.dart';
 import 'package:easyhour_app/screens/permit_list_screen.dart';
 import 'package:easyhour_app/screens/sickness_addedit_screen.dart';
@@ -104,6 +112,8 @@ class _EasyAppState extends State<EasyApp> {
                   create: (context) => SmartWorkingProvider()),
               ChangeNotifierProvider(create: (context) => CalendarProvider()),
               ChangeNotifierProvider(create: (context) => LocationProvider()),
+              ChangeNotifierProvider(create: (context) => BookingProvider()),
+              ChangeNotifierProvider(create: (context) => OfficeProvider()),
             ],
             child: FutureBuilder<SharedPreferences>(
                 future: SharedPreferences.getInstance(),
@@ -154,6 +164,11 @@ class _EasyMaterialApp extends MaterialApp {
             EasyRoute.addEdit(SmartWorking).page: (context) =>
                 SmartWorkingAddEditScreen(),
             EasyRoute.list(Location).page: (context) => LocationListScreen(),
+            EasyRoute.list(Booking).page: (context) => BookingListScreen(),
+            EasyRoute.addEdit(Booking).page: (context) =>
+                BookingAddEditScreen(),
+            EasyRoute.list(Office).page: (context) => OfficeListScreen(),
+            EasyRoute.addEdit(Office).page: (context) => OfficeAddEditScreen(),
           },
         );
 }

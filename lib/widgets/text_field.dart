@@ -10,6 +10,7 @@ class EasyTextField extends StatelessWidget {
   final String helperText;
   final IconData icon;
   final dynamic initialValue;
+  final bool enabled;
   final bool isLast;
   final bool isRequired;
   final bool obscureText;
@@ -26,6 +27,7 @@ class EasyTextField extends StatelessWidget {
     this.helperText,
     this.icon,
     this.initialValue,
+    this.enabled = true,
     this.isLast = false,
     this.isRequired = true,
     this.obscureText = false,
@@ -44,11 +46,13 @@ class EasyTextField extends StatelessWidget {
     return TextFormField(
       key: key,
       decoration: InputDecoration(
+        // FIXME: when using plural() string is already translated
         labelText: labelText.tr(),
         helperText: helperText?.tr(),
         suffixIcon: Icon(icon),
         // contentPadding: EdgeInsets.symmetric(vertical: 25),
         labelStyle: theme.textTheme.bodyText1.copyWith(color: Colors.black),
+        enabled: enabled,
       ),
       style: theme.textTheme.bodyText1.copyWith(color: theme.primaryColor),
       initialValue: controller == null ? formatValue(initialValue) : null,
@@ -60,9 +64,10 @@ class EasyTextField extends StatelessWidget {
           ? TextInputAction.newline
           : (isLast ? TextInputAction.done : TextInputAction.next),
       onSaved: onSaved,
-      onTap: onTap,
+      onTap: onTap ?? () {},
       readOnly: onTap != null,
       showCursor: onTap == null,
+      enabled: enabled,
       enableInteractiveSelection: onTap == null,
       validator: (value) {
         if (validator != null) {

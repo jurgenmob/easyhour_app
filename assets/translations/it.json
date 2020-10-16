@@ -14,6 +14,7 @@
 
   "field_is_required": "Questo campo è obbligatorio.",
   "field_email_invalid": "L'indirizzo e-mail inserito non è valido.",
+  "field_int_number_invalid": "Il numero inserito non è un numero intero valido.",
 
   "label_domain": "Dominio",
   "help_domain": "Il dominio .easyhour.app della tua azienda.",
@@ -40,6 +41,9 @@
     "one":"{} allegato selezionato",
     "other":"{} allegati selezionati"
   },
+  "label_office_name": "Nome Ufficio",
+  "label_workplaces_number": "Numero di postazioni",
+  "label_workplaces_prefix": "Prefisso nomi scrivanie",
 
   "label_vacations": {
     "one":"Ferie",
@@ -73,6 +77,18 @@
     "one":"Posizione",
     "other":"Posizioni"
   },
+  "label_bookings": {
+    "one":"Prenotazione",
+    "other":"Prenotazioni"
+  },
+  "label_workplaces": {
+    "one":"Postazione",
+    "other":"Postazioni"
+  },
+  "label_offices": {
+    "one":"Ufficio",
+    "other":"Uffici"
+  },
 
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",
   "empty_list_generic": "Non hai ancora inserito {}.\nClicca sull'icona in alto a destra per farlo.",
@@ -82,6 +98,7 @@
   "message_edit_generic": "Il contenuto è stato modificato correttamente.",
   "message_no_clients": "Nessun cliente disponibile.",
   "message_no_locations": "Nessuna località disponibile.",
+  "message_no_workplaces": "Nessuna postazione disponibile per il periodo selezionato.",
   "message_pick_task": "Scegli il task a cui associare le ore.",
   "message_stop_timer": "Sei sicuro di voler interrompere il timer?",
   "message_timer_active": "Un altro timer è attivo, disattivalo prima di attivarne un altro.",

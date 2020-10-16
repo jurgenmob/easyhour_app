@@ -51,7 +51,7 @@ class _CompanyActionButton extends StatelessWidget {
           ),
           onPressed: () async {
             await Navigator.pushNamed(context, item.page);
-            context.read<EasyAppBarProvider>().action = EasyRoute.calendar();
+            context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
           },
         ),
       ),

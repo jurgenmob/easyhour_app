@@ -245,9 +245,9 @@ class _TaskSelectFieldState extends State<_TaskSelectField> {
                   key: ValueKey(widget.item.task ?? UniqueKey()),
                   labelText: LocaleKeys.label_task,
                   icon: EasyIcons.profile,
-                  maxLines: 1,
                   initialValue: widget.item.task?.nomeTask,
-                  onTap: widget.editable ? state.showModal : () {},
+                  enabled: widget.editable,
+                  onTap: widget.editable ? state.showModal : null,
                 ),
               );
             });

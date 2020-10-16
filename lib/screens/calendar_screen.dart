@@ -13,15 +13,17 @@ import 'package:table_calendar/table_calendar.dart';
 
 import '../generated/locale_keys.g.dart';
 
-final _calendarWidgetKey = GlobalKey<_CalendarWidgetState>();
+final _calendarKey = GlobalKey<_CalendarWidgetState>();
 
 class CalendarScreen extends BaseScreen {
   @override
-  Widget getBody() => CalendarWidget(key: _calendarWidgetKey);
+  Widget getBody() => CalendarWidget(key: _calendarKey);
 
   @override
-  EasyRoute getAppBarRoute() => EasyRoute.addEdit(WorkLog,
-      arguments: () => WorkLog(data: _calendarWidgetKey.currentState._today));
+  List<EasyRoute> getAppBarRoutes() => [
+        EasyRoute.addEdit(WorkLog,
+            arguments: () => WorkLog(data: _calendarKey.currentState._today))
+      ];
 }
 
 class CalendarWidget extends StatefulWidget {

@@ -49,7 +49,6 @@ class _SicknessFormState extends AddEditFormState<Sickness, SicknessProvider> {
           labelText: LocaleKeys.label_medical_certificate,
           icon: EasyIcons.description,
           initialValue: item.descrizione,
-          maxLines: 1,
           isRequired: false,
           onSaved: (value) => _item.descrizione = value,
         ),

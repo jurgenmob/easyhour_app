@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/models/user_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Swtich between DEV and PROD environments
@@ -18,6 +21,10 @@ const int activitiesModuleId = 3;
 const int phasesModuleId = 7;
 const String approvedValue = "APPROVATO";
 
+// Roles constants
+const String roleReporter = "ROLE_REPORTER";
+const String roleAdmin = "ROLE_ADMIN";
+
 // Profile links
 const helpVideosUrl =
     'https://www.youtube.com/channel/UCXoLKcYQOyRKmgOziIpm9CQ';
@@ -32,11 +39,19 @@ bool validateEmail(String email) => RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
     .hasMatch(email);
 
+/// Validates an integer number.
+bool validateInt(String text) => RegExp(r"^[0-9]+$").hasMatch(text);
+
 /// Access to shared preferences
 SharedPreferences prefs;
 
 /// User and company info and config
 UserInfo userInfo;
+
+extension IntUtils on num {
+  String padLeft(int width, [String padding = '0']) =>
+      this.toString().padLeft(width, padding);
+}
 
 extension DateTimeUtils on DateTime {
   String formatDisplay() => DateFormat(displayDateFormat).format(this);
@@ -52,9 +67,9 @@ extension DateRangeTimeUtils on DateTimeRange {
 }
 
 extension TimeOfDayUtils on TimeOfDay {
-  String formatDisplay() => "$hour:" + minute.toString().padLeft(2, '0');
+  String formatDisplay() => "$hour:" + minute.padLeft(2);
 
-  String formatRest() => "$hour:" + minute.toString().padLeft(2, '0');
+  String formatRest() => "$hour:" + minute.padLeft(2);
 }
 
 extension ParseTimeUtils on String {
@@ -65,15 +80,24 @@ extension ParseTimeUtils on String {
 }
 
 extension DurationUtils on Duration {
-  String twoDigits(int n) => (n >= 10) ? "$n" : "0$n";
-
   String formatDisplay({bool showSeconds = false, bool showZero = true}) =>
       (inMilliseconds > 0 || (showZero && inMilliseconds >= 0))
-          ? twoDigits(inHours) +
+          ? inHours.padLeft(2) +
               ":" +
-              twoDigits(inMinutes.remainder(60)) +
-              (showSeconds ? ":" + twoDigits(inSeconds.remainder(60)) : "")
+              inMinutes.remainder(60).padLeft(2) +
+              (showSeconds ? ":" + inSeconds.remainder(60).padLeft(2) : "")
           : null;
 
   int formatRest() => inMinutes;
+}
+
+Future<String> get googleMapsApyKey async {
+  final keyName =
+      "GOOGLE_MAPS_API_KEY_${Platform.operatingSystem.toUpperCase()}";
+  String content = await rootBundle.loadString('secure.properties');
+  List<String> prop = content
+      .split("\n")
+      .firstWhere((e) => e.trim().startsWith("$keyName="), orElse: () => null)
+      ?.split("=");
+  return prop?.length == 2 ? prop[1] : null;
 }

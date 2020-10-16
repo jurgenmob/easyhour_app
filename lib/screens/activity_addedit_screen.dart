@@ -76,7 +76,6 @@ class _ActivityFormState extends AddEditFormState<Activity, ActivityProvider> {
           labelText: LocaleKeys.label_type,
           icon: EasyIcons.description,
           initialValue: item.tipologia,
-          maxLines: 1,
           isRequired: false,
           onSaved: (value) => _item.tipologia = value,
         ),

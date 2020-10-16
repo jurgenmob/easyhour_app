@@ -17,7 +17,8 @@ class EasyRoute {
 
   EasyRoute.calendar() : this('/calendar', icon: Icons.calendar_today);
 
-  EasyRoute.list(Type T) : this("/${T.toString().toLowerCase()}/list");
+  EasyRoute.list(Type T, {IconData icon})
+      : this("/${T.toString().toLowerCase()}/list", icon: icon);
 
   EasyRoute.addEdit(Type T, {ArgumentsFunc arguments})
       : this("/${T.toString().toLowerCase()}/add-edit",

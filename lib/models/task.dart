@@ -34,9 +34,6 @@ class Task with BaseModel, TodayActivity {
   get id => idTask;
 
   @override
-  get dateRange => null;
-
-  @override
   filter(dynamic filter) =>
       nomeTask?.containsIgnoreCase(filter.toString()) == true ||
       nomeProgetto?.containsIgnoreCase(filter.toString()) == true ||

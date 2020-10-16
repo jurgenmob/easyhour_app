@@ -17,9 +17,6 @@ class CompanyAction with BaseModel {
   get listTitle => text;
 
   @override
-  get dateRange => null;
-
-  @override
   CompanyActionProvider provider(BuildContext context) =>
       context.read<CompanyActionProvider>();
 

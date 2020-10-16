@@ -17,7 +17,7 @@ mixin BaseModel<T, P> {
 
   bool get approved => null;
 
-  DateTimeRange get dateRange;
+  DateTimeRange get dateRange => null;
 
   @protected
   DateTimeRange dateRangeFromDate(DateTime date) => DateTimeRange(
