@@ -21,7 +21,7 @@ const String approvedValue = "APPROVATO";
 // Profile links
 const helpVideosUrl =
     'https://www.youtube.com/channel/UCXoLKcYQOyRKmgOziIpm9CQ';
-const resetPasswordUrl = '$baseUrl/webapp/#/auth/login';
+const resetPasswordUrl = '$baseUrl/webapp/#/auth/reset';
 const privacyUrl = '$baseUrl/informativa-privacy';
 
 /// Minute interval for worklogs
