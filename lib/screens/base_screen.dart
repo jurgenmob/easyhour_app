@@ -14,10 +14,11 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
 
   Widget getBody();
 
-  List<EasyRoute> getAppBarRoutes() => [EasyRoute.addEdit(T)];
+  List<EasyRoute> getAppBarRoutes(BuildContext context) =>
+      [EasyRoute.addEdit(T)];
 
   void _initScreen(BuildContext context) {
-    context.read<EasyAppBarProvider>().actions = getAppBarRoutes();
+    context.read<EasyAppBarProvider>().actions = getAppBarRoutes(context);
 
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -57,5 +58,5 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
 
 abstract class BaseAddEditScreen<T extends BaseModel> extends BaseScreen<T> {
   @override
-  List<EasyRoute> getAppBarRoutes() => null;
+  List<EasyRoute> getAppBarRoutes(context) => null;
 }

@@ -30,6 +30,19 @@ class UserInfo {
 
   bool get isAdmin => authorities?.contains(roleAdmin) ?? false;
 
+  /// Returns the working hours of the user (if any) or the company (if any) or defaults
+  List<WorkShift> get workShifts => turniUser?.isNotEmpty == true
+      ? turniUser
+      : turniAzienda?.isNotEmpty == true
+          ? turniAzienda
+          : WorkShift.defaultWorkShifts();
+
+  /// Returns the target hours for a given day
+  Duration targetHours(DateTime date) => workShifts
+      .firstWhere((w) => w.giorno == date.weekday,
+          orElse: () => WorkShift.fromDefaults(date.weekday))
+      .duration;
+
   UserInfo.fromJson(Map<String, dynamic> json) {
     userDTO =
         json['userDTO'] != null ? new UserDTO.fromJson(json['userDTO']) : null;
@@ -244,6 +257,52 @@ class WorkShift {
     data['t4Fine'] = this.t4Fine;
     data['lavorativo'] = this.lavorativo;
     return data;
+  }
+
+  WorkShift.fromDefaults(int day, {bool workingDay}) {
+    if (workingDay == null)
+      workingDay = day != DateTime.saturday && day != DateTime.sunday;
+
+    id = day;
+    giorno = day;
+    lavorativo = workingDay;
+    t1Inizio = workingDay ? "9:00" : "";
+    t1Fine = workingDay ? "13:00" : "";
+    t2Inizio = workingDay ? "14:00" : "";
+    t2Fine = workingDay ? "18:00" : "";
+    t3Inizio = null;
+    t3Fine = null;
+    t4Inizio = null;
+    t4Fine = null;
+  }
+
+  // The duration of this work shift
+  Duration get duration => lavorativo
+      ? Duration(
+          minutes: [
+          [t1Inizio, t1Fine],
+          [t2Inizio, t2Fine],
+          [t3Inizio, t3Fine],
+          [t4Inizio, t4Fine]
+        ].fold<int>(
+              0,
+              (prev, shift) => shift[0] != null && shift[1] != null
+                  ? prev +
+                      shift[1].asTimeOfDay().inMinutes -
+                      shift[0].asTimeOfDay().inMinutes
+                  : prev))
+      : Duration();
+
+  static defaultWorkShifts() {
+    return [
+      WorkShift.fromDefaults(DateTime.monday, workingDay: true),
+      WorkShift.fromDefaults(DateTime.tuesday, workingDay: true),
+      WorkShift.fromDefaults(DateTime.wednesday, workingDay: true),
+      WorkShift.fromDefaults(DateTime.thursday, workingDay: true),
+      WorkShift.fromDefaults(DateTime.friday, workingDay: true),
+      WorkShift.fromDefaults(DateTime.saturday, workingDay: false),
+      WorkShift.fromDefaults(DateTime.sunday, workingDay: false),
+    ];
   }
 }
 

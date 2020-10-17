@@ -57,6 +57,11 @@ extension DateTimeUtils on DateTime {
   String formatDisplay() => DateFormat(displayDateFormat).format(this);
 
   String formatRest() => DateFormat(restDateFormat).format(this);
+
+  bool isSameDay(DateTime other) =>
+      other != null &&
+      DateFormat('yyyyMMdd').format(this) ==
+          DateFormat('yyyyMMdd').format(other);
 }
 
 extension DateRangeTimeUtils on DateTimeRange {
@@ -64,12 +69,18 @@ extension DateRangeTimeUtils on DateTimeRange {
       DateFormat(displayDateFormat).format(start) +
       " - " +
       DateFormat(displayDateFormat).format(end);
+
+  bool contains(DateTime date) =>
+      (date.isSameDay(start) || date.isSameDay(end)) ||
+      (date.isBefore(end) && date.isAfter(start));
 }
 
 extension TimeOfDayUtils on TimeOfDay {
   String formatDisplay() => "$hour:" + minute.padLeft(2);
 
   String formatRest() => "$hour:" + minute.padLeft(2);
+
+  int get inMinutes => hour * 60 + minute;
 }
 
 extension ParseTimeUtils on String {

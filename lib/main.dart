@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
-import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/location.dart';
@@ -56,6 +55,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/rest_client.dart';
 import 'globals.dart';
 
 void main() async {

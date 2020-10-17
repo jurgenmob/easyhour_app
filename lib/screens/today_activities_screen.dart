@@ -8,9 +8,9 @@ import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
 import 'package:easyhour_app/widgets/task_list_item.dart';
@@ -25,6 +25,10 @@ import '../generated/locale_keys.g.dart';
 class TodayActivitiesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Update the calendar icon
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => EasyAppBar.updateCalendarIndicator(context));
+
     return Consumer<TodayActivitiesProvider>(
         builder: (_, TodayActivitiesProvider model, Widget child) {
       final Type type = model.items?.isNotEmpty ?? false
@@ -72,7 +76,7 @@ class _TodayActivitiesHeader extends StatelessWidget {
   }
 
   Duration _totalDuration() =>
-      Duration(minutes: items.fold<int>(0, (p, c) => p + c.duration));
+      items.fold<Duration>(Duration(), (p, c) => p + c.duration(null));
 }
 
 /// Shown when the user is not at work
@@ -262,7 +266,7 @@ class _TaskItemState extends State<_TaskItem> {
         ..showSnackBar(SnackBar(content: Text(result)));
     }
 
-    // Restore the appbar icon
-    context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
+    // Update the calendar icon
+    EasyAppBar.updateCalendarIndicator(context);
   }
 }

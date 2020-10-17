@@ -48,6 +48,9 @@ class Trip with BaseModel, CalendarEvent {
       : null;
 
   @override
+  Duration duration(DateTime date) => Duration();
+
+  @override
   TripProvider provider(BuildContext context) => context.read<TripProvider>();
 
   @override

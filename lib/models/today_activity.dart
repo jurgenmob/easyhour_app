@@ -5,7 +5,7 @@ import 'sickness.dart';
 import 'vacation.dart';
 
 mixin TodayActivity on BaseModel {
-  int get duration => 0;
+  Duration duration(DateTime date);
 }
 
 class TodayActivityResponse {

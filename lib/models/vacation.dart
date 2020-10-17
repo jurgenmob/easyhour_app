@@ -54,6 +54,9 @@ class Vacation with BaseModel, TodayActivity, CalendarEvent {
       : null;
 
   @override
+  Duration duration(DateTime date) => userInfo.targetHours(date);
+
+  @override
   VacationProvider provider(BuildContext context) =>
       context.read<VacationProvider>();
 

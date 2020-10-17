@@ -1,3 +1,4 @@
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:flutter/material.dart';
 
@@ -93,6 +94,9 @@ class Holiday with BaseModel, CalendarEvent {
   get dateRange => date != null ? dateRangeFromDate(date) : null;
 
   @override
+  Duration duration(DateTime date) => userInfo.targetHours(date);
+
+  @override
   provider(BuildContext context) => null;
 
   Holiday.fromJson(Map<String, dynamic> json) {
@@ -106,6 +110,9 @@ class Holiday with BaseModel, CalendarEvent {
 /// An event with a date range, to be represented in a calendar
 mixin CalendarEvent on BaseModel {
   DateTimeRange get dateRange;
+
+  /// The duration of the event, in minutes
+  Duration duration(DateTime date);
 
   @override
   bool filter(f) {

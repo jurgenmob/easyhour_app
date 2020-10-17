@@ -25,11 +25,10 @@ class TaskProvider extends BaseProvider<Task> {
       } else {
         task.worklogs.add(newWorklog);
       }
+      // Also add the item to calendar and today activities
+      context.read<CalendarProvider>().addEditWorklog(newWorklog);
+      context.read<TodayActivitiesProvider>().addEditWorklog(newWorklog);
     }
-
-    // Also add the item to calendar and today activities
-    context.read<CalendarProvider>().add(newWorklog);
-    context.read<TodayActivitiesProvider>().addEditWorklog(newWorklog);
 
     notifyListeners();
 

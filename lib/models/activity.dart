@@ -47,6 +47,9 @@ class Activity with BaseModel, CalendarEvent {
   get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
+  Duration duration(DateTime date) => Duration();
+
+  @override
   ActivityProvider provider(BuildContext context) =>
       context.read<ActivityProvider>();
 

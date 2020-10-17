@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
@@ -6,6 +7,7 @@ import 'package:easyhour_app/providers/task_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +22,13 @@ class CalendarScreen extends BaseScreen {
   Widget getBody() => CalendarWidget(key: _calendarKey);
 
   @override
-  List<EasyRoute> getAppBarRoutes() => [
+  List<EasyRoute> getAppBarRoutes(context) => [
+        EasyRoute.calendar(
+            callback: () => _calendarKey.currentState._calendarController
+                .setSelectedDay(DateTime.now())),
         EasyRoute.addEdit(WorkLog,
-            arguments: () => WorkLog(data: _calendarKey.currentState._today))
+            arguments: () =>
+                WorkLog(data: _calendarKey.currentState._selectedDay))
       ];
 }
 
@@ -38,7 +44,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
   Map<DateTime, List> _events;
   Map<DateTime, List> _holidays;
   CalendarProvider _provider;
-  DateTime _today = DateTime.now();
+  DateTime _selectedDay = DateTime.now();
 
   // List _selectedEvents;
   AnimationController _animationController;
@@ -71,21 +77,44 @@ class _CalendarWidgetState extends State<CalendarWidget>
   }
 
   void _onDaySelected(DateTime day, List events) {
-    _today = day;
+    _selectedDay = day;
     _provider.filter = day;
     setState(() {});
   }
 
   void _refreshEvents(DateTime first, DateTime last, CalendarFormat format) {
-    _provider.getEvents(first, last);
+    final eventsRange = DateTimeRange(start: first, end: last);
+    _provider.getEvents(eventsRange);
+
+    // Update calendar indicator with current month
+    DateTimeRange indicatorRange;
+    if (!eventsRange.contains(DateTime.now())) {
+      // Select month of currently visible range
+      final mean = DateTime.fromMillisecondsSinceEpoch(
+          (first.millisecondsSinceEpoch + last.millisecondsSinceEpoch) ~/ 2);
+      indicatorRange = DateTimeRange(
+          start: DateTime(mean.year, mean.month, 1),
+          end: DateTime(mean.year, mean.month + 1, 0));
+    }
+    EasyAppBar.updateCalendarIndicator(context, dateRange: indicatorRange);
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<CalendarProvider>(
         builder: (_, CalendarProvider model, Widget child) {
+      // Get events and holidays
       _events = model.events;
       _holidays = model.holidays;
+
+      // Add all days to show the worked hours count of each day
+      try {
+        _calendarController.visibleDays.forEach((e) {
+          if (userInfo.targetHours(e).inMinutes > 0 &&
+              !_holidays.containsKey(e))
+            _events.putIfAbsent(e, () => List<BaseModel>());
+        });
+      } catch (e) {}
 
       return Scaffold(
         body: Column(
@@ -120,7 +149,6 @@ class _CalendarWidgetState extends State<CalendarWidget>
           todayColor: Colors.transparent,
           todayStyle:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          markersColor: const Color(0xFFCCCCCC),
           selectedStyle: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold),
@@ -129,7 +157,6 @@ class _CalendarWidgetState extends State<CalendarWidget>
           weekendStyle: const TextStyle(color: const Color(0xFFCCCCCC)),
           holidayStyle: const TextStyle(color: const Color(0XFFECE43E)),
           unavailableStyle: const TextStyle(color: const Color(0xFFCCCCCC)),
-          markersMaxAmount: 1,
         ),
         headerStyle: HeaderStyle(
           formatButtonVisible: false,
@@ -144,8 +171,54 @@ class _CalendarWidgetState extends State<CalendarWidget>
           weekdayStyle: const TextStyle(color: Colors.white),
           weekendStyle: const TextStyle(color: Colors.white),
         ),
+        builders: CalendarBuilders(
+            markersBuilder: (context, date, events, holidays) => [
+                  _buildEventsMarker(date, events),
+                ]),
       ),
     );
+  }
+
+  Widget _buildEventsMarker(DateTime date, List events) {
+    // Calculate worked hours
+    final workedHours =
+        events.fold<Duration>(Duration(), (p, e) => p + e.duration(date));
+
+    // Calculate target hours
+    final targetHours = userInfo.targetHours(date);
+
+    // Calculate text and colors
+    final today = DateTime.now();
+    final text = date.isSameDay(_selectedDay) ? "${workedHours.inHours}" : "";
+    final backgroundColor = date.isAfter(today)
+        ? Colors.transparent
+        : CalendarProvider.dayIndicator(
+            worked: workedHours, target: targetHours);
+    final foregroundColor =
+        workedHours < targetHours ? Colors.white : Colors.black;
+    final double size = text?.isNotEmpty == true ? 16 : 8;
+    final double position = text?.isNotEmpty == true ? 1 : 8;
+
+    return Positioned(
+        right: position,
+        bottom: position,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: backgroundColor,
+          ),
+          width: size,
+          height: size,
+          child: Center(
+            child: Text(
+              text,
+              style: TextStyle().copyWith(
+                color: foregroundColor,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ));
   }
 }
 

@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const app_version = 'app_version';
   static const api_generic_error = 'api_generic_error';
   static const message_login_failed = 'message_login_failed';
@@ -70,5 +70,4 @@ abstract class  LocaleKeys {
   static const label_choose = 'label_choose';
   static const label_save = 'label_save';
   static const message_confirm_app_exit = 'message_confirm_app_exit';
-
 }

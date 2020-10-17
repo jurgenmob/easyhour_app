@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../generated/locale_keys.g.dart';
+import 'app_bar.dart';
 import 'list_item.dart';
 
 abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
@@ -96,9 +97,8 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
 
   @protected
   void onEdit(T item) async {
-    final result = await Navigator.pushNamed(
-        context, (EasyRoute.addEdit(item.runtimeType)?.page),
-        arguments: item);
+    final result = EasyAppBar.navigate(
+        context, EasyRoute.addEdit(item.runtimeType, arguments: () => item));
 
     // Show the result message
     if (result != null) {

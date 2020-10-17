@@ -53,6 +53,9 @@ class WorkLog with BaseModel, CalendarEvent {
   get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
+  Duration duration(DateTime date) => Duration(minutes: durata);
+
+  @override
   Provider provider(BuildContext context) => null;
 
   @override

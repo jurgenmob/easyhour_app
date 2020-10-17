@@ -12,7 +12,7 @@ import '../generated/locale_keys.g.dart';
 
 class BookingListScreen extends BaseScreen<Booking> {
   @override
-  List<EasyRoute> getAppBarRoutes() => [
+  List<EasyRoute> getAppBarRoutes(context) => [
         if (userInfo.isReporter)
           EasyRoute.list(Office, icon: EasyIcons.settings),
         EasyRoute.addEdit(Booking)

@@ -49,6 +49,11 @@ class Permit with BaseModel, CalendarEvent {
   get dateRange => data != null ? dateRangeFromDate(data) : null;
 
   @override
+  Duration duration(DateTime date) => Duration(
+      minutes:
+          oraFine.asTimeOfDay().inMinutes - oraInizio.asTimeOfDay().inMinutes);
+
+  @override
   PermitProvider provider(BuildContext context) =>
       context.read<PermitProvider>();
 

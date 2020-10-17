@@ -5,18 +5,26 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/screens/company_actions_screen.dart';
 import 'package:easyhour_app/screens/profile_screen.dart';
 import 'package:easyhour_app/screens/today_activities_screen.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/locale_keys.g.dart';
 
 class HomeScreen extends BaseScreen {
-  List<EasyRoute> getAppBarRoutes() => [EasyRoute.calendar()];
+  List<EasyRoute> getAppBarRoutes(context) => [EasyRoute.calendar()];
 
-  HomeScreen() {
-    // Init push notifications
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _initPushNotifications());
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Init push notifications
+      _initPushNotifications();
+
+      // Update the calendar icon
+      EasyAppBar.updateCalendarIndicator(context);
+    });
+
+    return super.build(context);
   }
 
   @override

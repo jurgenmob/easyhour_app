@@ -313,12 +313,11 @@ class EasyRest {
     return UserInfoResponse.fromJson(jsonDecode(response.data)).info;
   }
 
-  Future<List<CalendarEvent>> getCalendarEvents(
-      DateTime startDate, DateTime endDate) async {
-    final startDateParam = DateFormat(restDateFormat).format(startDate);
-    final endDateParam = DateFormat(restDateFormat).format(endDate);
-    Response<String> response = await _dio.get(
-        '/calendar-activities?data_inizio=$startDateParam&data_fine=$endDateParam');
+  Future<List<CalendarEvent>> getCalendarEvents(DateTimeRange dateRange) async {
+    final startDate = DateFormat(restDateFormat).format(dateRange.start);
+    final endDate = DateFormat(restDateFormat).format(dateRange.end);
+    Response<String> response = await _dio
+        .get('/calendar-activities?data_inizio=$startDate&data_fine=$endDate');
 
     return CalendarResponse.fromJson(jsonDecode(response.data)).items;
   }

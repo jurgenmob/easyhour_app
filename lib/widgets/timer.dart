@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/routes.dart';
@@ -49,7 +49,7 @@ class _TimerWidgetState extends State<EasyTimer> {
 
     final text = task.hasTimer || _timer != null
         ? task.timer.duration.formatDisplay(showSeconds: true)
-        : Duration(minutes: task.duration).formatDisplay(showZero: false);
+        : task.duration(null).formatDisplay(showZero: false);
 
     return _loading
         ? Container(width: 100, child: EasyLoader(color: Colors.white54))
@@ -71,7 +71,7 @@ class _TimerWidgetState extends State<EasyTimer> {
                       Text(text,
                           style: Theme.of(context).textTheme.bodyText2.copyWith(
                               color: Colors.white,
-                              fontWeight: task.duration > 0 ||
+                              fontWeight: task.duration(null).inSeconds > 0 ||
                                       task.hasTimer ||
                                       _timer != null
                                   ? FontWeight.bold
@@ -136,7 +136,7 @@ class _TimerWidgetState extends State<EasyTimer> {
       // Create the worklog
       const i = worklogMinuteInterval;
       widget.task.timer.worklog
-        ..durata = widget.task.duration +
+        ..durata = widget.task.duration(null).inMinutes +
             (widget.task.timer.duration.inMinutes / i).round() * i
         ..task = widget.task;
       final result = await Navigator.pushNamed(

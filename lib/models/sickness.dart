@@ -42,6 +42,9 @@ class Sickness with BaseModel, TodayActivity, CalendarEvent {
       : null;
 
   @override
+  Duration duration(DateTime date) => userInfo.targetHours(date);
+
+  @override
   SicknessProvider provider(BuildContext context) =>
       context.read<SicknessProvider>();
 

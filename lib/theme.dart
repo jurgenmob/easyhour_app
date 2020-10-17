@@ -86,6 +86,7 @@ class EasyIcons {
   static const IconData timer_off = _EasyIconsData(0xe943);
   static const IconData timer_filled = _EasyIconsData(0xe941);
   static const IconData calendar = _EasyIconsData(0xe920);
+  static const IconData calendar_today = _EasyIconsData(0xe973);
   static const IconData arrow_left = _EasyIconsData(0xe981);
   static const IconData arrow_right = _EasyIconsData(0xe9cd);
   static const IconData description = _EasyIconsData(0xe948);

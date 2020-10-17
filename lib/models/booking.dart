@@ -51,6 +51,9 @@ class Booking with BaseModel, CalendarEvent {
       : null;
 
   @override
+  Duration duration(DateTime date) => Duration();
+
+  @override
   BookingProvider provider(BuildContext context) =>
       context.read<BookingProvider>();
 
