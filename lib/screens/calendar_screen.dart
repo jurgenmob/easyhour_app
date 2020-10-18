@@ -76,7 +76,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
     super.dispose();
   }
 
-  void _onDaySelected(DateTime day, List events) {
+  void _onDaySelected(DateTime day, List events, List holidays) {
     _selectedDay = day;
     _provider.filter = day;
     setState(() {});
