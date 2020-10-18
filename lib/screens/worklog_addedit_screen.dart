@@ -44,14 +44,11 @@ class _WorklogFormState
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Load suggested descriptions for this task
-      EasyRest().getSuggestedDescriptions(_item.task).then((value) => setState(
-          () => _suggestedDescriptions = value
-              .map((e) => SuggestedDescription(e, _descrController))
-              .toList()));
-
-      // Show hours picker at startup if modifying an existing worklog
       if (_item.task != null) {
+        // Load suggested descriptions for this task
+        _loadSuggestedDescriptions();
+
+        // Show hours picker at startup if modifying an existing worklog
         _openDurationPicker(context);
         editableTask = false;
       }
@@ -64,6 +61,13 @@ class _WorklogFormState
   void setItem(WorkLog itemToEdit) {
     _item = itemToEdit;
     _descrController.text = _item.descrizione;
+  }
+
+  void _loadSuggestedDescriptions() {
+    EasyRest().getSuggestedDescriptions(_item.task).then((value) => setState(
+        () => _suggestedDescriptions = value
+            .map((e) => SuggestedDescription(e, _descrController))
+            .toList()));
   }
 
   @override
@@ -217,7 +221,9 @@ class _TaskSelectFieldState extends State<_TaskSelectField> {
             value: widget.item.task,
             onChange: (state) {
               setState(() => widget.item.task = state.value);
-              _worklogFormKey.currentState.setState(() {});
+              _worklogFormKey.currentState
+                ..setState(() {})
+                .._loadSuggestedDescriptions();
             },
             choiceItems: _tasks,
             choiceStyle: S2ChoiceStyle(
