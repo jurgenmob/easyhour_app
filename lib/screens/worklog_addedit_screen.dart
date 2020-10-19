@@ -64,10 +64,12 @@ class _WorklogFormState
   }
 
   void _loadSuggestedDescriptions() {
-    EasyRest().getSuggestedDescriptions(_item.task).then((value) => setState(
-        () => _suggestedDescriptions = value
-            .map((e) => SuggestedDescription(e, _descrController))
-            .toList()));
+    if (mounted) {
+      EasyRest().getSuggestedDescriptions(_item.task).then((value) => setState(
+          () => _suggestedDescriptions = value
+              .map((e) => SuggestedDescription(e, _descrController))
+              .toList()));
+    }
   }
 
   @override

@@ -34,6 +34,8 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   Comparator<T> comparator() => null;
 
   void fetchData() async {
+    if (!mounted) return;
+
     try {
       setState(() {
         _error = null;

@@ -187,15 +187,21 @@ class _CalendarWidgetState extends State<CalendarWidget>
     // Calculate target hours
     final targetHours = userInfo.targetHours(date);
 
-    // Calculate text and colors
+    // Calculate text and colors:
+    // - if the date is in the past use the indicator
+    // - if the date is the selected day show worked hours + indicator
+    // - if the date is in the future don't show anything
     final today = DateTime.now();
     final text = date.isSameDay(_selectedDay) ? "${workedHours.inHours}" : "";
-    final backgroundColor = date.isAfter(today)
-        ? Colors.transparent
-        : CalendarProvider.dayIndicator(
-            worked: workedHours, target: targetHours);
-    final foregroundColor =
-        workedHours < targetHours ? Colors.white : Colors.black;
+    final CalendarIndicator indicator = date.isSameDay(_selectedDay)
+        ? ((date.isSameDay(today) || date.isBefore(today))
+            ? CalendarProvider.dayIndicator(
+                worked: workedHours, target: targetHours)
+            : CalendarIndicator(Colors.black, Colors.white))
+        : date.isAfter(today)
+            ? CalendarIndicator.transparent()
+            : CalendarProvider.dayIndicator(
+                worked: workedHours, target: targetHours);
     final double size = text?.isNotEmpty == true ? 16 : 8;
     final double position = text?.isNotEmpty == true ? 1 : 8;
 
@@ -205,7 +211,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: backgroundColor,
+            color: indicator.background,
           ),
           width: size,
           height: size,
@@ -213,7 +219,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
             child: Text(
               text,
               style: TextStyle().copyWith(
-                color: foregroundColor,
+                color: indicator.foreground,
                 fontSize: 12,
               ),
             ),

@@ -64,7 +64,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
     notifyListeners();
   }
 
-  Future<Color> monthIndicator({DateTimeRange dateRange}) async {
+  Future<CalendarIndicator> monthIndicator({DateTimeRange dateRange}) async {
     if (dateRange == null) {
       // Get events of current month
       DateTime now = DateTime.now();
@@ -105,9 +105,20 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   }
 
   // Calendar indicator colors
-  static Color dayIndicator(
+  static CalendarIndicator dayIndicator(
           {@required Duration worked, @required Duration target}) =>
       worked == target
-          ? Colors.greenAccent
-          : (worked < target ? Colors.red : Colors.yellow);
+          ? const CalendarIndicator(Colors.black, Colors.greenAccent)
+          : (worked < target
+              ? const CalendarIndicator(Colors.white, Colors.red)
+              : const CalendarIndicator(Colors.black, Colors.yellow));
+}
+
+class CalendarIndicator {
+  final Color foreground;
+  final Color background;
+
+  const CalendarIndicator(this.foreground, this.background);
+
+  CalendarIndicator.transparent() : this(Colors.black, Colors.transparent);
 }

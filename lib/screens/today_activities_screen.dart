@@ -8,6 +8,7 @@ import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
+import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
@@ -266,7 +267,8 @@ class _TaskItemState extends State<_TaskItem> {
         ..showSnackBar(SnackBar(content: Text(result)));
     }
 
-    // Update the calendar icon
+    // Restore the appbar icon
+    context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
     EasyAppBar.updateCalendarIndicator(context);
   }
 }

@@ -97,7 +97,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: route.indicator,
+                color: route.indicator.background,
               ),
               width: 8,
               height: 8,

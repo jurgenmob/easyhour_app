@@ -1,3 +1,4 @@
+import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:flutter/material.dart';
 
 typedef Object ArgumentsFunc();
@@ -16,7 +17,7 @@ class EasyRoute {
   final ArgumentsFunc argumentsFunc;
 
   /// If not-null a small spot with given color is added to the icon
-  Color _indicator;
+  CalendarIndicator _indicator;
 
   get indicator => _indicator;
 
@@ -25,14 +26,17 @@ class EasyRoute {
   Object get arguments => argumentsFunc != null ? argumentsFunc() : null;
 
   EasyRoute(this.page,
-      {this.icon, this.callback, this.argumentsFunc, Color indicator})
+      {this.icon,
+      this.callback,
+      this.argumentsFunc,
+      CalendarIndicator indicator})
       : _indicator = indicator;
 
   EasyRoute.home() : this('/home');
 
   EasyRoute.login() : this('/login');
 
-  EasyRoute.calendar({Color indicator, VoidCallback callback})
+  EasyRoute.calendar({CalendarIndicator indicator, VoidCallback callback})
       : this('/calendar',
             icon: Icon(callback == null ? Icons.calendar_today : Icons.today),
             indicator: indicator,
