@@ -381,79 +381,56 @@ class EasyRest {
   }
 
   Future<List<Booking>> getBookings() async {
-    // TODO
-    // Response<String> response = await _dio.get('/user-feries');
-    //
-    // return WorkPlaceResponse.fromJson(jsonDecode(response.data)).items;
+    // Mock data
+    // return EasyMock().getBookings();
 
-    List<WorkPlace> workPlaces = await getWorkPlaces();
-    return List.generate(
-        20,
-        (i) => Booking(
-            id: i,
-            dataInizio: DateTime.parse("2020-01-${i.padLeft(2)}"),
-            dataFine: DateTime.parse("2020-01-${(i + 1).padLeft(2)}"),
-            postazione: (workPlaces..shuffle()).first));
+    Response<String> response = await _dio.get('/user-prenotaziones');
+
+    return BookingResponse.fromJson(jsonDecode(response.data)).items;
   }
 
   Future<Response> deleteBooking(Booking item) async {
     return _dio.delete('/user-prenotaziones/${item.id}');
   }
 
-  Future<Booking> addEditWorkPlace(Booking item) async {
-    // TODO
-    // Response<String> response = await _dio.request<String>(
-    //   '/feries',
-    //   data: item.toJson(),
-    //   options: Options(method: item.isNew ? 'POST' : 'PUT'),
-    // );
-    //
-    // return WorkPlace.fromJson(jsonDecode(response.data));
+  Future<Booking> addEditBooking(Booking item) async {
+    Response<String> response = await _dio.request<String>(
+      '/nuova-prenotazione',
+      data: item.toJson(),
+      options: Options(method: item.isNew ? 'POST' : 'PUT'),
+    );
+
+    return Booking.fromJson(jsonDecode(response.data));
   }
 
-  Future<Response> deleteWorkPlace(Booking item) async {
-    // TODO
-    // return _dio.delete('/feries/${item.id}');
-  }
+  Future<List<WorkPlace>> getWorkPlaces(DateTimeRange dateRange) async {
+    Response<String> response = await _dio.get('/available-postaziones/' +
+        '${dateRange.start.formatRest()}/${dateRange.end.formatRest()}');
 
-  Future<List<WorkPlace>> getWorkPlaces({DateTimeRange dateRange}) async {
-    // TODO
-    // Response<String> response = await _dio.get('/user-feries');
-    //
-    // return WorkPlaceResponse.fromJson(jsonDecode(response.data)).items;
-
-    return List.generate(
-        20,
-        (i) => WorkPlace(
-            id: i,
-            nome: "Scrivania luuuunga ${i + 1}",
-            ufficio:
-                Office(id: i % 3, nome: "Ufficio lungo lungo ${i % 3 + 1}")));
+    return WorkPlaceResponse.fromJson(jsonDecode(response.data)).items;
   }
 
   Future<List<Office>> getOffices() async {
-    // TODO
-    // Response<String> response = await _dio.get('/user-permessos');
-    //
-    // return OfficeResponse.fromJson(jsonDecode(response.data)).items;
+    // Mock data
+    // return EasyMock().getOffices();
 
-    return List.generate(3, (i) => Office(id: i, nome: "Ufficio ${i + 1}"));
+    Response<String> response = await _dio.get('/ufficios');
+
+    return OfficeResponse.fromJson(jsonDecode(response.data)).items;
   }
 
   Future<Office> addEditOffice(Office item) async {
-    // TODO
-    // Response<String> response = await _dio.request<String>(
-    //   '/permessos',
-    //   data: item.toJson(),
-    //   options: Options(method: item.isNew ? 'POST' : 'PUT'),
-    // );
-    //
-    // return Office.fromJson(jsonDecode(response.data));
+    Response<String> response = await _dio.request<String>(
+      '/ufficios',
+      data: item.toJson(),
+      options: Options(method: item.isNew ? 'POST' : 'PUT'),
+    );
+
+    return Office.fromJson(jsonDecode(response.data));
   }
 
   Future<Response> deleteOffice(Office item) async {
-    // TODO
-    // return _dio.delete('/permessos/${item.id}');
+    return _dio.delete('/ufficios/${item.id}');
   }
 }
 

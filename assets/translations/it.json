@@ -37,57 +37,58 @@
   "label_enter_location_name": "Nome della posizione",
   "label_attachments": "Allegati",
   "label_attachments_selected": {
-    "zero":"Nessun allegato selezionato",
-    "one":"{} allegato selezionato",
-    "other":"{} allegati selezionati"
+    "zero": "Nessun allegato selezionato",
+    "one": "{} allegato selezionato",
+    "other": "{} allegati selezionati"
   },
   "label_office_name": "Nome Ufficio",
   "label_workplaces_number": "Numero di postazioni",
   "label_workplaces_prefix": "Prefisso nomi scrivanie",
 
   "label_vacations": {
-    "one":"Ferie",
-    "other":"Ferie"
+    "one": "Ferie",
+    "other": "Ferie"
   },
   "label_permits": {
-    "one":"Permesso",
-    "other":"Permessi"
+    "one": "Permesso",
+    "other": "Permessi"
   },
   "label_sicknesses": {
-    "one":"Malattia",
-    "other":"Malattia"
+    "one": "Malattia",
+    "other": "Malattia"
   },
   "label_trips": {
-    "one":"Trasferta",
-    "other":"Trasferte"
+    "one": "Trasferta",
+    "other": "Trasferte"
   },
   "label_activities": {
-    "one":"Attività",
-    "other":"Attività"
+    "one": "Attività",
+    "other": "Attività"
   },
   "label_smartworkings": {
-    "one":"Smart Working",
-    "other":"Smart Working"
+    "one": "Smart Working",
+    "other": "Smart Working"
   },
   "label_worklogs": {
-    "one":"Tempo lavorato",
-    "other":"Tempo lavorato"
+    "one": "Tempo lavorato",
+    "other": "Tempo lavorato"
   },
   "label_locations": {
-    "one":"Posizione",
-    "other":"Posizioni"
+    "one": "Posizione",
+    "other": "Posizioni"
   },
   "label_bookings": {
-    "one":"Prenotazione",
-    "other":"Prenotazioni"
+    "one": "Prenotazione",
+    "other": "Prenotazioni"
   },
   "label_workplaces": {
-    "one":"Postazione",
-    "other":"Postazioni"
+    "one": "Postazione",
+    "other": "Postazioni"
   },
+  "label_workplaces_short": "posti",
   "label_offices": {
-    "one":"Ufficio",
-    "other":"Uffici"
+    "one": "Ufficio",
+    "other": "Uffici"
   },
 
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",

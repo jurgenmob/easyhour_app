@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_select/smart_select.dart';
 
 final _bookingFormKey = GlobalKey<_BookingFormState>();
+final _workPlacesSelectKey = GlobalKey<_WorkPlaceSelectFieldState>();
 
 class BookingAddEditScreen extends BaseAddEditScreen<Booking> {
   @override
@@ -52,6 +53,7 @@ class _BookingFormState extends AddEditFormState<Booking, BookingProvider> {
                   item.dataInizio = picked.start;
                   item.dataFine = picked.end;
                 });
+                _workPlacesSelectKey.currentState.refreshWorkPlaces();
               }
             }),
         _WorkPlaceSelectField(_item, editable: _item.dateRange != null),
@@ -62,7 +64,8 @@ class _WorkPlaceSelectField extends StatefulWidget {
   final Booking item;
   final bool editable;
 
-  _WorkPlaceSelectField(this.item, {this.editable = true});
+  _WorkPlaceSelectField(this.item, {this.editable = true})
+      : super(key: _workPlacesSelectKey);
 
   @override
   _WorkPlaceSelectFieldState createState() => _WorkPlaceSelectFieldState();
@@ -72,15 +75,15 @@ class _WorkPlaceSelectFieldState extends State<_WorkPlaceSelectField> {
   bool _loading = false;
   List<S2Choice<WorkPlace>> _workplaces = [];
 
-  @override
-  void initState() {
-    super.initState();
-
-    _getWorkplaces();
+  void refreshWorkPlaces() {
+    setState(() => _workplaces = null);
   }
 
   @override
   Widget build(BuildContext context) {
+    // Load available work places
+    if (widget.item.dateRange != null && _workplaces == null) _getWorkplaces();
+
     // Autocomplete with first location if only one is found
     if (_workplaces?.length == 1) widget.item.postazione = _workplaces[0].value;
 
@@ -132,7 +135,7 @@ class _WorkPlaceSelectFieldState extends State<_WorkPlaceSelectField> {
     try {
       setState(() => _loading = true);
       List<WorkPlace> workplaces =
-          await EasyRest().getWorkPlaces(dateRange: widget.item.dateRange);
+          await EasyRest().getWorkPlaces(widget.item.dateRange);
       setState(() => _workplaces = S2Choice.listFrom<WorkPlace, dynamic>(
             source: workplaces,
             value: (index, item) => item,

@@ -4,7 +4,6 @@ import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/providers/booking_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
-import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +12,7 @@ import '../generated/locale_keys.g.dart';
 class BookingListScreen extends BaseScreen<Booking> {
   @override
   List<EasyRoute> getAppBarRoutes(context) => [
-        if (userInfo.isReporter)
-          EasyRoute.list(Office, icon: EasyIcons.settings),
+        if (userInfo.isReporter) EasyRoute.list(Office, icon: Icons.settings),
         EasyRoute.addEdit(Booking)
       ];
 

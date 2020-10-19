@@ -9,9 +9,9 @@ class BookingProvider extends BaseProvider<Booking> {
 
   @override
   Future<Booking> add(Booking item) =>
-      restAdd(EasyRest().addEditWorkPlace(item));
+      restAdd(EasyRest().addEditBooking(item));
 
   @override
   Future<bool> delete(Booking item) =>
-      restDelete(item, EasyRest().deleteWorkPlace(item));
+      restDelete(item, EasyRest().deleteBooking(item));
 }

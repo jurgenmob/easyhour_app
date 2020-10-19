@@ -81,7 +81,8 @@ abstract class BaseProvider<T extends BaseModel> extends ChangeNotifier {
   Future<bool> restDelete(T item, Future<Response> restCall) async {
     // Return value is empty, just check the http code
     Response response = await restCall;
-    final bool resultOk = response.statusCode == 200;
+    final bool resultOk =
+        response.statusCode == 200 || response.statusCode == 204;
     if (resultOk) _items.remove(item);
 
     notifyListeners();

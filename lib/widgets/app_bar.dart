@@ -78,7 +78,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
         ),
         actions: model.actions
             ?.where((e) => e != null)
-            ?.map((e) => _getIcon(context, e))
+            ?.map((e) => _buildIcon(context, e))
             ?.toList(),
         iconTheme: IconThemeData(color: Colors.white),
         brightness: Brightness.dark,
@@ -86,31 +86,34 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
     });
   }
 
-  Widget _getIcon(BuildContext context, EasyRoute route) => Stack(children: [
-        IconButton(
-          icon: route.icon,
-          onPressed: () => navigate(context, route),
-        ),
-        if (route.indicator != null)
-          Positioned(
-            bottom: 6,
-            right: 6,
-            child: Badge(
-              badgeColor: route.indicator.background,
-              borderRadius: 20,
-              padding: EdgeInsets.all(
-                  route.indicator.text?.isNotEmpty == true ? 2 : 4),
-              shape: route.indicator.text?.isNotEmpty == true
-                  ? BadgeShape.square
-                  : BadgeShape.circle,
-              badgeContent: Text(
-                route.indicator.text,
-                style:
-                    TextStyle(color: route.indicator.foreground, fontSize: 12),
+  Widget _buildIcon(BuildContext context, EasyRoute route) => GestureDetector(
+        onTap: () => navigate(context, route),
+        child: Stack(children: [
+          IconButton(
+            icon: route.icon,
+            onPressed: () => navigate(context, route),
+          ),
+          if (route.indicator != null)
+            Positioned(
+              bottom: 6,
+              right: 6,
+              child: Badge(
+                badgeColor: route.indicator.background,
+                borderRadius: 20,
+                padding: EdgeInsets.all(
+                    route.indicator.text?.isNotEmpty == true ? 2 : 4),
+                shape: route.indicator.text?.isNotEmpty == true
+                    ? BadgeShape.square
+                    : BadgeShape.circle,
+                badgeContent: Text(
+                  route.indicator.text,
+                  style: TextStyle(
+                      color: route.indicator.foreground, fontSize: 12),
+                ),
               ),
-            ),
-          )
-      ]);
+            )
+        ]),
+      );
 
   @override
   get preferredSize => Size.fromHeight(kToolbarHeight);

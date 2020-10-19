@@ -37,57 +37,58 @@
   "label_enter_location_name": "Location name",
   "label_attachments": "Attachments",
   "label_attachments_selected": {
-    "zero":"No attachment selected",
-    "one":"{} attachment selected",
-    "other":"{} attachments selected"
+    "zero": "No attachment selected",
+    "one": "{} attachment selected",
+    "other": "{} attachments selected"
   },
   "label_office_name": "Office Name",
   "label_workplaces_number": "Number of workplaces",
   "label_workplaces_prefix": "Desk names prefix",
 
   "label_vacations": {
-    "one":"Vacation",
-    "other":"Vacation"
+    "one": "Vacation",
+    "other": "Vacation"
   },
   "label_permits": {
-    "one":"Permit",
-    "other":"Permits"
+    "one": "Permit",
+    "other": "Permits"
   },
   "label_sicknesses": {
-    "one":"Sickness",
-    "other":"Sickness"
+    "one": "Sickness",
+    "other": "Sickness"
   },
   "label_trips": {
-    "one":"Trip",
-    "other":"Trips"
+    "one": "Trip",
+    "other": "Trips"
   },
   "label_activities": {
-    "one":"Activity",
-    "other":"Activities"
+    "one": "Activity",
+    "other": "Activities"
   },
   "label_smartworkings": {
-    "one":"Smart Working",
-    "other":"Smart Working"
+    "one": "Smart Working",
+    "other": "Smart Working"
   },
   "label_worklogs": {
-    "one":"Worklog",
-    "other":"Worklogs"
+    "one": "Worklog",
+    "other": "Worklogs"
   },
   "label_locations": {
-    "one":"Location",
-    "other":"Locations"
+    "one": "Location",
+    "other": "Locations"
   },
   "label_bookings": {
-    "one":"Booking",
-    "other":"Bookings"
+    "one": "Booking",
+    "other": "Bookings"
   },
   "label_workplaces": {
-    "one":"Workplace",
-    "other":"Workplaces"
+    "one": "Workplace",
+    "other": "Workplaces"
   },
+  "label_workplaces_short": "desks",
   "label_offices": {
-    "one":"Office",
-    "other":"Offices"
+    "one": "Office",
+    "other": "Offices"
   },
 
   "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",

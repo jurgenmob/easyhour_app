@@ -9,8 +9,11 @@ class Office with BaseModel {
   int id;
   String nome;
   String descrizione;
+  String prefisso;
+  int quantita;
+  int postazioniCount;
 
-  Office({this.id, this.nome, this.descrizione});
+  Office({this.id, this.nome, this.descrizione, this.prefisso, this.quantita});
 
   @override
   get listTitle => LocaleKeys.label_offices.plural(1).toUpperCase();
@@ -19,10 +22,7 @@ class Office with BaseModel {
   get listSubtitle => nome;
 
   @override
-  get listDetailsTop => "TODO PREFIX";
-
-  @override
-  get listDetailsBtm => "TODO #123";
+  get listDetailsTop => "$quantita ${LocaleKeys.label_workplaces_short.tr()}";
 
   @override
   get editable => false;
@@ -32,6 +32,9 @@ class Office with BaseModel {
     id = json['id'];
     nome = json['nome'];
     descrizione = json['descrizione'];
+    prefisso = json['prefisso'];
+    quantita = json['quantita'] ?? 0;
+    postazioniCount = json['postazioniCount'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -39,6 +42,13 @@ class Office with BaseModel {
     if (id != null) data['id'] = this.id;
     data['nome'] = this.nome;
     data['descrizione'] = this.descrizione;
+    data['prefisso'] = this.prefisso;
+    if (quantita != null) {
+      data['quantita'] = this.quantita;
+    }
+    if (postazioniCount != null) {
+      data['postazioniCount'] = this.postazioniCount;
+    }
     return data;
   }
 

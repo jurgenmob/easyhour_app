@@ -1,6 +1,6 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const app_version = 'app_version';
   static const api_generic_error = 'api_generic_error';
   static const message_login_failed = 'message_login_failed';
@@ -46,6 +46,7 @@ abstract class LocaleKeys {
   static const label_locations = 'label_locations';
   static const label_bookings = 'label_bookings';
   static const label_workplaces = 'label_workplaces';
+  static const label_workplaces_short = 'label_workplaces_short';
   static const label_offices = 'label_offices';
   static const empty_list_tasks = 'empty_list_tasks';
   static const empty_list_generic = 'empty_list_generic';
@@ -70,4 +71,5 @@ abstract class LocaleKeys {
   static const label_choose = 'label_choose';
   static const label_save = 'label_save';
   static const message_confirm_app_exit = 'message_confirm_app_exit';
+
 }
