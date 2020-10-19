@@ -19,7 +19,7 @@ class EasyRoute {
   /// If not-null a small spot with given color is added to the icon
   CalendarIndicator _indicator;
 
-  get indicator => _indicator;
+  CalendarIndicator get indicator => _indicator;
 
   set indicator(value) => _indicator = value;
 

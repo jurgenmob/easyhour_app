@@ -51,6 +51,12 @@ UserInfo userInfo;
 extension IntUtils on num {
   String padLeft(int width, [String padding = '0']) =>
       this.toString().padLeft(width, padding);
+
+  String formatWithSign() => this > 0
+      ? "+${this}"
+      : this < 0
+          ? "-${this}"
+          : "";
 }
 
 extension DateTimeUtils on DateTime {

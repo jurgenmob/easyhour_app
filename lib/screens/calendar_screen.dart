@@ -82,7 +82,8 @@ class _CalendarWidgetState extends State<CalendarWidget>
     setState(() {});
   }
 
-  void _refreshEvents(DateTime first, DateTime last, CalendarFormat format) {
+  void _refreshEvents(
+      DateTime first, DateTime last, CalendarFormat format) async {
     final eventsRange = DateTimeRange(start: first, end: last);
     _provider.getEvents(eventsRange);
 
@@ -180,6 +181,8 @@ class _CalendarWidgetState extends State<CalendarWidget>
   }
 
   Widget _buildEventsMarker(DateTime date, List events) {
+    // print("\n\n_buildEventsMarker() called with date = $date, events = $events");
+
     // Calculate worked hours
     final workedHours =
         events.fold<Duration>(Duration(), (p, e) => p + e.duration(date));
@@ -197,7 +200,8 @@ class _CalendarWidgetState extends State<CalendarWidget>
         ? ((date.isSameDay(today) || date.isBefore(today))
             ? CalendarProvider.dayIndicator(
                 worked: workedHours, target: targetHours)
-            : CalendarIndicator(Colors.black, Colors.white))
+            : const CalendarIndicator("",
+                foreground: Colors.black, background: Colors.white))
         : date.isAfter(today)
             ? CalendarIndicator.transparent()
             : CalendarProvider.dayIndicator(

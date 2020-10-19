@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/routes.dart';
@@ -92,15 +93,21 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
         ),
         if (route.indicator != null)
           Positioned(
-            bottom: 12,
-            right: 4,
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: route.indicator.background,
+            bottom: 6,
+            right: 6,
+            child: Badge(
+              badgeColor: route.indicator.background,
+              borderRadius: 20,
+              padding: EdgeInsets.all(
+                  route.indicator.text?.isNotEmpty == true ? 2 : 4),
+              shape: route.indicator.text?.isNotEmpty == true
+                  ? BadgeShape.square
+                  : BadgeShape.circle,
+              badgeContent: Text(
+                route.indicator.text,
+                style:
+                    TextStyle(color: route.indicator.foreground, fontSize: 12),
               ),
-              width: 8,
-              height: 8,
             ),
           )
       ]);

@@ -416,7 +416,7 @@ class EasyRest {
     // return _dio.delete('/feries/${item.id}');
   }
 
-  Future<List<WorkPlace>> getWorkPlaces() async {
+  Future<List<WorkPlace>> getWorkPlaces({DateTimeRange dateRange}) async {
     // TODO
     // Response<String> response = await _dio.get('/user-feries');
     //

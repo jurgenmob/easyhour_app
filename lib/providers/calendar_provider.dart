@@ -108,17 +108,26 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   static CalendarIndicator dayIndicator(
           {@required Duration worked, @required Duration target}) =>
       worked == target
-          ? const CalendarIndicator(Colors.black, Colors.greenAccent)
+          ? const CalendarIndicator("",
+              foreground: Colors.black, background: Colors.greenAccent)
           : (worked < target
-              ? const CalendarIndicator(Colors.white, Colors.red)
-              : const CalendarIndicator(Colors.black, Colors.yellow));
+              ? CalendarIndicator(
+                  (worked.inHours - target.inHours).formatWithSign(),
+                  foreground: Colors.white,
+                  background: Colors.red)
+              : CalendarIndicator(
+                  (worked.inHours - target.inHours).formatWithSign(),
+                  foreground: Colors.black,
+                  background: Colors.yellow));
 }
 
 class CalendarIndicator {
   final Color foreground;
   final Color background;
+  final String text;
 
-  const CalendarIndicator(this.foreground, this.background);
+  const CalendarIndicator(this.text,
+      {@required this.foreground, this.background = Colors.transparent});
 
-  CalendarIndicator.transparent() : this(Colors.black, Colors.transparent);
+  CalendarIndicator.transparent() : this("", foreground: Colors.black);
 }

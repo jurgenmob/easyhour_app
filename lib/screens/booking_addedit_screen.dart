@@ -131,7 +131,8 @@ class _WorkPlaceSelectFieldState extends State<_WorkPlaceSelectField> {
   void _getWorkplaces() async {
     try {
       setState(() => _loading = true);
-      List<WorkPlace> workplaces = await EasyRest().getWorkPlaces();
+      List<WorkPlace> workplaces =
+          await EasyRest().getWorkPlaces(dateRange: widget.item.dateRange);
       setState(() => _workplaces = S2Choice.listFrom<WorkPlace, dynamic>(
             source: workplaces,
             value: (index, item) => item,
