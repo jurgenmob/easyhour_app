@@ -2,25 +2,12 @@ import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/worklog.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-import '../globals.dart';
 import 'base_provider.dart';
 
 class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
   @override
   Future<List<TodayActivity>> get() async {
-    // Since this provider is the very first one used, this is the best
-    // place to initialize user info, at least if anybody can come up
-    // with a cleaner (but not more verbose) solution. Moving that in
-    // main.dart leads to a poor ux because multiple loaders are shown
-    // and we also need to handle non-logged users separately.
-    userInfo = await EasyRest().getUserInfo();
-
-    // Also set the Crashlytics ID here
-    FirebaseCrashlytics.instance
-        .setUserIdentifier(userInfo.userDTO.id?.toString());
-
     return restGet(EasyRest().getTodayActivities());
   }
 

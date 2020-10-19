@@ -25,6 +25,7 @@ import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/models/workplace.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -63,7 +64,12 @@ class EasyRest {
 
     // Add auth token to each request
     _dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      // Wait for user information to be available first
+      if (isUserLogged() && userInfo == null && options.path != '/user-info') {
+        await getUserInfo();
+      }
+
       return options
         ..headers.addAll({
           if (_accessToken != null) "Authorization": "Bearer $_accessToken",
@@ -121,7 +127,12 @@ class EasyRest {
       Response<String> response = await _dio.post<String>('/authenticate',
           data: LoginRequest(username: username, password: password).toJson());
 
-      return saveTokens(LoginResponse.fromJson(jsonDecode(response.data)));
+      if (await saveTokens(LoginResponse.fromJson(jsonDecode(response.data)))) {
+        // Also, wait for user information to be populated
+        await getUserInfo();
+
+        return true;
+      }
     } catch (e, s) {
       print(e);
       print(s);
@@ -133,6 +144,7 @@ class EasyRest {
   Future<bool> doLogout() {
     _accessToken = null;
     _refreshToken = null;
+    userInfo = null;
 
     return saveTokens(null);
   }
@@ -310,7 +322,13 @@ class EasyRest {
   Future<UserInfo> getUserInfo() async {
     Response<String> response = await _dio.get('/user-info');
 
-    return UserInfoResponse.fromJson(jsonDecode(response.data)).info;
+    userInfo = UserInfoResponse.fromJson(jsonDecode(response.data)).info;
+
+    // Also set the Crashlytics ID here
+    FirebaseCrashlytics.instance
+        .setUserIdentifier(userInfo.userDTO.id?.toString());
+
+    return userInfo;
   }
 
   Future<List<CalendarEvent>> getCalendarEvents(DateTimeRange dateRange) async {

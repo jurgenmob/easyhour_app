@@ -8,7 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Swtich between DEV and PROD environments
-const String baseUrl =
+const String baseUrl = //'http://192.168.1.24:8080';
     kReleaseMode ? 'https://easyhour.app' : 'https://easyhour.mobidev.it';
 
 const String restDateFormat = "yyyy-MM-dd";
