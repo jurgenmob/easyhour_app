@@ -1,4 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh
+${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt
 ${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework
 ${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework
 ${PODS_ROOT}/../Flutter/Flutter.framework

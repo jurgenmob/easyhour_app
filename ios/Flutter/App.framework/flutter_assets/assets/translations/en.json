@@ -14,6 +14,7 @@
 
   "field_is_required": "This field is required.",
   "field_email_invalid": "The e-mail address you provided is not valid.",
+  "field_int_number_invalid": "The given number is not a valid integer number.",
 
   "label_domain": "Domain",
   "help_domain": "The .easyhour.app domain belonging your company.",
@@ -40,6 +41,9 @@
     "one":"{} attachment selected",
     "other":"{} attachments selected"
   },
+  "label_office_name": "Office Name",
+  "label_workplaces_number": "Number of workplaces",
+  "label_workplaces_prefix": "Desk names prefix",
 
   "label_vacations": {
     "one":"Vacation",
@@ -73,6 +77,18 @@
     "one":"Location",
     "other":"Locations"
   },
+  "label_bookings": {
+    "one":"Booking",
+    "other":"Bookings"
+  },
+  "label_workplaces": {
+    "one":"Workplace",
+    "other":"Workplaces"
+  },
+  "label_offices": {
+    "one":"Office",
+    "other":"Offices"
+  },
 
   "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",
   "empty_list_generic": "No {} planned.\nStart by clicking on the icon in the top-right corner.",
@@ -82,6 +98,7 @@
   "message_edit_generic": "The content has been modified successfully.",
   "message_no_clients": "Sorry, no clients available.",
   "message_no_locations": "Sorry, no locations available.",
+  "message_no_workplaces": "Sorry, no workplaces available in the selected period.",
   "message_pick_task": "Pick a task for the worklog.",
   "message_stop_timer": "Are you sure you want to stop the timer?",
   "message_timer_active": "You already have an active timer, deactivate it before starting a new one.",
