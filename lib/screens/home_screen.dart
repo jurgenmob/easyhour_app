@@ -1,5 +1,6 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/screens/company_actions_screen.dart';
@@ -56,8 +57,9 @@ class HomeScreen extends BaseScreen {
     firebaseMessaging.requestNotificationPermissions();
 
     firebaseMessaging.getToken().then((String token) {
-      // TODO: sent token to server when API will be available
+      // Send token to backend
       print("*** Push token ***: $token");
+      EasyRest().updatePushToken(token);
     });
   }
 }

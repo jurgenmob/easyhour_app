@@ -432,6 +432,14 @@ class EasyRest {
   Future<Response> deleteOffice(Office item) async {
     return _dio.delete('/ufficios/${item.id}');
   }
+
+  Future<bool> updatePushToken(String deviceId) async {
+    Response<String> response = await _dio.post<String>('/pushes',
+        data: UpdatePushRequest(deviceId, Platform.operatingSystem).toJson());
+
+    return UpdatePushResponse.fromJson(jsonDecode(response.data)).deviceId ==
+        deviceId;
+  }
 }
 
 String handleRestError(BuildContext context, e, s) {

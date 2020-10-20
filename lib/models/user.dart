@@ -50,7 +50,6 @@ class LoginRequest {
     data['username'] = this.username.trim();
     data['password'] = this.password.trim();
     data['rememberMe'] = true;
-
     return data;
   }
 }
@@ -64,7 +63,6 @@ class RefreshTokenRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['refreshToken'] = this.refreshToken;
     data['rememberMe'] = true;
-
     return data;
   }
 }
@@ -76,5 +74,31 @@ class LoginResponse {
   LoginResponse.fromJson(Map<String, dynamic> json) {
     accessToken = json['accessToken'];
     refreshToken = json['refreshToken'];
+  }
+}
+
+class UpdatePushRequest {
+  String deviceId;
+  String platform;
+
+  UpdatePushRequest(this.deviceId, this.platform);
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['deviceId'] = this.deviceId;
+    data['platform'] = this.platform;
+    return data;
+  }
+}
+
+class UpdatePushResponse {
+  int id;
+  String deviceId;
+  String platform;
+
+  UpdatePushResponse.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    deviceId = json['deviceId'];
+    platform = json['platform'];
   }
 }
