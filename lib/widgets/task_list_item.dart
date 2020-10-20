@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 
 class TaskListItem extends StatelessWidget {
   final CrossAxisAlignment alignment;
+  final String heroTag;
 
-  const TaskListItem(this.task, {Key key, this.alignment}) : super(key: key);
+  const TaskListItem(this.task,
+      {Key key, @required this.heroTag, this.alignment})
+      : super(key: key);
 
   final Task task;
 
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: "task-${task.id}",
+      tag: heroTag,
       child: Column(
           crossAxisAlignment: alignment ?? CrossAxisAlignment.start,
           children: <Widget>[

@@ -23,8 +23,6 @@ class _OfficeFormState extends AddEditFormState<Office, OfficeProvider> {
   Office get item => _item;
   Office _item;
 
-  _OfficeFormState() : super(LocaleKeys.label_offices);
-
   @override
   void setItem(Office itemToEdit) {
     if (_item == null) _item = itemToEdit ?? Office();
@@ -43,8 +41,8 @@ class _OfficeFormState extends AddEditFormState<Office, OfficeProvider> {
           icon: EasyIcons.description,
           keyboardType:
               TextInputType.numberWithOptions(signed: false, decimal: false),
-          // initialValue: item.nome,
-          // onSaved: (value) => _item.descrizione = value,
+          initialValue: item.quantita,
+          onSaved: (value) => _item.quantita = int.parse(value),
           validator: (value) => validateInt(value) && int.parse(value) > 0
               ? null
               : LocaleKeys.field_int_number_invalid.tr(),
@@ -52,9 +50,9 @@ class _OfficeFormState extends AddEditFormState<Office, OfficeProvider> {
         EasyTextField(
           labelText: LocaleKeys.label_workplaces_prefix,
           icon: EasyIcons.description,
-          // initialValue: item.nome,
+          initialValue: item.prefisso,
           isRequired: false,
-          // onSaved: (value) => _item.descrizione = value,
+          onSaved: (value) => _item.prefisso = value,
         ),
       ];
 }

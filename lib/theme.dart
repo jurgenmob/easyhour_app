@@ -65,8 +65,13 @@ class EasyIcons {
 
   // Tabs
   static const IconData home = _EasyIconsData(0xe976);
+  static const IconData home_filled = _EasyIconsData(0xe975);
   static const IconData company = _EasyIconsData(0xe9f5);
+  static const IconData company_filled = _EasyIconsData(0xe91b);
   static const IconData profile = _EasyIconsData(0xe9b7);
+  static const IconData profile_filled = _EasyIconsData(0xe9b5);
+  static const IconData chart = _EasyIconsData(0xe9f7);
+  static const IconData chart_filled = _EasyIconsData(0xe9bf);
 
   // Company actions
   static const IconData vacations = _EasyIconsData(0xe95e);
@@ -75,7 +80,7 @@ class EasyIcons {
   static const IconData trips = _EasyIconsData(0xe9e8);
   static const IconData activities = _EasyIconsData(0xe911);
   static const IconData smartworkings = _EasyIconsData(0xe9d5);
-  static const IconData workplaces = _EasyIconsData(0xe94e);
+  static const IconData workplaces = _EasyIconsData(0xe922);
 
   // Misc
   static const IconData login = _EasyIconsData(0xe98d);
@@ -97,8 +102,11 @@ class EasyIcons {
   static const IconData position = _EasyIconsData(0xea12);
   static const IconData add = _EasyIconsData(0xe901);
   static const IconData attachment = _EasyIconsData(0xe902);
-  static const IconData workplaces_filled = _EasyIconsData(0xe949);
+  static const IconData workman = _EasyIconsData(0xe94e);
+  static const IconData workman_filled = _EasyIconsData(0xe949);
   static const IconData settings = _EasyIconsData(0xe977);
+  static const IconData approve_ok = _EasyIconsData(0xe957);
+  static const IconData approve_ko = _EasyIconsData(0xe926);
 }
 
 class _EasyIconsData extends IconData {

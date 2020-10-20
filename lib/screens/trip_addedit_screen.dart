@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/client.dart';
 import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/providers/trip_provider.dart';
@@ -30,8 +30,6 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
 
   String _attachmentsNames;
   List<PlatformFile> _attachments;
-
-  _TripFormState() : super(LocaleKeys.label_trips);
 
   @override
   void setItem(Trip itemToEdit) {

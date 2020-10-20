@@ -1,5 +1,5 @@
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/providers/vacation_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
@@ -21,8 +21,6 @@ class _VacationForm extends StatefulWidget {
 class _VacationFormState extends AddEditFormState<Vacation, VacationProvider> {
   Vacation get item => _item;
   Vacation _item;
-
-  _VacationFormState() : super(LocaleKeys.label_vacations);
 
   @override
   void setItem(Vacation itemToEdit) {

@@ -1,5 +1,5 @@
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/providers/activity_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
@@ -21,8 +21,6 @@ class _ActivityForm extends StatefulWidget {
 class _ActivityFormState extends AddEditFormState<Activity, ActivityProvider> {
   Activity get item => _item;
   Activity _item;
-
-  _ActivityFormState() : super(LocaleKeys.label_activities);
 
   @override
   void setItem(Activity itemToEdit) {

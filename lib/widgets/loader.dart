@@ -24,9 +24,8 @@ class EasyLoader extends StatelessWidget {
               width: 48,
               height: 48,
               child: CircularProgressIndicator(
-                valueColor: color != null
-                    ? new AlwaysStoppedAnimation<Color>(color)
-                    : null,
+                valueColor:
+                    color != null ? AlwaysStoppedAnimation<Color>(color) : null,
               )),
         ],
       ),

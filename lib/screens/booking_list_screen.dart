@@ -7,8 +7,6 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
-
 class BookingListScreen extends BaseScreen<Booking> {
   @override
   List<EasyRoute> getAppBarRoutes(context) => [
@@ -26,7 +24,4 @@ class _BookingListScreen extends StatefulWidget {
 }
 
 class _BookingListScreenState
-    extends EasyListState<_BookingListScreen, Booking, BookingProvider> {
-  _BookingListScreenState()
-      : super(EasyListState.defaultEmptyText(LocaleKeys.label_bookings));
-}
+    extends EasyListState<_BookingListScreen, Booking, BookingProvider> {}

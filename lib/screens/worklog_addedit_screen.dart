@@ -55,8 +55,6 @@ class _WorklogFormState
     });
   }
 
-  _WorklogFormState() : super(LocaleKeys.label_worklogs);
-
   @override
   void setItem(WorkLog itemToEdit) {
     _item = itemToEdit;
@@ -81,6 +79,7 @@ class _WorklogFormState
             children: [
               Expanded(
                 child: TaskListItem(_item.task,
+                    heroTag: "task-${_item.task.id}",
                     alignment: CrossAxisAlignment.center),
               )
             ],

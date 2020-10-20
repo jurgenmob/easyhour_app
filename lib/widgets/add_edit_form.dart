@@ -5,6 +5,7 @@ import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';
+import 'package:easyhour_app/widgets/header.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,8 +16,6 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
   final formKey = GlobalKey<FormState>();
 
   T get item;
-
-  final String itemName;
 
   void setItem(T itemToEdit);
 
@@ -29,15 +28,14 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
   @protected
   bool loading = false;
 
-  AddEditFormState(this.itemName);
-
   @override
   Widget build(BuildContext context) {
     // Get the item to edit, or generate a new item
     setItem(ModalRoute.of(context).settings.arguments);
 
     return Column(children: [
-      getHeader() ?? _AddEditFormHeader(itemName),
+      getHeader() ??
+          EasyHeader(BaseModel.displayName(T).plural(1).toUpperCase()),
       Expanded(
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 40, vertical: 24),
@@ -148,25 +146,5 @@ abstract class AddEditFormState<T extends BaseModel, P extends BaseProvider>
           );
         },
         initialTime: initialTime ?? TimeOfDay.fromDateTime(DateTime.now()));
-  }
-}
-
-class _AddEditFormHeader extends StatelessWidget {
-  final String itemName;
-
-  _AddEditFormHeader(this.itemName);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: [
-      Expanded(
-        child: Container(
-            padding: EdgeInsets.all(16),
-            color: Theme.of(context).primaryColor,
-            child: Text(itemName.plural(1).toUpperCase(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline3)),
-      ),
-    ]);
   }
 }

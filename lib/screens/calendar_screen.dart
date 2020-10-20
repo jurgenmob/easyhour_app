@@ -91,8 +91,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
     DateTimeRange indicatorRange;
     if (!eventsRange.contains(DateTime.now())) {
       // Select month of currently visible range
-      final mean = DateTime.fromMillisecondsSinceEpoch(
-          (first.millisecondsSinceEpoch + last.millisecondsSinceEpoch) ~/ 2);
+      final mean = DateTimeRange(start: first, end: last).mean;
       indicatorRange = DateTimeRange(
           start: DateTime(mean.year, mean.month, 1),
           end: DateTime(mean.year, mean.month + 1, 0));
@@ -239,7 +238,7 @@ class _EventList extends StatefulWidget {
 
 class _EventListState
     extends EasyListState<_EventList, BaseModel, CalendarProvider> {
-  _EventListState() : super(LocaleKeys.empty_list_calendar.tr());
+  _EventListState() : super(emptyText: LocaleKeys.empty_list_calendar.tr());
 
   @override
   void onDelete(BaseModel item) {

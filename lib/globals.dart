@@ -55,7 +55,7 @@ extension IntUtils on num {
   String formatWithSign() => this > 0
       ? "+${this}"
       : this < 0
-          ? "-${this}"
+          ? "${this}"
           : "";
 }
 
@@ -76,9 +76,14 @@ extension DateRangeTimeUtils on DateTimeRange {
       " - " +
       DateFormat(displayDateFormat).format(end);
 
+  /// Check if given date is in range
   bool contains(DateTime date) =>
       (date.isSameDay(start) || date.isSameDay(end)) ||
       (date.isBefore(end) && date.isAfter(start));
+
+  /// Get the day in the middle of the range
+  DateTime get mean => DateTime.fromMillisecondsSinceEpoch(
+      (start.millisecondsSinceEpoch + end.millisecondsSinceEpoch) ~/ 2);
 }
 
 extension TimeOfDayUtils on TimeOfDay {

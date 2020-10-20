@@ -16,7 +16,7 @@ class CompanyActionsScreen extends StatefulWidget {
 
 class _CompanyActionsScreenState extends EasyListState<CompanyActionsScreen,
     CompanyAction, CompanyActionProvider> {
-  _CompanyActionsScreenState() : super("", refreshEnabled: false);
+  _CompanyActionsScreenState() : super(refreshEnabled: false);
 
   @override
   Widget getItem(CompanyAction item) {

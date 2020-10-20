@@ -1,5 +1,5 @@
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
@@ -21,8 +21,6 @@ class _PermitForm extends StatefulWidget {
 class _PermitFormState extends AddEditFormState<Permit, PermitProvider> {
   Permit get item => _item;
   Permit _item;
-
-  _PermitFormState() : super(LocaleKeys.label_permits);
 
   @override
   void setItem(Permit itemToEdit) {

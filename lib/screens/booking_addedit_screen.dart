@@ -32,8 +32,6 @@ class _BookingFormState extends AddEditFormState<Booking, BookingProvider> {
   Booking get item => _item;
   Booking _item;
 
-  _BookingFormState() : super(LocaleKeys.label_workplaces);
-
   @override
   void setItem(Booking itemToEdit) {
     if (_item == null) _item = itemToEdit ?? Booking();
@@ -122,9 +120,9 @@ class _WorkPlaceSelectFieldState extends State<_WorkPlaceSelectField> {
                 child: EasyTextField(
                     key: ValueKey(widget.item.postazione ?? UniqueKey()),
                     labelText: LocaleKeys.label_workplaces.plural(1),
-                    icon: EasyIcons.workplaces_filled,
+                    icon: EasyIcons.workplaces,
                     maxLines: 3,
-                    initialValue: widget.item.displayName,
+                    initialValue: widget.item.formatDisplay(),
                     enabled: widget.editable,
                     onTap: widget.editable ? state.showModal : null),
               );

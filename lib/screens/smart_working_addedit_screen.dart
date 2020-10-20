@@ -32,8 +32,6 @@ class _SmartWorkingFormState
   SmartWorking get item => _item;
   SmartWorking _item;
 
-  _SmartWorkingFormState() : super(LocaleKeys.label_smartworkings);
-
   @override
   void setItem(SmartWorking itemToEdit) {
     if (_item == null) _item = itemToEdit ?? SmartWorking();

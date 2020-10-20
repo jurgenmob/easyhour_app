@@ -52,9 +52,9 @@ class TodayActivitiesScreen extends StatelessWidget {
 }
 
 class _TodayActivitiesHeader extends StatelessWidget {
-  final List<TodayActivity> items;
+  final List<TodayActivity> _items;
 
-  _TodayActivitiesHeader(this.items);
+  _TodayActivitiesHeader(this._items);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _TodayActivitiesHeader extends StatelessWidget {
   }
 
   Duration _totalDuration() =>
-      items.fold<Duration>(Duration(), (p, c) => p + c.duration(null));
+      _items.fold<Duration>(Duration(), (p, c) => p + c.duration(null));
 }
 
 /// Shown when the user is not at work
@@ -159,8 +159,6 @@ class _TaskList extends StatefulWidget {
 class _TaskListState
     extends EasyListState<_TaskList, TodayActivity, TodayActivitiesProvider>
     with TimerCoordinator {
-  _TaskListState() : super(LocaleKeys.empty_list_tasks.tr());
-
   bool _timerActive = false;
 
   @override
@@ -236,7 +234,8 @@ class _TaskItemState extends State<_TaskItem> {
                   child: Container(
                     padding: EdgeInsets.all(8),
                     color: Theme.of(context).primaryColor,
-                    child: TaskListItem(widget.task),
+                    child: TaskListItem(widget.task,
+                        heroTag: "task-${widget.task.id}"),
                   ),
                 ),
                 EasyTimer(widget.task,

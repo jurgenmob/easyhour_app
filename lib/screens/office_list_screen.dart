@@ -4,8 +4,6 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
-
 class OfficeListScreen extends BaseScreen<Office> {
   @override
   Widget getBody() => _OfficeListScreen();
@@ -17,7 +15,4 @@ class _OfficeListScreen extends StatefulWidget {
 }
 
 class _OfficeListScreenState
-    extends EasyListState<_OfficeListScreen, Office, OfficeProvider> {
-  _OfficeListScreenState()
-      : super(EasyListState.defaultEmptyText(LocaleKeys.label_offices));
-}
+    extends EasyListState<_OfficeListScreen, Office, OfficeProvider> {}

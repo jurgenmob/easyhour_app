@@ -9,13 +9,16 @@ class EasyTabBar extends StatelessWidget {
     return new TabBar(
       tabs: [
         Tab(
-          icon: new Icon(EasyIcons.home, size: iconSize),
+          icon: new Icon(EasyIcons.home_filled, size: iconSize),
         ),
         Tab(
-          icon: new Icon(EasyIcons.company, size: iconSize),
+          icon: new Icon(EasyIcons.chart_filled, size: iconSize),
         ),
         Tab(
-          icon: new Icon(EasyIcons.profile, size: iconSize),
+          icon: new Icon(EasyIcons.company_filled, size: iconSize),
+        ),
+        Tab(
+          icon: new Icon(EasyIcons.profile_filled, size: iconSize),
         )
       ],
       labelColor: Theme.of(context).primaryColor,

@@ -4,8 +4,6 @@ import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
-
 class PermitListScreen extends BaseScreen<Permit> {
   @override
   Widget getBody() => _PermitListScreen();
@@ -17,7 +15,4 @@ class _PermitListScreen extends StatefulWidget {
 }
 
 class _PermitListScreenState
-    extends EasyListState<_PermitListScreen, Permit, PermitProvider> {
-  _PermitListScreenState()
-      : super(EasyListState.defaultEmptyText(LocaleKeys.label_permits));
-}
+    extends EasyListState<_PermitListScreen, Permit, PermitProvider> {}

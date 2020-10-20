@@ -4,6 +4,7 @@ import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/screens/company_actions_screen.dart';
+import 'package:easyhour_app/screens/my_report_screen.dart';
 import 'package:easyhour_app/screens/profile_screen.dart';
 import 'package:easyhour_app/screens/today_activities_screen.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
@@ -31,13 +32,14 @@ class HomeScreen extends BaseScreen {
   @override
   Widget getBody() {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         body: DoubleBackToCloseApp(
           child: Center(
             child: TabBarView(
               children: [
                 TodayActivitiesScreen(),
+                MyReportScreen(),
                 CompanyActionsScreen(),
                 ProfileScreen(),
               ],

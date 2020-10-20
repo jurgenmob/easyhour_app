@@ -1,5 +1,5 @@
-import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
@@ -21,8 +21,6 @@ class _SicknessForm extends StatefulWidget {
 class _SicknessFormState extends AddEditFormState<Sickness, SicknessProvider> {
   Sickness get item => _item;
   Sickness _item;
-
-  _SicknessFormState() : super(LocaleKeys.label_sicknesses);
 
   @override
   void setItem(Sickness itemToEdit) {

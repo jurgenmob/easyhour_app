@@ -36,6 +36,12 @@ abstract class  LocaleKeys {
   static const label_office_name = 'label_office_name';
   static const label_workplaces_number = 'label_workplaces_number';
   static const label_workplaces_prefix = 'label_workplaces_prefix';
+  static const label_month_hours = 'label_month_hours';
+  static const label_current_hours = 'label_current_hours';
+  static const label_target_month_hours = 'label_target_month_hours';
+  static const label_target_current_hours = 'label_target_current_hours';
+  static const label_worked_month_hours = 'label_worked_month_hours';
+  static const label_worked_current_hours = 'label_worked_current_hours';
   static const label_vacations = 'label_vacations';
   static const label_permits = 'label_permits';
   static const label_sicknesses = 'label_sicknesses';

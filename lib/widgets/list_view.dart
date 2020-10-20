@@ -21,11 +21,10 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   String _error;
 
   @protected
-  static String defaultEmptyText(String itemName) =>
-      LocaleKeys.empty_list_generic
-          .tr(args: [itemName.plural(2).toLowerCase()]);
+  String get defaultEmptyText => LocaleKeys.empty_list_generic
+      .tr(args: [BaseModel.displayName(T).plural(2).toLowerCase()]);
 
-  EasyListState(this.emptyText, {this.refreshEnabled = true});
+  EasyListState({this.emptyText, this.refreshEnabled = true});
 
   Widget getItem(T item) =>
       EasyListItem<T>(item, onEdit: onEdit, onDelete: onDelete);
@@ -34,9 +33,8 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   Comparator<T> comparator() => null;
 
   void fetchData() async {
-    if (!mounted) return;
-
     try {
+      if (!mounted) return;
       setState(() {
         _error = null;
         _loading = true;
@@ -45,11 +43,13 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
       // Get the items
       await context.read<P>().get();
 
+      if (!mounted) return;
       setState(() {
         _error = null;
         _loading = false;
       });
     } catch (e, s) {
+      if (!mounted) return;
       setState(() {
         _error = handleRestError(context, e, s);
         _loading = false;
@@ -74,7 +74,9 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
         return EasyLoader();
       } else if (provider.items?.isEmpty ?? true) {
         // Show an empty list
-        return _EmptyList(text: _error ?? emptyText, onRefresh: _onRefresh);
+        return _EmptyList(
+            text: _error ?? emptyText ?? defaultEmptyText,
+            onRefresh: _onRefresh);
       }
 
       // Allow subclasses to sort items

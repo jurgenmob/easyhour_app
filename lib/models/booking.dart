@@ -46,7 +46,7 @@ class Booking with BaseModel, CalendarEvent {
       ? DateTimeRange(start: dataInizio, end: dataFine)
       : null;
 
-  get displayName => postazione != null
+  String formatDisplay() => postazione != null
       ? "${postazione.nome} (${postazione.ufficio.nome})"
       : null;
 
