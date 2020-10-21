@@ -4,20 +4,59 @@ The timesheet, that's it!
 
 ## Getting Started
 
-TODO
-
 ### Setting the Google Maps API key
 
-1. Create a `secure.properties` file starting from `secure.properties.tpl` and set the map keys for iOS and Android.
-2. In your IDE (or from CLI) specify as build/run parameter: `--dart-define="GOOGLE_MAPS_API_KEY=..."`
+Create a `secure.properties` file starting from `secure.properties.tpl` and set the map keys for iOS and Android.
 
-iOS: TBD
+### Other Google services (Analytics, Firebase)
+
+Place Firebase configuratio in `android/app/google-services.json` (Android) and `ios/Runner/GoogleService-Info.plist` (iOS).
 
 ### Re-generate language keys
 
 ```
 flutter pub run easy_localization:generate -f keys -S assets/translations/ -o locale_keys.g.dart
 ```
+
+### Build the app
+
+```
+flutter pub get
+
+# Android
+flutter build android
+
+# iOS
+flutter build ios
+```
+
+### Run the app
+
+```
+# Android
+flutter run android
+
+# iOS
+flutter run ios
+```
+
+### Publish the app
+
+```
+flutter clean
+flutter pub get
+
+# Android
+flutter build appbundle
+
+# iOS
+flutter build ios
+cd ios
+pod install
+cd ..
+```
+
+... then follow instructions here: [Android](https://flutter.dev/docs/deployment/android) | [iOS](https://flutter.dev/docs/deployment/ios).
 
 ## License
 
@@ -27,3 +66,4 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>
+
