@@ -18,26 +18,10 @@ Place Firebase configuratio in `android/app/google-services.json` (Android) and 
 flutter pub run easy_localization:generate -f keys -S assets/translations/ -o locale_keys.g.dart
 ```
 
-### Build the app
-
-```
-flutter pub get
-
-# Android
-flutter build android
-
-# iOS
-flutter build ios
-```
-
 ### Run the app
 
 ```
-# Android
-flutter run android
-
-# iOS
-flutter run ios
+flutter run
 ```
 
 ### Publish the app
