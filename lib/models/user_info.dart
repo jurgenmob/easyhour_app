@@ -30,6 +30,8 @@ class UserInfo {
 
   bool get isAdmin => authorities?.contains(roleAdmin) ?? false;
 
+  bool get isManager => isAdmin || userExtra?.manager == true;
+
   /// Returns the working hours of the user (if any) or the company (if any) or defaults
   List<WorkShift> get workShifts => turniUser?.isNotEmpty == true
       ? turniUser

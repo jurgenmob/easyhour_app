@@ -81,6 +81,7 @@ class EasyIcons {
   static const IconData activities = _EasyIconsData(0xe911);
   static const IconData smartworkings = _EasyIconsData(0xe9d5);
   static const IconData workplaces = _EasyIconsData(0xe922);
+  static const IconData requests = _EasyIconsData(0xe92e);
 
   // Misc
   static const IconData login = _EasyIconsData(0xe98d);
@@ -107,6 +108,7 @@ class EasyIcons {
   static const IconData settings = _EasyIconsData(0xe977);
   static const IconData approve_ok = _EasyIconsData(0xe957);
   static const IconData approve_ko = _EasyIconsData(0xe926);
+  static const IconData approve_pending = _EasyIconsData(0xe92e);
 }
 
 class _EasyIconsData extends IconData {

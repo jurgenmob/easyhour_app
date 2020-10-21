@@ -11,7 +11,7 @@ import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class HomeScreen extends BaseScreen {
   List<EasyRoute> getAppBarRoutes(context) => [EasyRoute.calendar()];

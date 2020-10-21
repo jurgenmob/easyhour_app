@@ -8,7 +8,7 @@ import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 

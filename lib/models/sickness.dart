@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
 import 'base_model.dart';
 import 'calendar.dart';
 import 'company.dart';
@@ -29,6 +29,9 @@ class Sickness with BaseModel, TodayActivity, CalendarEvent {
 
   @override
   get listTitle => LocaleKeys.label_sicknesses.plural(1).toUpperCase();
+
+  @override
+  String get listSubtitle => descrizione;
 
   @override
   get listDetailsTop => dataInizio.formatDisplay();

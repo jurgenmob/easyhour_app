@@ -33,9 +33,6 @@ class Location with BaseModel {
   get listSubtitle => descrizione;
 
   @override
-  get approved => attivo;
-
-  @override
   get editable => false;
 
   @override

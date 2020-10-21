@@ -13,6 +13,7 @@ import 'package:easyhour_app/models/error.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
+import 'package:easyhour_app/models/request.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/models/task.dart';
@@ -429,7 +430,7 @@ class EasyRest {
     return Office.fromJson(jsonDecode(response.data));
   }
 
-  Future<Response> deleteOffice(Office item) async {
+  Future<Response> deleteOffice(Office item) {
     return _dio.delete('/ufficios/${item.id}');
   }
 
@@ -439,6 +440,22 @@ class EasyRest {
 
     return UpdatePushResponse.fromJson(jsonDecode(response.data)).deviceId ==
         deviceId;
+  }
+
+  Future<List<Request>> getRequests() async {
+    Response<String> response = await _dio.get(
+        '/administration-activities?stato=DA_APPROVARE' +
+            '&ferie=true&permessi=true&trasferte=false&smartWorking=true');
+
+    return RequestResponse.fromJson(jsonDecode(response.data)).items;
+  }
+
+  Future<Response> approveRefuseRequest(Request item,
+      {@required bool approved}) {
+    return _dio.put<String>(
+      '/set-stato-administration-activity/${item.id}' +
+          '?tipo=${item.tipologia.toLowerCase()}&stato=${approved ? approvedValue : refusedValue}',
+    );
   }
 }
 

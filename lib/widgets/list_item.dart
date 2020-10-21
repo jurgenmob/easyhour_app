@@ -1,29 +1,49 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
 
-import '../generated/locale_keys.g.dart';
-
 class EasyListItem<T extends BaseModel> extends StatelessWidget {
   final BaseModel item;
+
+  final ConfirmDismissCallback confirmDismiss;
+  final DismissDirectionCallback onDismissed;
+  final IconData startIcon;
+  final IconData endIcon;
 
   final Function(T) onEdit;
   final Function(T) onDelete;
 
-  EasyListItem(this.item, {this.onEdit, this.onDelete});
+  EasyListItem(this.item,
+      {this.onEdit,
+      this.onDelete,
+      this.startIcon,
+      this.endIcon,
+      this.confirmDismiss,
+      this.onDismissed});
 
   @override
   Widget build(BuildContext context) {
     if (item.dismissible && item.editable) {
       return _DismissibleEasyListItem<T>(item,
+          bothDirections: startIcon != null,
+          confirmDismiss: confirmDismiss,
+          onDismissed: onDismissed,
           child: _EditableEasyListItem<T>(item,
-              child: _EasyListItem(item), onEdit: onEdit),
+              child:
+                  _EasyListItem(item, startIcon: startIcon, endIcon: endIcon),
+              onEdit: onEdit),
           onDelete: onDelete);
     } else if (item.dismissible) {
       return _DismissibleEasyListItem<T>(item,
-          child: _ReadonlyEasyListItem(item, child: _EasyListItem(item)),
+          bothDirections: startIcon != null,
+          confirmDismiss: confirmDismiss,
+          onDismissed: onDismissed,
+          child: _ReadonlyEasyListItem(item,
+              child:
+                  _EasyListItem(item, startIcon: startIcon, endIcon: endIcon)),
           onDelete: onDelete);
     } else if (item.editable) {
       return _EditableEasyListItem<T>(item,
@@ -37,28 +57,42 @@ class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
   final BaseModel item;
   final Widget child;
 
+  final ConfirmDismissCallback confirmDismiss;
+  final DismissDirectionCallback onDismissed;
+  final bool bothDirections;
+
   final Function(T) onDelete;
 
   _DismissibleEasyListItem(this.item,
-      {@required this.child, @required this.onDelete});
+      {@required this.child,
+      @required this.onDelete,
+      this.bothDirections,
+      this.confirmDismiss,
+      this.onDismissed});
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
         key: ValueKey(item.id),
-        direction:
-            item.dismissible != null ? DismissDirection.endToStart : null,
+        direction: item.dismissible != null
+            ? bothDirections == true
+                ? DismissDirection.horizontal
+                : DismissDirection.endToStart
+            : null,
         background: Container(
             color: Theme.of(context).primaryColor,
             alignment: Alignment.centerRight,
             padding: EdgeInsets.symmetric(horizontal: 24),
             child: Icon(EasyIcons.delete, color: Colors.white)),
         confirmDismiss: (DismissDirection direction) async =>
-            await showConfirmDialog(
-                context,
-                LocaleKeys.message_delete_confirm
-                    .tr(args: [item.listTitle.toLowerCase()])),
-        onDismissed: (_) => onDelete(item),
+            confirmDismiss != null
+                ? confirmDismiss(direction)
+                : await showConfirmDialog(
+                    context,
+                    LocaleKeys.message_delete_confirm
+                        .tr(args: [item.listTitle.toLowerCase()])),
+        onDismissed: (direction) =>
+            onDismissed != null ? onDismissed(direction) : onDelete(item),
         child: child);
   }
 }
@@ -92,13 +126,21 @@ class _ReadonlyEasyListItem extends StatelessWidget {
 
 class _EasyListItem extends StatelessWidget {
   final BaseModel item;
+  final IconData endIcon;
+  final IconData startIcon;
 
-  _EasyListItem(this.item);
+  _EasyListItem(this.item, {this.endIcon, this.startIcon});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Container(
+          height: 100,
+          child: item.dismissible && startIcon != null
+              ? _DismissIndicator(icon: startIcon, directionStart: true)
+              : null,
+        ),
         Expanded(
           child: Container(
             padding: EdgeInsets.all(8),
@@ -148,15 +190,15 @@ class _EasyListItem extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2)
         ]),
         SizedBox(width: 16),
-        if (item.approved != null)
+        if (item.approvedIcon != null)
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8),
-            child: Icon(item.approved ? Icons.check : Icons.hourglass_empty,
-                color: Theme.of(context).primaryColor),
+            child:
+                Icon(item.approvedIcon, color: Theme.of(context).primaryColor),
           ),
         Container(
           height: 100,
-          child: item.dismissible ? _DismissIndicator() : null,
+          child: item.dismissible ? _DismissIndicator(icon: endIcon) : null,
         ),
       ],
     );
@@ -164,13 +206,22 @@ class _EasyListItem extends StatelessWidget {
 }
 
 class _DismissIndicator extends StatelessWidget {
+  final IconData icon;
+  final bool directionStart;
+
+  _DismissIndicator({this.icon, this.directionStart});
+
   @override
   Widget build(BuildContext context) =>
       Stack(alignment: Alignment.center, children: [
         FittedBox(
             fit: BoxFit.contain,
-            child:
-                Image.asset('images/item_right.png', width: 45, height: 148)),
-        Icon(EasyIcons.arrow_left, size: 16, color: Colors.white)
+            child: Image.asset(
+                directionStart == true
+                    ? 'images/item_left.png'
+                    : 'images/item_right.png',
+                width: 45,
+                height: 148)),
+        Icon(icon ?? EasyIcons.arrow_left, size: 16, color: Colors.white)
       ]);
 }

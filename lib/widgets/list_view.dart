@@ -7,7 +7,7 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'app_bar.dart';
 import 'list_item.dart';
 

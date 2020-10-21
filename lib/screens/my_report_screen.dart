@@ -16,7 +16,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class MyReportScreen extends StatefulWidget {
   @override
@@ -29,6 +29,8 @@ class _MyReportScreenState extends State<MyReportScreen> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
       // Get events for current month
       final date = DateTime.now();
       _dateRange = DateTimeRange(

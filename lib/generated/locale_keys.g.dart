@@ -54,6 +54,7 @@ abstract class  LocaleKeys {
   static const label_workplaces = 'label_workplaces';
   static const label_workplaces_short = 'label_workplaces_short';
   static const label_offices = 'label_offices';
+  static const label_requests = 'label_requests';
   static const empty_list_tasks = 'empty_list_tasks';
   static const empty_list_generic = 'empty_list_generic';
   static const empty_list_calendar = 'empty_list_calendar';
@@ -66,6 +67,8 @@ abstract class  LocaleKeys {
   static const message_pick_task = 'message_pick_task';
   static const message_stop_timer = 'message_stop_timer';
   static const message_timer_active = 'message_timer_active';
+  static const message_no_description = 'message_no_description';
+  static const message_no_requests = 'message_no_requests';
   static const label_my_places = 'label_my_places';
   static const label_help_videos = 'label_help_videos';
   static const label_reset_password = 'label_reset_password';

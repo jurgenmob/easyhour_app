@@ -5,6 +5,7 @@ import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
+import 'package:easyhour_app/models/request.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/models/trip.dart';
@@ -18,6 +19,7 @@ import 'package:easyhour_app/providers/company_action_provider.dart';
 import 'package:easyhour_app/providers/location_provider.dart';
 import 'package:easyhour_app/providers/office_provider.dart';
 import 'package:easyhour_app/providers/permit_provider.dart';
+import 'package:easyhour_app/providers/request_provider.dart';
 import 'package:easyhour_app/providers/sickness_provider.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
 import 'package:easyhour_app/providers/task_provider.dart';
@@ -37,6 +39,7 @@ import 'package:easyhour_app/screens/office_addedit_screen.dart';
 import 'package:easyhour_app/screens/office_list_screen.dart';
 import 'package:easyhour_app/screens/permit_addedit_screen.dart';
 import 'package:easyhour_app/screens/permit_list_screen.dart';
+import 'package:easyhour_app/screens/request_list_screen.dart';
 import 'package:easyhour_app/screens/sickness_addedit_screen.dart';
 import 'package:easyhour_app/screens/sickness_list_screen.dart';
 import 'package:easyhour_app/screens/smart_working_addedit_screen.dart';
@@ -114,6 +117,7 @@ class _EasyAppState extends State<EasyApp> {
               ChangeNotifierProvider(create: (context) => LocationProvider()),
               ChangeNotifierProvider(create: (context) => BookingProvider()),
               ChangeNotifierProvider(create: (context) => OfficeProvider()),
+              ChangeNotifierProvider(create: (context) => RequestProvider()),
             ],
             child: FutureBuilder<SharedPreferences>(
                 future: SharedPreferences.getInstance(),
@@ -169,6 +173,7 @@ class _EasyMaterialApp extends MaterialApp {
                 BookingAddEditScreen(),
             EasyRoute.list(Office).page: (context) => OfficeListScreen(),
             EasyRoute.addEdit(Office).page: (context) => OfficeAddEditScreen(),
+            EasyRoute.list(Request).page: (context) => RequestListScreen(),
           },
         );
 }

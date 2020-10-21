@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/providers/smart_working_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
 import 'base_model.dart';
 import 'company.dart';
 import 'user.dart';
@@ -44,7 +44,7 @@ class SmartWorking with BaseModel {
   get listDetailsBtm => dataFine.formatDisplay();
 
   @override
-  get approved => stato == approvedValue;
+  get approvedIcon => defaultApprovedIcon(stato);
 
   @override
   get editable => false;

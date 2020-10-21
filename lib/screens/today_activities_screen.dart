@@ -21,7 +21,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class TodayActivitiesScreen extends StatelessWidget {
   @override

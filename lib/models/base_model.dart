@@ -1,7 +1,9 @@
 import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/location.dart';
+import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
@@ -9,6 +11,7 @@ import 'package:easyhour_app/models/trip.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/models/workplace.dart';
+import 'package:easyhour_app/theme.dart';
 import 'package:flutter/material.dart';
 
 mixin BaseModel<T, P> {
@@ -26,7 +29,14 @@ mixin BaseModel<T, P> {
 
   String get listDetailsBtm => null;
 
-  bool get approved => null;
+  IconData get approvedIcon => null;
+
+  @protected
+  IconData defaultApprovedIcon(String state) => state == approvedValue
+      ? EasyIcons.approve_ok
+      : state == refusedValue
+          ? EasyIcons.approve_ko
+          : EasyIcons.approve_pending;
 
   DateTimeRange get dateRange => null;
 
@@ -67,6 +77,8 @@ mixin BaseModel<T, P> {
       return LocaleKeys.label_bookings;
     else if (t == WorkPlace)
       return LocaleKeys.label_workplaces;
+    else if (t == Office)
+      return LocaleKeys.label_offices;
     else
       return "";
   }

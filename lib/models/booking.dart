@@ -6,7 +6,7 @@ import 'package:easyhour_app/providers/booking_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'base_model.dart';
 
 // https://javiercbk.github.io/json_to_dart/

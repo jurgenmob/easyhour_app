@@ -97,6 +97,10 @@
     "one": "Ufficio",
     "other": "Uffici"
   },
+  "label_requests": {
+    "one": "Richiesta",
+    "other": "Richieste"
+  },
 
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",
   "empty_list_generic": "Non hai ancora inserito {}.\nClicca sull'icona in alto a destra per farlo.",
@@ -110,6 +114,8 @@
   "message_pick_task": "Scegli il task a cui associare le ore.",
   "message_stop_timer": "Sei sicuro di voler interrompere il timer?",
   "message_timer_active": "Un altro timer è attivo, disattivalo prima di attivarne un altro.",
+  "message_no_description": "Nessuna descrizione inserita.",
+  "message_no_requests": "È tuttoa posto, non ci sono richieste in attesa di approvazione.",
 
   "label_my_places": "Le mie posizioni",
   "label_help_videos": "Video di aiuto",

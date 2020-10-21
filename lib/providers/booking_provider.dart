@@ -8,8 +8,7 @@ class BookingProvider extends BaseProvider<Booking> {
   Future<List<Booking>> get() => restGet(EasyRest().getBookings());
 
   @override
-  Future<Booking> add(Booking item) =>
-      restAdd(EasyRest().addEditBooking(item));
+  Future<Booking> add(Booking item) => restAdd(EasyRest().addEditBooking(item));
 
   @override
   Future<bool> delete(Booking item) =>

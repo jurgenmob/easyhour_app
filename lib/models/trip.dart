@@ -5,7 +5,7 @@ import 'package:easyhour_app/providers/trip_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'base_model.dart';
 import 'client.dart';
 import 'company.dart';

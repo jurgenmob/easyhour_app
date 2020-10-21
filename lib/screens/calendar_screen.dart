@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/worklog.dart';
@@ -12,8 +13,6 @@ import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../generated/locale_keys.g.dart';
 
 final _calendarKey = GlobalKey<_CalendarWidgetState>();
 

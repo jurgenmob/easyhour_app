@@ -25,6 +25,8 @@ class User {
       this.imageUrl,
       this.azienda});
 
+  String get fullName => "$lastName $firstName";
+
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     login = json['login'];

@@ -10,7 +10,7 @@ import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../generated/locale_keys.g.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
