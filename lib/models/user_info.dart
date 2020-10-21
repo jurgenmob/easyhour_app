@@ -67,7 +67,7 @@ class UserInfo {
       });
     }
     if (json['turniUser'] != null) {
-      turniUser = new List<Null>();
+      turniUser = new List<WorkShift>();
       json['turniUser'].forEach((v) {
         turniUser.add(new WorkShift.fromJson(v));
       });
