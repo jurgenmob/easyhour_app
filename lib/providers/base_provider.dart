@@ -7,8 +7,11 @@ abstract class BaseProvider<T extends BaseModel> extends ChangeNotifier {
   dynamic _filter;
 
   set filter(dynamic filter) {
+    final notify = _filter != _filter;
+
     _filter = filter;
-    notifyListeners();
+
+    if (notify) notifyListeners();
   }
 
   List<T> get allItems => List.unmodifiable(_items != null ? _items : List());
