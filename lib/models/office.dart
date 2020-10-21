@@ -22,7 +22,7 @@ class Office with BaseModel {
   get listSubtitle => nome;
 
   @override
-  get listDetailsTop => "$quantita ${LocaleKeys.label_workplaces_short.tr()}";
+  get listDetailsTop => "$postazioniCount ${LocaleKeys.label_workplaces_short.tr()}";
 
   @override
   get editable => false;

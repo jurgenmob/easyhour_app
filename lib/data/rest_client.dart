@@ -414,14 +414,14 @@ class EasyRest {
     // Mock data
     // return EasyMock().getOffices();
 
-    Response<String> response = await _dio.get('/ufficios');
+    Response<String> response = await _dio.get('/user-ufficios');
 
     return OfficeResponse.fromJson(jsonDecode(response.data)).items;
   }
 
   Future<Office> addEditOffice(Office item) async {
     Response<String> response = await _dio.request<String>(
-      '/ufficios',
+      '/user-ufficios',
       data: item.toJson(),
       options: Options(method: item.isNew ? 'POST' : 'PUT'),
     );
