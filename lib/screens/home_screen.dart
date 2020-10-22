@@ -1,6 +1,7 @@
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/screens/base_screen.dart';
 import 'package:easyhour_app/screens/company_actions_screen.dart';
@@ -10,8 +11,6 @@ import 'package:easyhour_app/screens/today_activities_screen.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
-
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class HomeScreen extends BaseScreen {
   List<EasyRoute> getAppBarRoutes(context) => [EasyRoute.calendar()];
@@ -61,7 +60,7 @@ class HomeScreen extends BaseScreen {
     firebaseMessaging.getToken().then((String token) {
       // Send token to backend
       print("*** Push token ***: $token");
-      EasyRest().updatePushToken(token);
+      if (token != null) EasyRest().updatePushToken(token);
     });
   }
 }
