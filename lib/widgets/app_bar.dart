@@ -53,7 +53,6 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
       // notify listeners
       provider.actions = provider.actions;
       // Update indicator
-      context.read<CalendarProvider>().filter = null;
       route.indicator =
           await CalendarProvider.monthIndicator(dateRange: dateRange);
       // notify listeners

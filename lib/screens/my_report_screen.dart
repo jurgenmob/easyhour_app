@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/calendar.dart';
@@ -15,8 +16,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class MyReportScreen extends StatefulWidget {
   @override
@@ -36,7 +35,9 @@ class _MyReportScreenState extends State<MyReportScreen> {
       _dateRange = DateTimeRange(
           start: DateTime(date.year, date.month, 1),
           end: DateTime(date.year, date.month + 1, 0));
-      context.read<CalendarProvider>().getEvents(_dateRange);
+      context.read<CalendarProvider>()
+        ..filter = null
+        ..getEvents(_dateRange);
 
       // Update the calendar icon
       EasyAppBar.updateCalendarIndicator(context);

@@ -54,18 +54,14 @@ class _CalendarWidgetState extends State<CalendarWidget>
     super.initState();
 
     _provider = context.read<CalendarProvider>();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _provider.filter = DateTime.now());
-
     _calendarController = CalendarController();
-
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
-    );
+    )..forward();
 
-    _animationController.forward();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _provider.filter = DateTime.now());
   }
 
   @override
@@ -83,6 +79,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
 
   void _refreshEvents(
       DateTime first, DateTime last, CalendarFormat format) async {
+    // Get new events
     final eventsRange = DateTimeRange(start: first, end: last);
     _provider.getEvents(eventsRange);
 
