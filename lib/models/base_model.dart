@@ -5,6 +5,7 @@ import 'package:easyhour_app/models/booking.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
+import 'package:easyhour_app/models/request.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/smart_working.dart';
 import 'package:easyhour_app/models/trip.dart';
@@ -79,6 +80,8 @@ mixin BaseModel<T, P> {
       return LocaleKeys.label_workplaces;
     else if (t == Office)
       return LocaleKeys.label_offices;
+    else if (t == Request)
+      return LocaleKeys.label_requests;
     else
       return "";
   }

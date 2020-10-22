@@ -116,6 +116,8 @@
   "message_timer_active": "You already have an active timer, deactivate it before starting a new one.",
   "message_no_description": "No description provided.",
   "message_no_requests": "No pending requests are waiting for your approval, you're all set.",
+  "message_request_approved": "Reqeust of {} approved.",
+  "message_request_refused": "Request of {} refused!",
 
   "label_my_places": "My places",
   "label_help_videos": "Help videos",

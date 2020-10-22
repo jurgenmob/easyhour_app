@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/models/request.dart';
 import 'package:easyhour_app/providers/request_provider.dart';
@@ -33,13 +34,30 @@ class _RequestListScreenState
       startIcon: EasyIcons.approve_ok,
       endIcon: EasyIcons.approve_ko,
       confirmDismiss: (direction) => Future.value(true),
-      onDismissed: (direction) {
-        context.read<RequestProvider>().approveRefuse(item,
-            approved: direction == DismissDirection.startToEnd);
-      },
+      onDismissed: (direction) => _approveRefuse(item, direction),
       onEdit: (_) {
         _showDescr(item);
       });
+
+  void _approveRefuse(Request item, DismissDirection direction) async {
+    try {
+      final approved = direction == DismissDirection.startToEnd;
+      await context
+          .read<RequestProvider>()
+          .approveRefuse(item, approved: approved);
+
+      // Show the result
+      Scaffold.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+            content: Text((approved
+                    ? LocaleKeys.message_request_approved
+                    : LocaleKeys.message_request_refused)
+                .tr(args: [item.tipologia.toLowerCase()]))));
+    } catch (e, s) {
+      handleRestError(context, e, s);
+    }
+  }
 
   void _showDescr(Request item) {
     // Show the details

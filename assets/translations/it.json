@@ -116,6 +116,8 @@
   "message_timer_active": "Un altro timer è attivo, disattivalo prima di attivarne un altro.",
   "message_no_description": "Nessuna descrizione inserita.",
   "message_no_requests": "È tutto a posto, non ci sono richieste in attesa di approvazione.",
+  "message_request_approved": "Richiesta di {} approvata.",
+  "message_request_refused": "Richiesta di {} rifiutata!",
 
   "label_my_places": "Le mie posizioni",
   "label_help_videos": "Video di aiuto",

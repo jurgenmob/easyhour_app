@@ -69,6 +69,8 @@ abstract class  LocaleKeys {
   static const message_timer_active = 'message_timer_active';
   static const message_no_description = 'message_no_description';
   static const message_no_requests = 'message_no_requests';
+  static const message_request_approved = 'message_request_approved';
+  static const message_request_refused = 'message_request_refused';
   static const label_my_places = 'label_my_places';
   static const label_help_videos = 'label_help_videos';
   static const label_reset_password = 'label_reset_password';
