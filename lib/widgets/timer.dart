@@ -8,6 +8,7 @@ import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/dialogs.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
@@ -139,9 +140,10 @@ class _TimerWidgetState extends State<EasyTimer> {
         ..durata = widget.task.duration(null).inMinutes +
             (widget.task.timer.duration.inMinutes / i).round() * i
         ..task = widget.task;
-      final result = await Navigator.pushNamed(
-          context, (EasyRoute.addEdit(WorkLog)?.page),
-          arguments: widget.task.timer.worklog);
+      final result = await EasyAppBar.pushNamed(
+          context,
+          EasyRoute.addEdit(WorkLog,
+              arguments: () => widget.task.timer.worklog));
 
       // Show the result message
       if (result != null) {

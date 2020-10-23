@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/button.dart';
 import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -70,7 +70,7 @@ class _ProfileScreen extends StatelessWidget {
               child:
                   Text(LocaleKeys.label_my_places.tr(), style: flatButtonStyle),
               onPressed: () =>
-                  Navigator.pushNamed(context, EasyRoute.list(Location).page),
+                  EasyAppBar.pushNamed(context, EasyRoute.list(Location)),
             ),
             FlatButton(
               child: Text(LocaleKeys.label_help_videos.tr(),
@@ -86,11 +86,9 @@ class _ProfileScreen extends StatelessWidget {
             EasyButton(
               text: LocaleKeys.label_logout.tr().toUpperCase(),
               icon: EasyIcons.logout,
-              onPressed: () {
-                EasyRest().doLogout();
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login', ModalRoute.withName('/'));
-              },
+              onPressed: () => EasyRest()
+                  .doLogout()
+                  .then((_) => EasyAppBar.gotoLogin(context)),
             ),
             SizedBox(height: 8),
             FlatButton(

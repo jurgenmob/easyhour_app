@@ -21,37 +21,37 @@ class CompanyActionProvider extends BaseProvider<CompanyAction> {
               CompanyAction(
                   text: LocaleKeys.label_requests,
                   icon: EasyIcons.requests,
-                  page: EasyRoute.list(Request).page),
+                  route: EasyRoute.list(Request)),
             CompanyAction(
                 text: LocaleKeys.label_vacations,
                 icon: EasyIcons.vacations,
-                page: EasyRoute.list(Vacation).page),
+                route: EasyRoute.list(Vacation)),
             CompanyAction(
                 text: LocaleKeys.label_permits,
                 icon: EasyIcons.permits,
-                page: EasyRoute.list(Permit).page),
+                route: EasyRoute.list(Permit)),
             CompanyAction(
                 text: LocaleKeys.label_sicknesses,
                 icon: EasyIcons.sickness,
-                page: EasyRoute.list(Sickness).page),
+                route: EasyRoute.list(Sickness)),
             CompanyAction(
                 text: LocaleKeys.label_trips,
                 icon: EasyIcons.trips,
-                page: EasyRoute.list(Trip).page),
+                route: EasyRoute.list(Trip)),
             if (userInfo.hasActivitiesModule)
               CompanyAction(
                   text: LocaleKeys.label_activities,
                   icon: EasyIcons.activities,
-                  page: EasyRoute.list(Activity).page),
+                  route: EasyRoute.list(Activity)),
             if (userInfo.hasSmartWorkingModule)
               CompanyAction(
                   text: LocaleKeys.label_smartworkings,
                   icon: EasyIcons.smartworkings,
-                  page: EasyRoute.list(SmartWorking).page),
+                  route: EasyRoute.list(SmartWorking)),
             CompanyAction(
                 text: LocaleKeys.label_bookings,
                 icon: EasyIcons.workplaces,
-                page: EasyRoute.list(Booking).page),
+                route: EasyRoute.list(Booking)),
           ]);
 
   @override

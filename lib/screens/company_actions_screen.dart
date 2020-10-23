@@ -1,13 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/models/company_action.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/company_action_provider.dart';
-import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
 
 class CompanyActionsScreen extends StatefulWidget {
   @override
@@ -50,13 +47,7 @@ class _CompanyActionButton extends StatelessWidget {
               ),
             ],
           ),
-          onPressed: () async {
-            await Navigator.pushNamed(context, item.page);
-
-            // Update the calendar icon
-            context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
-            EasyAppBar.updateCalendarIndicator(context);
-          },
+          onPressed: () => EasyAppBar.pushNamed(context, item.route),
         ),
       ),
     );

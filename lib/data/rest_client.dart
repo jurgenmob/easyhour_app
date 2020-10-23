@@ -25,6 +25,7 @@ import 'package:easyhour_app/models/user_info.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/models/workplace.dart';
+import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class EasyRest {
               data: RefreshTokenRequest(_refreshToken).toJson());
           saveTokens(LoginResponse.fromJson(jsonDecode(response.data)));
           options.headers['Authorization'] = 'Bearer $_accessToken';
+
           return _dio.request(options.path, options: options);
         }
       }
@@ -471,7 +473,7 @@ String handleRestError(BuildContext context, e, s) {
   if (e.runtimeType == DioError &&
       (e.response?.statusCode == 401 || e.request.path == '/refresh')) {
     error = LocaleKeys.message_login_expired.tr();
-    EasyRest().doLogout().then((_) => Navigator.pushNamed(context, '/login'));
+    EasyRest().doLogout().then((_) => EasyAppBar.gotoLogin(context));
   } else {
     // Show the error to the user
     try {

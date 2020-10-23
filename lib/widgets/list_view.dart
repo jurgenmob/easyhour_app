@@ -101,7 +101,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
 
   @protected
   void onEdit(T item) async {
-    final result = EasyAppBar.navigate(
+    final result = EasyAppBar.pushNamed(
         context, EasyRoute.addEdit(item.runtimeType, arguments: () => item));
 
     // Show the result message

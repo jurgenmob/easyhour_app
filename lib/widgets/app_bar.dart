@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
   static List<EasyRoute> _actions;
 
-  static dynamic navigate(BuildContext context, EasyRoute route) async {
+  static dynamic pushNamed(BuildContext context, EasyRoute route) async {
     if (route?.page == null) return;
 
     // Callback only actions
@@ -40,6 +40,11 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
     }
 
     return result;
+  }
+
+  static dynamic gotoLogin(BuildContext context) {
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', ModalRoute.withName('/'));
   }
 
   static void updateCalendarIndicator(BuildContext context,
@@ -86,11 +91,11 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
   }
 
   Widget _buildIcon(BuildContext context, EasyRoute route) => GestureDetector(
-        onTap: () => navigate(context, route),
+        onTap: () => pushNamed(context, route),
         child: Stack(children: [
           IconButton(
             icon: route.icon,
-            onPressed: () => navigate(context, route),
+            onPressed: () => pushNamed(context, route),
           ),
           if (route.indicator != null)
             Positioned(
