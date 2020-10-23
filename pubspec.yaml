@@ -4,7 +4,7 @@ description: The timesheet, that's it!
 # Remove this line if you wish to publish to pub.dev
 publish_to: 'none'
 
-version: 2.0.6+1002006
+version: 2.0.8+1002008
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
