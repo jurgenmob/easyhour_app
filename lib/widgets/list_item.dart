@@ -11,7 +11,9 @@ class EasyListItem<T extends BaseModel> extends StatelessWidget {
   final ConfirmDismissCallback confirmDismiss;
   final DismissDirectionCallback onDismissed;
   final IconData startIcon;
+  final String startText;
   final IconData endIcon;
+  final String endText;
 
   final Function(T) onEdit;
   final Function(T) onDelete;
@@ -20,58 +22,35 @@ class EasyListItem<T extends BaseModel> extends StatelessWidget {
       {this.onEdit,
       this.onDelete,
       this.startIcon,
+      this.startText,
       this.endIcon,
+      this.endText,
       this.confirmDismiss,
       this.onDismissed});
 
   @override
   Widget build(BuildContext context) {
     if (item.dismissible && item.editable) {
-      return _DismissibleEasyListItem<T>(item,
-          bothDirections: startIcon != null,
-          confirmDismiss: confirmDismiss,
-          onDismissed: onDismissed,
-          child: _EditableEasyListItem<T>(item,
-              child:
-                  _EasyListItem(item, startIcon: startIcon, endIcon: endIcon),
-              onEdit: onEdit),
-          onDelete: onDelete);
-    } else if (item.dismissible) {
-      return _DismissibleEasyListItem<T>(item,
-          bothDirections: startIcon != null,
-          confirmDismiss: confirmDismiss,
-          onDismissed: onDismissed,
-          child: _ReadonlyEasyListItem(item,
+      return _dismissibleItem(context,
+          child: _editableItem(context,
               child:
                   _EasyListItem(item, startIcon: startIcon, endIcon: endIcon)),
-          onDelete: onDelete);
+          bothDirections: startIcon != null);
+    } else if (item.dismissible) {
+      return _dismissibleItem(context,
+          child: _readonlyItem(context,
+              child:
+                  _EasyListItem(item, startIcon: startIcon, endIcon: endIcon)),
+          bothDirections: startIcon != null);
     } else if (item.editable) {
-      return _EditableEasyListItem<T>(item,
-          child: _EasyListItem(item), onEdit: onEdit);
+      return _editableItem(context, child: _EasyListItem(item));
+    } else {
+      return _EasyListItem(item);
     }
-    return _EasyListItem(item);
   }
-}
 
-class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
-  final BaseModel item;
-  final Widget child;
-
-  final ConfirmDismissCallback confirmDismiss;
-  final DismissDirectionCallback onDismissed;
-  final bool bothDirections;
-
-  final Function(T) onDelete;
-
-  _DismissibleEasyListItem(this.item,
-      {@required this.child,
-      @required this.onDelete,
-      this.bothDirections,
-      this.confirmDismiss,
-      this.onDismissed});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _dismissibleItem(BuildContext context,
+      {@required Widget child, bool bothDirections}) {
     return Dismissible(
         key: ValueKey(item.id),
         direction: item.dismissible != null
@@ -80,10 +59,29 @@ class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
                 : DismissDirection.endToStart
             : null,
         background: Container(
-            color: Theme.of(context).primaryColor,
+            color: EasyColors.approve,
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(startIcon, color: Colors.white),
+                if (startText != null) SizedBox(height: 4),
+                if (startText != null) Text(startText, style: snackBarStyle)
+              ],
+            )),
+        secondaryBackground: Container(
+            color: EasyColors.refuse,
             alignment: Alignment.centerRight,
             padding: EdgeInsets.symmetric(horizontal: 24),
-            child: Icon(EasyIcons.delete, color: Colors.white)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(endIcon, color: Colors.white),
+                if (endText != null) SizedBox(height: 4),
+                if (endText != null) Text(endText, style: snackBarStyle)
+              ],
+            )),
         confirmDismiss: (DismissDirection direction) async =>
             confirmDismiss != null
                 ? confirmDismiss(direction)
@@ -95,31 +93,12 @@ class _DismissibleEasyListItem<T extends BaseModel> extends StatelessWidget {
             onDismissed != null ? onDismissed(direction) : onDelete(item),
         child: child);
   }
-}
 
-class _EditableEasyListItem<T extends BaseModel> extends StatelessWidget {
-  final BaseModel item;
-  final Widget child;
-
-  final Function(T) onEdit;
-
-  _EditableEasyListItem(this.item,
-      {@required this.child, @required this.onEdit});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _editableItem(BuildContext context, {@required Widget child}) {
     return Card(child: InkWell(onTap: () => onEdit(item), child: child));
   }
-}
 
-class _ReadonlyEasyListItem extends StatelessWidget {
-  final BaseModel item;
-  final Widget child;
-
-  _ReadonlyEasyListItem(this.item, {@required this.child});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _readonlyItem(BuildContext context, {@required Widget child}) {
     return Card(child: child);
   }
 }

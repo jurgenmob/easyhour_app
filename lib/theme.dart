@@ -67,6 +67,15 @@ const snackBarStyle = TextStyle(
   color: const Color(0xFFFFFFFF),
 );
 
+// Calendar colors
+class EasyColors {
+  static const calOk = Colors.greenAccent;
+  static const calMissing = Colors.red;
+  static const calTooMuch = Colors.yellow;
+  static const approve = Colors.green;
+  static const refuse = Colors.red;
+}
+
 class EasyIcons {
   EasyIcons._();
 

@@ -5,6 +5,7 @@ import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
 import 'package:easyhour_app/routes.dart';
+import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +28,11 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
 
   EasyListState({this.emptyText, this.refreshEnabled = true});
 
-  Widget getItem(T item) =>
-      EasyListItem<T>(item, onEdit: onEdit, onDelete: onDelete);
+  Widget getItem(T item) => EasyListItem<T>(item,
+      endIcon: EasyIcons.delete,
+      endText: LocaleKeys.label_delete.tr(),
+      onEdit: onEdit,
+      onDelete: onDelete);
 
   @protected
   Comparator<T> comparator() => null;

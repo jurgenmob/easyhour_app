@@ -159,31 +159,28 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
           ? null
           : worked == target
               ? const CalendarIndicator("",
-                  foreground: Colors.black,
-                  background: CalendarIndicator.colorOk)
+                  foreground: Colors.black, background: EasyColors.calOk)
               : (worked < target
                   ? CalendarIndicator(
                       (worked.inHours - target.inHours).formatWithSign(),
                       foreground: Colors.white,
-                      background: CalendarIndicator.colorMissing)
+                      background: EasyColors.calMissing)
                   : CalendarIndicator(
                       (worked.inHours - target.inHours).formatWithSign(),
                       foreground: Colors.black,
-                      background: CalendarIndicator.colorTooMuch));
+                      background: EasyColors.calTooMuch));
 }
 
 class CalendarIndicator {
-  static const colorOk = Colors.greenAccent;
-  static const colorMissing = Colors.red;
-  static const colorTooMuch = Colors.yellow;
-
   final Color foreground;
   final Color background;
   final String text;
 
-  Icon get icon =>
-      Icon(background == colorOk ? EasyIcons.approve_ok : EasyIcons.approve_ko,
-          color: background);
+  Icon get icon => Icon(
+      background == EasyColors.calOk
+          ? EasyIcons.approve_ok
+          : EasyIcons.approve_ko,
+      color: background);
 
   const CalendarIndicator(this.text,
       {@required this.foreground, this.background = Colors.transparent});

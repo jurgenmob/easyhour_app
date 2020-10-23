@@ -130,6 +130,9 @@
   "label_add": "Add",
   "label_choose": "Choose one",
   "label_save": "Save",
+  "label_approve": "Approve",
+  "label_refuse": "Refuse",
+  "label_delete": "Delete",
 
   "message_confirm_app_exit": "Tap back again to quit app"
 }

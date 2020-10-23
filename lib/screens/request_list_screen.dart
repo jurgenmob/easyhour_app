@@ -33,7 +33,9 @@ class _RequestListScreenState
   @override
   Widget getItem(Request item) => EasyListItem<Request>(item,
       startIcon: EasyIcons.approve_ok,
+      startText: LocaleKeys.label_approve.tr(),
       endIcon: EasyIcons.approve_ko,
+      endText: LocaleKeys.label_refuse.tr(),
       confirmDismiss: (direction) => Future.value(true),
       onDismissed: (direction) => _approveRefuse(item, direction),
       onEdit: (_) {
