@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/sickness.dart';
 import 'package:easyhour_app/models/task.dart';
@@ -21,8 +22,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'package:easyhour_app/generated/locale_keys.g.dart';
-
 class TodayActivitiesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,25 +35,28 @@ class TodayActivitiesScreen extends StatelessWidget {
           ? model.items.first.runtimeType
           : null;
 
-      return Column(children: [
-        type == Vacation || type == Sickness
-            ? SizedBox(height: 24)
-            : EasySearchBar<TodayActivitiesProvider>(),
-        _TodayActivitiesHeader(model.items),
-        SizedBox(height: 8),
-        Expanded(
-            child: type == Vacation || type == Sickness
-                ? _VacationSicknessContainer(type)
-                : _TaskList())
-      ]);
+      return type == Vacation || type == Sickness
+          ? Column(children: [
+              SizedBox(height: 24),
+              _TodayActivitiesHeader(model.items, showTotalDuration: false),
+              SizedBox(height: 8),
+              Expanded(child: _VacationSicknessContainer(type))
+            ])
+          : Column(children: [
+              EasySearchBar<TodayActivitiesProvider>(),
+              _TodayActivitiesHeader(model.items, showTotalDuration: true),
+              SizedBox(height: 8),
+              Expanded(child: _TaskList())
+            ]);
     });
   }
 }
 
 class _TodayActivitiesHeader extends StatelessWidget {
-  final List<TodayActivity> _items;
+  final List<TodayActivity> items;
+  final bool showTotalDuration;
 
-  _TodayActivitiesHeader(this._items);
+  _TodayActivitiesHeader(this.items, {this.showTotalDuration = true});
 
   @override
   Widget build(BuildContext context) {
@@ -67,17 +69,18 @@ class _TodayActivitiesHeader extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2),
           ),
         ),
-        Container(
-            width: 108,
-            child: Text(_totalDuration().formatDisplay(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText2)),
+        if (showTotalDuration)
+          Container(
+              width: 108,
+              child: Text(_totalDuration().formatDisplay(),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyText2)),
       ],
     );
   }
 
-  Duration _totalDuration() =>
-      _items.fold<Duration>(Duration(), (p, c) => p + c.duration(null));
+  Duration _totalDuration() => items.fold<Duration>(
+      Duration(), (p, c) => p + c.duration(DateTime.now()));
 }
 
 /// Shown when the user is not at work
