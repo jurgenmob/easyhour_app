@@ -1,3 +1,4 @@
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/routes.dart';
@@ -23,7 +24,7 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
     firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print("Push onMessage: $message");
-        showMessage(message['notification']['body']);
+        showMessage(_scaffoldKey.currentState, message['notification']['body']);
       },
       onLaunch: (Map<String, dynamic> message) async {
         print("Push onLaunch: $message");
@@ -46,13 +47,6 @@ abstract class BaseScreen<T extends BaseModel> extends StatelessWidget {
         body: getBody(),
       ),
     );
-  }
-
-  @protected
-  void showMessage(String message) {
-    _scaffoldKey.currentState
-      ..removeCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
   }
 }
 

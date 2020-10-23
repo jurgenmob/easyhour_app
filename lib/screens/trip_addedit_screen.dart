@@ -107,9 +107,8 @@ class _TripFormState extends AddEditFormState<Trip, TripProvider> {
       print(e);
       print(s);
 
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(e.toString())));
+      // Show the error
+      showMessage(Scaffold.of(context), e.toString());
     }
     setState(() {});
   }

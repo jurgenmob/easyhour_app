@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/routes.dart';
@@ -25,11 +26,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
         arguments: route.arguments);
 
     // Show the result message
-    if (result != null) {
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(result)));
-    }
+    if (result != null) showMessage(Scaffold.of(context), result);
 
     // Restore previous action
     context.read<EasyAppBarProvider>().actions = prev;

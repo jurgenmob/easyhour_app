@@ -486,9 +486,7 @@ String handleRestError(BuildContext context, e, s) {
   }
 
   // Show the error
-  Scaffold.of(context)
-    ..removeCurrentSnackBar()
-    ..showSnackBar(SnackBar(content: Text(error)));
+  showMessage(Scaffold.of(context), error);
 
   return error;
 }

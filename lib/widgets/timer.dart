@@ -146,11 +146,7 @@ class _TimerWidgetState extends State<EasyTimer> {
               arguments: () => widget.task.timer.worklog));
 
       // Show the result message
-      if (result != null) {
-        Scaffold.of(context)
-          ..removeCurrentSnackBar()
-          ..showSnackBar(SnackBar(content: Text(result)));
-      }
+      if (result != null) showMessage(Scaffold.of(context), result);
     } catch (e, s) {
       handleRestError(context, e, s);
     } finally {

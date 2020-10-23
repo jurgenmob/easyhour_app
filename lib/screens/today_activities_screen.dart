@@ -9,7 +9,6 @@ import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/models/today_activity.dart';
 import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
-import 'package:easyhour_app/providers/app_bar_provider.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
@@ -182,10 +181,7 @@ class _TaskListState
   @override
   bool confirmStart(BuildContext context) {
     if (_timerActive) {
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(
-            SnackBar(content: Text(LocaleKeys.message_timer_active.tr())));
+      showMessage(Scaffold.of(context), LocaleKeys.message_timer_active.tr());
       return false;
     }
     return true;
@@ -258,19 +254,10 @@ class _TaskItemState extends State<_TaskItem> {
     final worklog = widget.task.worklogs.length > 0
         ? widget.task.worklogs.first
         : WorkLog(data: DateTime.now(), task: widget.task);
-    final result = await Navigator.pushNamed(
-        context, (EasyRoute.addEdit(WorkLog)?.page),
-        arguments: worklog);
+    final result = await EasyAppBar.pushNamed(
+        context, EasyRoute.addEdit(WorkLog, arguments: () => worklog));
 
     // Show the result message
-    if (result != null) {
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(result)));
-    }
-
-    // Restore the appbar icon
-    context.read<EasyAppBarProvider>().actions = [EasyRoute.calendar()];
-    EasyAppBar.updateCalendarIndicator(context);
+    if (result != null) showMessage(Scaffold.of(context), result);
   }
 }

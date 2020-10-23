@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
+import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
 import 'package:easyhour_app/routes.dart';
@@ -7,7 +9,6 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'app_bar.dart';
 import 'list_item.dart';
 
@@ -105,11 +106,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
         context, EasyRoute.addEdit(item.runtimeType, arguments: () => item));
 
     // Show the result message
-    if (result != null) {
-      Scaffold.of(context)
-        ..removeCurrentSnackBar()
-        ..showSnackBar(SnackBar(content: Text(result)));
-    }
+    if (result != null) showMessage(Scaffold.of(context), result);
   }
 
   @protected
@@ -118,10 +115,8 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
       // Delete the item
       bool result = await context.read<P>().delete(item);
       if (result) {
-        Scaffold.of(context)
-          ..removeCurrentSnackBar()
-          ..showSnackBar(
-              SnackBar(content: Text(LocaleKeys.message_delete_generic.tr())));
+        showMessage(
+            Scaffold.of(context), LocaleKeys.message_delete_generic.tr());
       }
     } catch (e, s) {
       handleRestError(context, e, s);

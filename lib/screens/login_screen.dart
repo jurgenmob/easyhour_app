@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/button.dart';
@@ -7,8 +8,6 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
-
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -103,8 +102,8 @@ class _LoginFormState extends State<_LoginForm> {
         if (resultOk) {
           Navigator.pushReplacementNamed(context, '/home');
         } else {
-          _scaffoldKey.currentState.showSnackBar(
-              SnackBar(content: Text(LocaleKeys.message_login_failed).tr()));
+          showMessage(
+              _scaffoldKey.currentState, LocaleKeys.message_login_failed.tr());
         }
 
         setState(() {

@@ -60,6 +60,13 @@ final appTheme = ThemeData(
       color: const Color(0xFF00ADE6),
     ));
 
+const snackBarStyle = TextStyle(
+  fontFamily: 'Roboto',
+  fontWeight: FontWeight.w300,
+  fontSize: 16,
+  color: const Color(0xFFFFFFFF),
+);
+
 class EasyIcons {
   EasyIcons._();
 

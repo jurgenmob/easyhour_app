@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/models/user_info.dart';
+import 'package:easyhour_app/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -124,4 +125,10 @@ Future<String> get googleMapsApyKey async {
       .firstWhere((e) => e.trim().startsWith("$keyName="), orElse: () => null)
       ?.split("=");
   return prop?.length == 2 ? prop[1] : null;
+}
+
+void showMessage(ScaffoldState scaffoldState, String message) {
+  scaffoldState
+    ..removeCurrentSnackBar()
+    ..showSnackBar(SnackBar(content: Text(message, style: snackBarStyle)));
 }
