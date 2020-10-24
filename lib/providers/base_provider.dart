@@ -7,7 +7,7 @@ abstract class BaseProvider<T extends BaseModel> extends ChangeNotifier {
   dynamic _filter;
 
   set filter(dynamic filter) {
-    final notify = _filter != _filter;
+    final notify = filter != _filter;
 
     _filter = filter;
 

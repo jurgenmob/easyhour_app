@@ -59,9 +59,6 @@ class _CalendarWidgetState extends State<CalendarWidget>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     )..forward();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _provider.filter = DateTime.now());
   }
 
   @override
@@ -137,8 +134,10 @@ class _CalendarWidgetState extends State<CalendarWidget>
         onDaySelected: _onDaySelected,
         onVisibleDaysChanged: _refreshEvents,
         onCalendarCreated: (first, last, format) => {
-          WidgetsBinding.instance
-              .addPostFrameCallback((_) => _refreshEvents(first, last, format))
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _refreshEvents(first, last, format);
+            _provider.filter = DateTime.now();
+          })
         },
         calendarStyle: CalendarStyle(
           selectedColor: Colors.white,
