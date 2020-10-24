@@ -51,13 +51,16 @@ class TodayActivitiesScreen extends StatelessWidget {
                       SizedBox(height: 8),
                       Expanded(child: _VacationSicknessContainer(type))
                     ])
-                  : Column(children: [
-                      EasySearchBar<TodayActivitiesProvider>(),
-                      _TodayActivitiesHeader(model.items,
-                          showTotalDuration: true),
-                      SizedBox(height: 8),
-                      Expanded(child: _TaskList())
-                    ]);
+                  : GestureDetector(
+                      onTap: () => FocusScope.of(context).unfocus(),
+                      child: Column(children: [
+                        EasySearchBar<TodayActivitiesProvider>(),
+                        _TodayActivitiesHeader(model.items,
+                            showTotalDuration: true),
+                        SizedBox(height: 8),
+                        Expanded(child: _TaskList())
+                      ]),
+                    );
             });
           }
           // return EasyLoader(showLogo: true);
