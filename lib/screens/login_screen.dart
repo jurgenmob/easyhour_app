@@ -55,6 +55,7 @@ class _LoginFormState extends State<_LoginForm> {
             initialValue: EasyRest().domain,
             onSaved: (value) => _domain = value,
           ),
+          SizedBox(height: 8),
           EasyTextField(
             labelText: LocaleKeys.label_username,
             keyboardType: TextInputType.emailAddress,
@@ -65,6 +66,7 @@ class _LoginFormState extends State<_LoginForm> {
                 : LocaleKeys.field_email_invalid.tr(),
             onSaved: (value) => _username = value,
           ),
+          SizedBox(height: 8),
           EasyTextField(
             labelText: LocaleKeys.label_password,
             icon: EasyIcons.lock,
