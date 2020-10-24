@@ -178,6 +178,8 @@ class _TaskListState
     with TimerCoordinator {
   bool _timerActive = false;
 
+  _TaskListState() : super(emptyText: LocaleKeys.empty_list_tasks.tr());
+
   @override
   Widget getItem(TodayActivity item) {
     return _TaskItem(widget, item as Task);
