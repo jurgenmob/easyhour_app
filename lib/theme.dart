@@ -122,7 +122,7 @@ class EasyIcons {
   static const IconData workman = _EasyIconsData(0xe94e);
   static const IconData workman_filled = _EasyIconsData(0xe949);
   static const IconData settings = _EasyIconsData(0xe977);
-  static const IconData approve_ok = _EasyIconsData(0xe957);
+  static const IconData approve_ok = _EasyIconsData(0xe9f3);
   static const IconData approve_ko = _EasyIconsData(0xe926);
   static const IconData approve_pending = _EasyIconsData(0xe92e);
 }
