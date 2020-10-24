@@ -20,6 +20,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+SharedPreferences _prefs;
 
 class TodayActivitiesScreen extends StatelessWidget {
   @override
@@ -28,26 +31,38 @@ class TodayActivitiesScreen extends StatelessWidget {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => EasyAppBar.updateCalendarIndicator(context));
 
-    return Consumer<TodayActivitiesProvider>(
-        builder: (_, TodayActivitiesProvider model, Widget child) {
-      final Type type = model.items?.isNotEmpty ?? false
-          ? model.items.first.runtimeType
-          : null;
+    return FutureBuilder<SharedPreferences>(
+        future: SharedPreferences.getInstance(),
+        builder: (context, snapshot) {
+          if (snapshot?.connectionState == ConnectionState.done) {
+            _prefs = snapshot.data;
 
-      return type == Vacation || type == Sickness
-          ? Column(children: [
-              SizedBox(height: 24),
-              _TodayActivitiesHeader(model.items, showTotalDuration: false),
-              SizedBox(height: 8),
-              Expanded(child: _VacationSicknessContainer(type))
-            ])
-          : Column(children: [
-              EasySearchBar<TodayActivitiesProvider>(),
-              _TodayActivitiesHeader(model.items, showTotalDuration: true),
-              SizedBox(height: 8),
-              Expanded(child: _TaskList())
-            ]);
-    });
+            return Consumer<TodayActivitiesProvider>(
+                builder: (_, TodayActivitiesProvider model, Widget child) {
+              final Type type = model.items?.isNotEmpty ?? false
+                  ? model.items.first.runtimeType
+                  : null;
+
+              return type == Vacation || type == Sickness
+                  ? Column(children: [
+                      SizedBox(height: 24),
+                      _TodayActivitiesHeader(model.items,
+                          showTotalDuration: false),
+                      SizedBox(height: 8),
+                      Expanded(child: _VacationSicknessContainer(type))
+                    ])
+                  : Column(children: [
+                      EasySearchBar<TodayActivitiesProvider>(),
+                      _TodayActivitiesHeader(model.items,
+                          showTotalDuration: true),
+                      SizedBox(height: 8),
+                      Expanded(child: _TaskList())
+                    ]);
+            });
+          }
+          // return EasyLoader(showLogo: true);
+          return Container();
+        });
   }
 }
 
@@ -150,11 +165,11 @@ class _TaskList extends StatefulWidget {
     } else {
       _flaggedTasks.add(task.id.toString());
     }
-    prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
+    _prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
   }
 
   _TaskList()
-      : _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
+      : _flaggedTasks = _prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
         super(key: _taskListKey);
 }
 

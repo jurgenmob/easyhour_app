@@ -56,10 +56,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/rest_client.dart';
-import 'globals.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -119,17 +117,12 @@ class _EasyAppState extends State<EasyApp> {
               ChangeNotifierProvider(create: (context) => OfficeProvider()),
               ChangeNotifierProvider(create: (context) => RequestProvider()),
             ],
-            child: FutureBuilder<SharedPreferences>(
-                future: SharedPreferences.getInstance(),
-                builder: (context, snapshot) {
-                  if (snapshot?.connectionState == ConnectionState.done) {
-                    prefs = snapshot.data;
-
-                    return _EasyMaterialApp(context);
-                  }
-                  // return EasyLoader(showLogo: true);
-                  return Container();
-                })));
+            child: FutureBuilder(
+                future: EasyRest().initClient(),
+                builder: (context, snapshot) =>
+                    snapshot?.connectionState == ConnectionState.done
+                        ? _EasyMaterialApp(context)
+                        : Container())));
   }
 }
 
@@ -141,7 +134,7 @@ class _EasyMaterialApp extends MaterialApp {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-          initialRoute: EasyRest().isUserLogged()
+          initialRoute: EasyRest().isUserLogged
               ? EasyRoute.home().page
               : EasyRoute.login().page,
           routes: {

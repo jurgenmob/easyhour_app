@@ -29,11 +29,13 @@ import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'
+    show FlutterSecureStorage;
 import 'package:package_info/package_info.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class EasyRest {
   static final EasyRest _instance = EasyRest._internal();
+  static final _storage = new FlutterSecureStorage();
 
   static int _retry = 0;
 
@@ -61,14 +63,14 @@ class EasyRest {
       "${packageInfo?.appName}/${packageInfo?.buildNumber})";
 
   EasyRest._internal() {
-    // Initialize logged user tokens from prefs
+    // Initialize logged user tokens
     initClient();
 
     // Add auth token to each request
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       // Wait for user information to be available first
-      if (isUserLogged() && userInfo == null && options.path != '/user-info') {
+      if (isUserLogged && userInfo == null && options.path != '/user-info') {
         await getUserInfo();
       }
 
@@ -100,27 +102,28 @@ class EasyRest {
     }));
   }
 
-  void initClient() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future initClient() async {
     packageInfo = await PackageInfo.fromPlatform();
 
-    _domain = prefs.getString('domain');
-    _username = prefs.getString('username');
-    _accessToken = prefs.getString('accessToken');
-    _refreshToken = prefs.getString('refreshToken');
+    _domain = await _storage.read(key: 'domain');
+    _username = await _storage.read(key: 'username');
+    _accessToken = await _storage.read(key: 'accessToken');
+    _refreshToken = await _storage.read(key: 'refreshToken');
   }
 
   Future<bool> saveTokens(LoginResponse response) async {
     _accessToken = response?.accessToken;
     _refreshToken = response?.refreshToken;
 
-    await prefs.setString('domain', _domain);
-    await prefs.setString('username', _username);
-    await prefs.setString('accessToken', _accessToken);
-    await prefs.setString('refreshToken', _refreshToken);
+    await _storage.write(key: 'domain', value: _domain);
+    await _storage.write(key: 'username', value: _username);
+    await _storage.write(key: 'accessToken', value: _accessToken);
+    await _storage.write(key: 'refreshToken', value: _refreshToken);
 
     return _accessToken != null;
   }
+
+  bool get isUserLogged => _accessToken?.isNotEmpty == true;
 
   Future<bool> doLogin(String domain, String username, String password) async {
     _username = username.trim();
@@ -151,8 +154,6 @@ class EasyRest {
 
     return saveTokens(null);
   }
-
-  bool isUserLogged() => prefs.getString('accessToken')?.isNotEmpty ?? false;
 
   Future<List<TodayActivity>> getTodayActivities() async {
     Response<String> response = await _dio.get('/today-activities');

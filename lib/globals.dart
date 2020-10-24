@@ -6,7 +6,6 @@ import 'package:easyhour_app/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:shared_preferences/shared_preferences.dart';
 
 /// Swtich between DEV and PROD environments
 const String baseUrl = //'http://192.168.1.24:8080';
@@ -44,9 +43,6 @@ bool validateEmail(String email) => RegExp(
 
 /// Validates an integer number.
 bool validateInt(String text) => RegExp(r"^[0-9]+$").hasMatch(text);
-
-/// Access to shared preferences
-SharedPreferences prefs;
 
 /// User and company info and config
 UserInfo userInfo;
