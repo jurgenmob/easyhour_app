@@ -69,8 +69,13 @@ class EasyRest {
     // Add auth token to each request
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
-      // Wait for user information to be available first
-      if (isUserLogged && userInfo == null && options.path != '/user-info') {
+      // Wait for user information to be available first, with the exception
+      // of some requests that do not need them and are executed concurrently
+      // at app start
+      if (isUserLogged &&
+          userInfo == null &&
+          options.path != '/user-info' &&
+          options.path != '/pushes') {
         await getUserInfo();
       }
 
