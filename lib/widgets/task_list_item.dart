@@ -23,12 +23,13 @@ class TaskListItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold)),
-            SizedBox(height: 8),
+            SizedBox(height: 12),
             Text(task.nomeTask.toUpperCase(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold)),
+            SizedBox(height: 4),
             Text(task.nomeProgetto,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
