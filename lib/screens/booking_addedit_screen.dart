@@ -144,6 +144,7 @@ class _WorkPlaceSelectFieldState extends State<_WorkPlaceSelectField> {
     } catch (e, s) {
       print(e);
       print(s);
+      _workplaces = List(); // avoid infinite loop
     } finally {
       setState(() => _loading = false);
     }
