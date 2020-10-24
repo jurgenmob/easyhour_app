@@ -149,7 +149,7 @@ class _CalendarWidgetState extends State<CalendarWidget>
               fontWeight: FontWeight.bold),
           weekdayStyle:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          weekendStyle: const TextStyle(color: const Color(0xFFCCCCCC)),
+          weekendStyle: const TextStyle(color: Colors.white),
           holidayStyle: const TextStyle(color: const Color(0XFFECE43E)),
           unavailableStyle: const TextStyle(color: const Color(0xFFCCCCCC)),
         ),
