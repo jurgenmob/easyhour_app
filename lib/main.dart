@@ -73,7 +73,7 @@ void main() async {
   // Set colors for system UI
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.white,
-    statusBarColor: Color(0xAA00ADE6),
+    statusBarColor: const Color(0xAA00ADE6),
     statusBarIconBrightness: Brightness.dark,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));

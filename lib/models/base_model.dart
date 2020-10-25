@@ -2,6 +2,7 @@ import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/activity.dart';
 import 'package:easyhour_app/models/booking.dart';
+import 'package:easyhour_app/models/company_action.dart';
 import 'package:easyhour_app/models/location.dart';
 import 'package:easyhour_app/models/office.dart';
 import 'package:easyhour_app/models/permit.dart';
@@ -13,6 +14,7 @@ import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/models/workplace.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 mixin BaseModel<T, P> {
@@ -82,6 +84,10 @@ mixin BaseModel<T, P> {
       return LocaleKeys.label_offices;
     else if (t == Request)
       return LocaleKeys.label_requests;
+    else if (t == CompanyAction)
+      return "";
+    else if (kDebugMode)
+      throw Exception("Missing base model translation for ${t.toString()}");
     else
       return "";
   }

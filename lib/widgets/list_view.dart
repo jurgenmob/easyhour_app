@@ -23,8 +23,10 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   String _error;
 
   @protected
-  String get defaultEmptyText => LocaleKeys.empty_list_generic
-      .tr(args: [BaseModel.displayName(T).plural(2).toLowerCase()]);
+  String get defaultEmptyText => BaseModel.displayName(T).isNotEmpty
+      ? LocaleKeys.empty_list_generic
+          .tr(args: [BaseModel.displayName(T).plural(2).toLowerCase()])
+      : "";
 
   EasyListState({this.emptyText, this.refreshEnabled = true});
 

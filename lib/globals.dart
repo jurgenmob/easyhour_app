@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 /// Swtich between DEV and PROD environments
-const String baseUrl = //'http://192.168.1.24:8080';
+const String baseUrl =
     kReleaseMode ? 'https://easyhour.app' : 'https://easyhour.mobidev.it';
 
 const String restDateFormat = "yyyy-MM-dd";

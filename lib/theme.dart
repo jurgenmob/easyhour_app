@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 final appTheme = ThemeData(
-    primaryColor: Color(0xFF00ADE6),
+    primaryColor: const Color(0xFF00ADE6),
 //  primarySwatch: Colors.blue,
     brightness: Brightness.light,
     fontFamily: 'Roboto',

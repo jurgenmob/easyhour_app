@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'package:provider/provider.dart';
-
-import 'package:easyhour_app/generated/locale_keys.g.dart';
 
 class EasySearchBar<P extends BaseProvider> extends StatefulWidget {
   @override
@@ -23,17 +22,17 @@ class _EasySearchBarState<P extends BaseProvider>
     KeyboardVisibilityNotification().addNewListener(onChange: (bool visible) {
       if (!visible) FocusScope.of(context).unfocus();
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     _controller.addListener(() {
       context.read<P>().filter = _controller.text;
       setState(() {});
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF2F2F2),
+      color: const Color(0xFFF2F2F2),
       margin: EdgeInsets.all(16),
       child: TextFormField(
         controller: _controller,

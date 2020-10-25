@@ -241,7 +241,7 @@ class _TaskItemState extends State<_TaskItem> {
       child: Opacity(
         opacity: widget.list.isFlagged(widget.task) ? 0.5 : 1.0,
         child: Card(
-          color: Color(0xFF019CE4),
+          color: const Color(0xFF019CE4),
           margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
           child: InkWell(
             onTap: () {
