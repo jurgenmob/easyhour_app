@@ -1,13 +1,14 @@
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
 import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/calendar.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
-import 'package:easyhour_app/widgets/app_bar.dart';
+import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/header.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/task_list_item.dart';
@@ -15,64 +16,150 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+
+final _headerKey = GlobalKey<_MyReportHeaderState>();
 
 class MyReportScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MyReportScreenState();
 }
 
-class _MyReportScreenState extends State<MyReportScreen> {
-  DateTimeRange _dateRange;
+class _MyReportScreenState extends State<MyReportScreen>
+    with TickerProviderStateMixin {
+  TabController _tabController;
+  DateTimeRange _currentMonthRange;
+  DateTimeRange _previousMonthRange;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Define range for current and previous month
+    final now = DateTime.now();
+    _currentMonthRange = DateTimeRange(
+        start: DateTime(now.year, now.month, 1),
+        end: DateTime(now.year, now.month + 1, 0));
+    _previousMonthRange = DateTimeRange(
+        start: DateTime(now.year, now.month - 1, 1),
+        end: DateTime(now.year, now.month, 0));
+
+    _tabController = TabController(vsync: this, length: 2, initialIndex: 1);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-
-      // Get events for current month
-      final date = DateTime.now();
-      _dateRange = DateTimeRange(
-          start: DateTime(date.year, date.month, 1),
-          end: DateTime(date.year, date.month + 1, 0));
-      context.read<CalendarProvider>()
-        ..filter = null
-        ..getEvents(_dateRange);
-
-      // Update the calendar icon
-      EasyAppBar.updateCalendarIndicator(context);
-    });
-
-    return Consumer<CalendarProvider>(
-        builder: (_, CalendarProvider model, Widget child) {
-      return _dateRange != null
-          ? Column(children: [
-              _MyReportHeader(model.items, _dateRange),
-              Expanded(
-                  child: _TaskList(CalendarProvider.workedHoursByType(
-                      _dateRange, model.items)))
-            ])
-          : EasyLoader();
-    });
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        _MyReportHeader(key: _headerKey),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              _MyReportScreenTab(_previousMonthRange,
+                  nextArrowCallback: () => _tabController.animateTo(1)),
+              _MyReportScreenTab(_currentMonthRange,
+                  prevArrowCallback: () => _tabController.animateTo(0)),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class _MyReportHeader extends StatelessWidget {
-  final List<CalendarEvent> _items;
-  final DateTimeRange _dateRange;
+class _MyReportScreenTab extends StatefulWidget {
+  final DateTimeRange dateRange;
+  final VoidCallback prevArrowCallback;
+  final VoidCallback nextArrowCallback;
 
-  _MyReportHeader(this._items, this._dateRange);
+  _MyReportScreenTab(this.dateRange,
+      {this.prevArrowCallback, this.nextArrowCallback});
+
+  @override
+  State<StatefulWidget> createState() => _MyReportScreenTabState();
+}
+
+class _MyReportScreenTabState extends State<_MyReportScreenTab> {
+  List<CalendarEvent> _events;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadEvents();
+  }
+
+  void _loadEvents() async {
+    try {
+      setState(() {
+        _events = null;
+      });
+
+      // Get events
+      final events = await EasyRest().getCalendarEvents(widget.dateRange);
+
+      // Update header
+      _headerKey.currentState
+        ..dateRange = widget.dateRange
+        ..events = events
+        ..prevArrowCallback = widget.prevArrowCallback
+        ..nextArrowCallback = widget.nextArrowCallback
+        ..setState(() {});
+
+      // Update list
+      setState(() {
+        _events = events;
+      });
+    } catch (e, s) {
+      print(e);
+      print(s);
+
+      setState(() {
+        _events = List();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Calculate target and worked houts
+    return _events != null
+        ? _TaskList(
+            CalendarProvider.workedHoursByType(widget.dateRange, _events))
+        : EasyLoader();
+  }
+}
+
+class _MyReportHeader extends StatefulWidget {
+  _MyReportHeader({Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _MyReportHeaderState();
+}
+
+class _MyReportHeaderState extends State<_MyReportHeader> {
+  List<CalendarEvent> events;
+  DateTimeRange dateRange;
+  VoidCallback prevArrowCallback;
+  VoidCallback nextArrowCallback;
+
+  @override
+  Widget build(BuildContext context) {
+    if (dateRange == null) return Container();
+
+    // Calculate target and worked hours
     final dateRangeToDate =
-        CalendarProvider.monthRange(_dateRange.mean, upToToday: true);
-    final target = CalendarProvider.targetHours(_dateRange);
+        CalendarProvider.monthRange(dateRange.mean, upToToday: true);
+    final target = CalendarProvider.targetHours(dateRange);
     final targetToDate = CalendarProvider.targetHours(dateRangeToDate);
-    final worked = CalendarProvider.workedHours(_dateRange, _items);
-    final workedToDate = CalendarProvider.workedHours(dateRangeToDate, _items);
-    print("\nMy report (${_dateRange.formatDisplay()}): " +
+    final worked = CalendarProvider.workedHours(dateRange, events);
+    final workedToDate = CalendarProvider.workedHours(dateRangeToDate, events);
+    print("\nMy report (${dateRange.formatDisplay()}): " +
         "worked = ${worked.formatDisplay()}, target=${target.formatDisplay()}\n");
     print("\nMy report to date (${dateRangeToDate.formatDisplay()}): " +
         "worked = ${workedToDate.formatDisplay()}, target=${targetToDate.formatDisplay()}\n\n");
@@ -84,21 +171,30 @@ class _MyReportHeader extends StatelessWidget {
         worked: workedToDate, target: targetToDate);
 
     // Current month name
-    final monthName = DateFormat('MMMM yyyy').format(_dateRange.mean);
+    final monthName = DateFormat('MMMM yyyy').format(dateRange.mean);
 
     return Column(
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: EasyHeader(monthName.toUpperCase()),
-            ),
-          ],
+        Container(
+          color: Theme.of(context).primaryColor,
+          child: Row(
+            children: [
+              prevArrowCallback != null
+                  ? _button(context, EasyIcons.arrow_left, prevArrowCallback)
+                  : SizedBox(width: 32),
+              Expanded(
+                child: EasyHeader(monthName.toUpperCase()),
+              ),
+              nextArrowCallback != null
+                  ? _button(context, EasyIcons.arrow_right, nextArrowCallback)
+                  : SizedBox(width: 32),
+            ],
+          ),
         ),
         SizedBox(height: 8),
         _row(context, LocaleKeys.label_month_hours.tr(),
             "${worked.formatDisplay()}\n${target.formatDisplay()}",
-            icon: _dateRange.end.isBefore(DateTime.now())
+            icon: dateRange.end.isBefore(DateTime.now())
                 ? targetIndicator.icon
                 : null),
         _row(context, LocaleKeys.label_current_hours.tr(),
@@ -107,6 +203,15 @@ class _MyReportHeader extends StatelessWidget {
       ],
     );
   }
+
+  Widget _button(BuildContext context, IconData icon, VoidCallback callback) =>
+      InkWell(
+        onTap: callback,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Icon(icon, color: Colors.white, size: 16),
+        ),
+      );
 
   Widget _row(BuildContext context, String text, String value, {Widget icon}) =>
       Row(
@@ -160,7 +265,7 @@ class _ReportItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color(0xFF019CE4),
+      color: const Color(0xFF019CE4),
       margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
       child: Row(
         children: <Widget>[
