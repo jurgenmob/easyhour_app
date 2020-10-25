@@ -95,11 +95,13 @@ class EasyListItem<T extends BaseModel> extends StatelessWidget {
   }
 
   Widget _editableItem(BuildContext context, {@required Widget child}) {
-    return Card(child: InkWell(onTap: () => onEdit(item), child: child));
+    return Card(
+        margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
+        child: InkWell(onTap: () => onEdit(item), child: child));
   }
 
   Widget _readonlyItem(BuildContext context, {@required Widget child}) {
-    return Card(child: child);
+    return Card(margin: EdgeInsets.fromLTRB(4, 0, 4, 0), child: child);
   }
 }
 

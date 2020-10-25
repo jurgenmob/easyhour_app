@@ -133,6 +133,8 @@
   "label_approve": "Approve",
   "label_refuse": "Refuse",
   "label_delete": "Delete",
+  "label_flag_task": "Send\nto back",
+  "label_unflag_task": "Restore",
 
   "message_confirm_app_exit": "Tap back again to quit app"
 }

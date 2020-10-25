@@ -84,6 +84,8 @@ abstract class  LocaleKeys {
   static const label_approve = 'label_approve';
   static const label_refuse = 'label_refuse';
   static const label_delete = 'label_delete';
+  static const label_flag_task = 'label_flag_task';
+  static const label_unflag_task = 'label_unflag_task';
   static const message_confirm_app_exit = 'message_confirm_app_exit';
 
 }

@@ -11,6 +11,7 @@ import 'package:easyhour_app/models/vacation.dart';
 import 'package:easyhour_app/models/worklog.dart';
 import 'package:easyhour_app/providers/today_activities_provider.dart';
 import 'package:easyhour_app/routes.dart';
+import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/search_bar.dart';
@@ -227,8 +228,10 @@ class _TaskItem extends StatefulWidget {
 class _TaskItemState extends State<_TaskItem> {
   @override
   Widget build(BuildContext context) {
+    final bool flagged = widget.list.isFlagged(widget.task);
+
     return Dismissible(
-      key: ValueKey("${widget.task.id}-${widget.list.isFlagged(widget.task)}"),
+      key: ValueKey("${widget.task.id}-$flagged"),
       direction: DismissDirection.startToEnd,
       confirmDismiss: (direction) {
         // Toggle the flagged state
@@ -238,11 +241,32 @@ class _TaskItemState extends State<_TaskItem> {
         return Future.value(false);
       },
       dismissThresholds: {DismissDirection.startToEnd: 0.2},
+      background: Container(
+          color: const Color(0xFFAAAAAA),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                  flagged
+                      ? Icons.vertical_align_top
+                      : Icons.vertical_align_bottom,
+                  color: Colors.white),
+              SizedBox(height: 4),
+              Text(
+                  flagged
+                      ? LocaleKeys.label_unflag_task.tr()
+                      : LocaleKeys.label_flag_task.tr(),
+                  textAlign: TextAlign.center,
+                  style: snackBarStyle)
+            ],
+          )),
       child: Opacity(
-        opacity: widget.list.isFlagged(widget.task) ? 0.5 : 1.0,
+        opacity: flagged ? 0.5 : 1.0,
         child: Card(
           color: const Color(0xFF019CE4),
-          margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
+          margin: EdgeInsets.fromLTRB(4, 0, 4, 0),
           child: InkWell(
             onTap: () {
               _onEdit(context);

@@ -133,6 +133,8 @@
   "label_approve": "Approva",
   "label_refuse": "Rifiuta",
   "label_delete": "Elimina",
+  "label_flag_task": "Sposta\nin basso",
+  "label_unflag_task": "Ripristina",
 
   "message_confirm_app_exit": "Premi indietro di nuovo per uscire dall'app"
 }

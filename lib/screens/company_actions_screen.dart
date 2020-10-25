@@ -16,6 +16,14 @@ class _CompanyActionsScreenState extends EasyListState<CompanyActionsScreen,
   _CompanyActionsScreenState() : super(refreshEnabled: false);
 
   @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: super.build(context),
+    );
+  }
+
+  @override
   Widget getItem(CompanyAction item) {
     return _CompanyActionButton(item);
   }
@@ -29,7 +37,7 @@ class _CompanyActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: ButtonTheme(
         child: RaisedButton(
           padding: EdgeInsets.symmetric(vertical: 24, horizontal: 48),

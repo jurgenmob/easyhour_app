@@ -91,11 +91,12 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
       if (comparator() != null) items.sort(comparator());
 
       // All good, create the list
-      final Widget listView = ListView.builder(
+      final Widget listView = ListView.separated(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemCount: provider.items.length,
-          itemBuilder: (_, index) => getItem(items[index]));
+          itemBuilder: (_, index) => getItem(items[index]),
+          separatorBuilder: (_, index) => SizedBox(height: 8));
 
       // Show the list
       return refreshEnabled
