@@ -103,6 +103,6 @@ mixin BaseModel<T, P> {
 
 extension ContainsIgnoreCase on String {
   bool containsIgnoreCase(String other) {
-    return this.toLowerCase().contains(other);
+    return this.toLowerCase().contains(other.toLowerCase());
   }
 }
