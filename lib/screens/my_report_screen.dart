@@ -61,6 +61,7 @@ class _MyReportScreenState extends State<MyReportScreen>
         Expanded(
           child: TabBarView(
             controller: _tabController,
+            physics: NeverScrollableScrollPhysics(),
             children: [
               _MyReportScreenTab(_previousMonthRange,
                   nextArrowCallback: () => _tabController.animateTo(1)),
