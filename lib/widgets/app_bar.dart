@@ -72,10 +72,13 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
       return AppBar(
         automaticallyImplyLeading: true,
         centerTitle: true,
-        title: Image.asset(
-          'images/logo_or.png',
-          fit: BoxFit.fitHeight,
-          height: 40,
+        title: Hero(
+          tag: "appbar-logo",
+          child: Image.asset(
+            'images/logo_or.png',
+            fit: BoxFit.fitHeight,
+            height: 40,
+          ),
         ),
         actions: model.actions
             ?.where((e) => e != null)
