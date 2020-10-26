@@ -28,6 +28,7 @@ import 'package:easyhour_app/models/workplace.dart';
 import 'package:easyhour_app/widgets/app_bar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     show FlutterSecureStorage;
@@ -55,7 +56,13 @@ class EasyRest {
 
   Dio _dio = Dio()
     ..options.baseUrl = '$baseUrl/easyhour/api'
-    ..interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    ..interceptors.add(LogInterceptor(
+        request: true,
+        error: true,
+        requestHeader: kDebugMode,
+        requestBody: kDebugMode,
+        responseHeader: kDebugMode,
+        responseBody: kDebugMode));
 
   String get userAgent =>
       "EasyHourApp/${packageInfo?.version} " +
