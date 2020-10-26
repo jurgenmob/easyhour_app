@@ -103,7 +103,7 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
               right: 6,
               child: Badge(
                 badgeColor: route.indicator.background,
-                borderRadius: 20,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
                 padding: EdgeInsets.all(
                     route.indicator.text?.isNotEmpty == true ? 2 : 4),
                 shape: route.indicator.text?.isNotEmpty == true
