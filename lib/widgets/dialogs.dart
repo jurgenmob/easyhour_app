@@ -113,7 +113,8 @@ Future<Duration> showDurationDialog(
                 ),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [cancelButton, okButton])
+                    children: [cancelButton, okButton]),
+                SizedBox(height: 8)
               ],
             ));
       });
