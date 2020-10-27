@@ -20,7 +20,8 @@ class HomeScreen extends BaseScreen {
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Init push notifications
-      _initPushNotifications();
+      Future.delayed(Duration(seconds: 1))
+          .then((value) => _initPushNotifications());
 
       // Update the calendar icon
       EasyAppBar.updateCalendarIndicator(context);

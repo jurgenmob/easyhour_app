@@ -25,7 +25,26 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences _prefs;
 
-class TodayActivitiesScreen extends StatelessWidget {
+class TodayActivitiesScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TodayActivitiesScreenState();
+}
+
+class _TodayActivitiesScreenState extends State<TodayActivitiesScreen> {
+  DateTime today;
+
+  @override
+  void initState() {
+    super.initState();
+
+    today = DateTime.now();
+
+    // Reload state when date changes
+    Future.delayed(
+            DateTime(today.year, today.month, today.day + 1).difference(today))
+        .then((_) => setState(() => today = DateTime.now()));
+  }
+
   @override
   Widget build(BuildContext context) {
     // Update the calendar icon
@@ -48,7 +67,7 @@ class TodayActivitiesScreen extends StatelessWidget {
                   ? Column(children: [
                       SizedBox(height: 24),
                       _TodayActivitiesHeader(model.items,
-                          showTotalDuration: false),
+                          today: today, showTotalDuration: false),
                       SizedBox(height: 8),
                       Expanded(child: _VacationSicknessContainer(type))
                     ])
@@ -57,9 +76,9 @@ class TodayActivitiesScreen extends StatelessWidget {
                       child: Column(children: [
                         EasySearchBar<TodayActivitiesProvider>(),
                         _TodayActivitiesHeader(model.items,
-                            showTotalDuration: true),
+                            today: today, showTotalDuration: true),
                         SizedBox(height: 8),
-                        Expanded(child: _TaskList())
+                        Expanded(child: _TaskList(today))
                       ]),
                     );
             });
@@ -71,10 +90,12 @@ class TodayActivitiesScreen extends StatelessWidget {
 }
 
 class _TodayActivitiesHeader extends StatelessWidget {
+  final DateTime today;
   final List<TodayActivity> items;
   final bool showTotalDuration;
 
-  _TodayActivitiesHeader(this.items, {this.showTotalDuration = true});
+  _TodayActivitiesHeader(this.items,
+      {@required this.today, this.showTotalDuration = true});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +103,7 @@ class _TodayActivitiesHeader extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Container(
-            child: Text(DateFormat("dd MMMM yyyy").format(DateTime.now()),
+            child: Text(DateFormat("dd MMMM yyyy").format(today),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyText2),
           ),
@@ -97,8 +118,8 @@ class _TodayActivitiesHeader extends StatelessWidget {
     );
   }
 
-  Duration _totalDuration() => items.fold<Duration>(
-      Duration(), (p, c) => p + c.duration(DateTime.now()));
+  Duration _totalDuration() =>
+      items.fold<Duration>(Duration(), (p, c) => p + c.duration(today));
 }
 
 /// Shown when the user is not at work
@@ -156,6 +177,7 @@ final _taskListKey = GlobalKey<_TaskListState>();
 class _TaskList extends StatefulWidget {
   static final _flaggedTaskPrefKey = 'flaggedTasks';
 
+  final DateTime today;
   final List<String> _flaggedTasks;
 
   @override
@@ -172,7 +194,7 @@ class _TaskList extends StatefulWidget {
     _prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
   }
 
-  _TaskList()
+  _TaskList(this.today)
       : _flaggedTasks = _prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
         super(key: _taskListKey);
 }
@@ -297,7 +319,7 @@ class _TaskItemState extends State<_TaskItem> {
     // reference to the task is always needed
     final worklog = widget.task.worklogs.length > 0
         ? widget.task.worklogs.first
-        : WorkLog(data: DateTime.now(), task: widget.task);
+        : WorkLog(data: widget.list.today, task: widget.task);
     final result = await EasyAppBar.pushNamed(
         context, EasyRoute.addEdit(WorkLog, arguments: () => worklog));
 
