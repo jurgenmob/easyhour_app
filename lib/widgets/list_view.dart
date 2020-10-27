@@ -8,6 +8,7 @@ import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
 import 'app_bar.dart';
@@ -91,12 +92,20 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
       if (comparator() != null) items.sort(comparator());
 
       // All good, create the list
-      final Widget listView = ListView.separated(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: provider.items.length,
-          itemBuilder: (_, index) => getItem(items[index]),
-          separatorBuilder: (_, index) => SizedBox(height: 8));
+      final Widget listView = AnimationLimiter(
+          child: ListView.separated(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: provider.items.length,
+              itemBuilder: (_, index) => AnimationConfiguration.staggeredList(
+                  position: index,
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: getItem(items[index]),
+                    ),
+                  )),
+              separatorBuilder: (_, index) => SizedBox(height: 8)));
 
       // Show the list
       return refreshEnabled
