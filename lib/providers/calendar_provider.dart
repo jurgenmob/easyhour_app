@@ -40,7 +40,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   Map<DateTime, List> get events {
     Map<DateTime, List<BaseModel>> events = {};
 
-    allItems?.where((e) => e.runtimeType != Holiday)?.forEach((e) {
+    allItems.where((e) => e.runtimeType != Holiday)?.forEach((e) {
       _addEventRange(events, e.dateRange.start, e.dateRange.end, e);
     });
 
@@ -51,7 +51,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   Map<DateTime, List> get holidays {
     Map<DateTime, List<BaseModel>> holidays = {};
 
-    allItems?.where((e) => e.runtimeType == Holiday)?.forEach((e) {
+    allItems.where((e) => e.runtimeType == Holiday)?.forEach((e) {
       _addEvent(holidays, e.dateRange.start, e);
     });
 

@@ -14,12 +14,12 @@ abstract class BaseProvider<T extends BaseModel> extends ChangeNotifier {
     if (notify) notifyListeners();
   }
 
-  List<T> get allItems => _items != null ? List.unmodifiable(_items) : null;
+  List<T> get allItems => List.unmodifiable(_items != null ? _items : List());
 
   List<T> get items => List.unmodifiable(_items != null && _filter != null
       ? _items.where((element) => element.filter(_filter)).toList()
       : (_items ?? List()));
-  List<T> _items;
+  List<T> _items = List();
 
   Future<List<T>> get();
 

@@ -11,7 +11,7 @@ class TodayActivitiesProvider extends BaseProvider<TodayActivity> {
     return restGet(EasyRest().getTodayActivities());
   }
 
-  Task getTask(Task task) => allItems?.where((e) => e == task)?.first as Task;
+  Task getTask(Task task) => allItems.where((e) => e == task)?.first as Task;
 
   void addEditWorklog(WorkLog worklog) {
     final activityTask = getTask(worklog.task);
