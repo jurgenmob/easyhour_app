@@ -16,6 +16,10 @@ class UserInfo {
   List<WorkShift> turniUser;
   WorkShift turnoOggi;
 
+  int get id => userDTO.id;
+
+  String get prefKey => "${userInfo.id}_";
+
   bool get hasTimerModule =>
       configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
 

@@ -21,9 +21,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-SharedPreferences _prefs;
 
 class TodayActivitiesScreen extends StatefulWidget {
   @override
@@ -51,41 +48,31 @@ class _TodayActivitiesScreenState extends State<TodayActivitiesScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => EasyAppBar.updateCalendarIndicator(context));
 
-    return FutureBuilder<SharedPreferences>(
-        future: SharedPreferences.getInstance(),
-        builder: (context, snapshot) {
-          if (snapshot?.connectionState == ConnectionState.done) {
-            _prefs = snapshot.data;
+    return Consumer<TodayActivitiesProvider>(
+        builder: (_, TodayActivitiesProvider model, Widget child) {
+      final Type type = model.items?.isNotEmpty ?? false
+          ? model.items.first.runtimeType
+          : null;
 
-            return Consumer<TodayActivitiesProvider>(
-                builder: (_, TodayActivitiesProvider model, Widget child) {
-              final Type type = model.items?.isNotEmpty ?? false
-                  ? model.items.first.runtimeType
-                  : null;
-
-              return type == Vacation || type == Sickness
-                  ? Column(children: [
-                      SizedBox(height: 24),
-                      _TodayActivitiesHeader(model.items,
-                          today: today, showTotalDuration: false),
-                      SizedBox(height: 8),
-                      Expanded(child: _VacationSicknessContainer(type))
-                    ])
-                  : GestureDetector(
-                      onTap: () => FocusScope.of(context).unfocus(),
-                      child: Column(children: [
-                        EasySearchBar<TodayActivitiesProvider>(),
-                        _TodayActivitiesHeader(model.items,
-                            today: today, showTotalDuration: true),
-                        SizedBox(height: 8),
-                        Expanded(child: _TaskList(today))
-                      ]),
-                    );
-            });
-          }
-          // return EasyLoader(showLogo: true);
-          return Container();
-        });
+      return type == Vacation || type == Sickness
+          ? Column(children: [
+              SizedBox(height: 24),
+              _TodayActivitiesHeader(model.items,
+                  today: today, showTotalDuration: false),
+              SizedBox(height: 8),
+              Expanded(child: _VacationSicknessContainer(type))
+            ])
+          : GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Column(children: [
+                EasySearchBar<TodayActivitiesProvider>(),
+                _TodayActivitiesHeader(model.items,
+                    today: today, showTotalDuration: true),
+                SizedBox(height: 8),
+                Expanded(child: _TaskList(today))
+              ]),
+            );
+    });
   }
 }
 
@@ -175,28 +162,12 @@ class _VacationSicknessContainer extends StatelessWidget {
 final _taskListKey = GlobalKey<_TaskListState>();
 
 class _TaskList extends StatefulWidget {
-  static final _flaggedTaskPrefKey = 'flaggedTasks';
-
   final DateTime today;
-  final List<String> _flaggedTasks;
 
   @override
   createState() => _TaskListState();
 
-  bool isFlagged(Task task) => _flaggedTasks.contains(task.id.toString());
-
-  void toggleFlagged(Task task) {
-    if (isFlagged(task)) {
-      _flaggedTasks.remove(task.id.toString());
-    } else {
-      _flaggedTasks.add(task.id.toString());
-    }
-    _prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
-  }
-
-  _TaskList(this.today)
-      : _flaggedTasks = _prefs.getStringList(_flaggedTaskPrefKey) ?? List(),
-        super(key: _taskListKey);
+  _TaskList(this.today) : super(key: _taskListKey);
 }
 
 class _TaskListState
@@ -206,20 +177,34 @@ class _TaskListState
 
   _TaskListState() : super(emptyText: LocaleKeys.empty_list_tasks.tr());
 
+  String get _flaggedTaskPrefKey => "${userInfo?.prefKey}flaggedTasks";
+
+  bool isFlagged(Task task) =>
+      prefs.getStringList(_flaggedTaskPrefKey).contains(task.id.toString());
+
+  void toggleFlagged(Task task) {
+    final _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey);
+    if (isFlagged(task)) {
+      _flaggedTasks.remove(task.id.toString());
+    } else {
+      _flaggedTasks.add(task.id.toString());
+    }
+    prefs.setStringList(_flaggedTaskPrefKey, _flaggedTasks);
+  }
+
   @override
   Widget getItem(TodayActivity item) {
     return _TaskItem(widget, item as Task);
   }
 
   @override
-  Comparator comparator() =>
-      (a, b) => widget.isFlagged(a) && widget.isFlagged(b)
-          ? 0
-          : widget.isFlagged(a)
-              ? 1
-              : widget.isFlagged(b)
-                  ? -1
-                  : 0;
+  Comparator comparator() => (a, b) => isFlagged(a) && isFlagged(b)
+      ? 0
+      : isFlagged(a)
+          ? 1
+          : isFlagged(b)
+              ? -1
+              : 0;
 
   @override
   bool confirmStart(BuildContext context) {
@@ -250,14 +235,14 @@ class _TaskItem extends StatefulWidget {
 class _TaskItemState extends State<_TaskItem> {
   @override
   Widget build(BuildContext context) {
-    final bool flagged = widget.list.isFlagged(widget.task);
+    final bool flagged = _taskListKey.currentState.isFlagged(widget.task);
 
     return Dismissible(
       key: ValueKey("${widget.task.id}-$flagged"),
       direction: DismissDirection.startToEnd,
       confirmDismiss: (direction) {
         // Toggle the flagged state
-        widget.list.toggleFlagged(widget.task);
+        _taskListKey.currentState.toggleFlagged(widget.task);
         setState(() {}); // set semi-transparent
         _taskListKey.currentState.setState(() {}); // update sorting
         return Future.value(false);

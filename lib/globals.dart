@@ -6,6 +6,8 @@ import 'package:easyhour_app/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Swtich between DEV and PROD environments
 const String baseUrl =
@@ -46,6 +48,8 @@ bool validateInt(String text) => RegExp(r"^[0-9]+$").hasMatch(text);
 
 /// User and company info and config
 UserInfo userInfo;
+SharedPreferences prefs;
+PackageInfo packageInfo;
 
 extension IntUtils on num {
   String padLeft(int width, [String padding = '0']) =>

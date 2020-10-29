@@ -33,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     show FlutterSecureStorage;
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EasyRest {
   static final EasyRest _instance = EasyRest._internal();
@@ -51,8 +52,6 @@ class EasyRest {
   String _domain;
   String _accessToken;
   String _refreshToken;
-
-  PackageInfo packageInfo;
 
   Dio _dio = Dio()
     ..options.baseUrl = '$baseUrl/easyhour/api'
@@ -115,6 +114,7 @@ class EasyRest {
   }
 
   Future initClient() async {
+    prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
     _domain = await _storage.read(key: 'domain');

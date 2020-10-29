@@ -40,7 +40,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   Map<DateTime, List> get events {
     Map<DateTime, List<BaseModel>> events = {};
 
-    allItems.where((e) => e.runtimeType != Holiday).forEach((e) {
+    allItems?.where((e) => e.runtimeType != Holiday)?.forEach((e) {
       _addEventRange(events, e.dateRange.start, e.dateRange.end, e);
     });
 
@@ -51,7 +51,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   Map<DateTime, List> get holidays {
     Map<DateTime, List<BaseModel>> holidays = {};
 
-    allItems.where((e) => e.runtimeType == Holiday).forEach((e) {
+    allItems?.where((e) => e.runtimeType == Holiday)?.forEach((e) {
       _addEvent(holidays, e.dateRange.start, e);
     });
 
@@ -107,9 +107,9 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
     _expand(dateRange).forEach((date) {
       target += userInfo.targetHours(date);
 
-      if (kDebugMode)
-        print("Indicator: target for ${date.formatDisplay()} = " +
-            "${userInfo.targetHours(date).formatDisplay()}\n");
+      // if (kDebugMode)
+      //   print("Indicator: target for ${date.formatDisplay()} = " +
+      //       "${userInfo.targetHours(date).formatDisplay()}\n");
     });
 
     return target;
@@ -124,9 +124,9 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
         if (dateRange.contains(date)) {
           worked += event.duration(date);
 
-          if (kDebugMode)
-            print("Indicator: worked for ${date.formatDisplay()} = " +
-                "${event.duration(date).formatDisplay()}\n");
+          // if (kDebugMode)
+          //   print("Indicator: worked for ${date.formatDisplay()} = " +
+          //       "${event.duration(date).formatDisplay()}\n");
         }
       });
     });

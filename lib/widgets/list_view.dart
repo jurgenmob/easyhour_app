@@ -77,7 +77,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
     super.build(context);
 
     return Consumer<P>(builder: (_, P provider, Widget child) {
-      if (_loading) {
+      if (_loading || provider.allItems == null) {
         // Show loader
         return EasyLoader();
       } else if (provider.items?.isEmpty ?? true) {
