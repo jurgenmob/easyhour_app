@@ -63,6 +63,7 @@ class _TodayActivitiesScreenState extends State<TodayActivitiesScreen> {
               Expanded(child: _VacationSicknessContainer(type))
             ])
           : GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () => FocusScope.of(context).unfocus(),
               child: Column(children: [
                 EasySearchBar<TodayActivitiesProvider>(),
