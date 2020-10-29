@@ -24,10 +24,10 @@
 
     ],
     "Firebase/CoreOnly": [
-      "~> 6.26.0"
+      "~> 6.33.0"
     ],
     "Firebase/Messaging": [
-      "~> 6.26.0"
+      "~> 6.33.0"
     ]
   },
   "static_framework": true,

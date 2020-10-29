@@ -1,5 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh
-${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt
 ${BUILT_PRODUCTS_DIR}/DKImagePickerController/DKImagePickerController.framework
 ${BUILT_PRODUCTS_DIR}/DKPhotoGallery/DKPhotoGallery.framework
 ${PODS_ROOT}/../Flutter/Flutter.framework
@@ -10,6 +9,7 @@ ${BUILT_PRODUCTS_DIR}/Reachability/Reachability.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework
 ${BUILT_PRODUCTS_DIR}/file_picker/file_picker.framework
+${BUILT_PRODUCTS_DIR}/flutter_secure_storage/flutter_secure_storage.framework
 ${BUILT_PRODUCTS_DIR}/geolocator/geolocator.framework
 ${BUILT_PRODUCTS_DIR}/keyboard_visibility/keyboard_visibility.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework
