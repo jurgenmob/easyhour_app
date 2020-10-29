@@ -180,11 +180,13 @@ class _TaskListState
 
   String get _flaggedTaskPrefKey => "${userInfo?.prefKey}flaggedTasks";
 
-  bool isFlagged(Task task) =>
-      prefs.getStringList(_flaggedTaskPrefKey).contains(task.id.toString());
+  List<String> get _flaggedTasks =>
+      prefs.getStringList(_flaggedTaskPrefKey) ?? List();
+
+  bool isFlagged(Task task) => _flaggedTasks.contains(task.id.toString());
 
   void toggleFlagged(Task task) {
-    final _flaggedTasks = prefs.getStringList(_flaggedTaskPrefKey);
+    final _flaggedTasks = this._flaggedTasks;
     if (isFlagged(task)) {
       _flaggedTasks.remove(task.id.toString());
     } else {
