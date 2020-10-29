@@ -13,7 +13,8 @@ class TaskProvider extends BaseProvider<Task> {
   @override
   Future<List<Task>> get() => restGet(EasyRest().getTasks());
 
-  Task getTask(int id) => items.where((e) => e is Task && e.id == id).first;
+  Task getTask(int id) =>
+      items?.firstWhere((e) => e.id == id, orElse: () => null);
 
   Future<WorkLog> addEditWorklog(
       BuildContext context, Task task, WorkLog worklog) async {

@@ -152,10 +152,11 @@ class _WorklogFormState
 
         // Add/edit the item
         final provider = context.read<TaskProvider>();
-        if (provider.items.isEmpty) {
+        Task task = provider.getTask(item.task.id);
+        if (task == null) {
           await provider.get(); // may have never been initialized
+          task = provider.getTask(item.task.id);
         }
-        final Task task = provider.getTask(item.task.id);
         final bool isNew = item.isNew;
         try {
           if (item.durata == 0) {
