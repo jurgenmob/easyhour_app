@@ -31,7 +31,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
 
   EasyListState({this.emptyText, this.refreshEnabled = true});
 
-  Widget getItem(T item) => EasyListItem<T>(item,
+  Widget getItem(int index, T item) => EasyListItem<T>(item,
       endIcon: EasyIcons.delete,
       endText: LocaleKeys.label_delete.tr(),
       onEdit: onEdit,
@@ -102,7 +102,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
                   child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
-                      child: getItem(items[index]),
+                      child: getItem(index, items[index]),
                     ),
                   )),
               separatorBuilder: (_, index) => SizedBox(height: 8)));

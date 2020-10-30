@@ -196,7 +196,7 @@ class _TaskListState
   }
 
   @override
-  Widget getItem(TodayActivity item) {
+  Widget getItem(int index, TodayActivity item) {
     return _TaskItem(widget, item as Task);
   }
 

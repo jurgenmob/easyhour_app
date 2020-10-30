@@ -21,6 +21,7 @@ const int timerModuleId = 1;
 const int smartWorkingModuleId = 2;
 const int activitiesModuleId = 3;
 const int phasesModuleId = 7;
+const int bookingModuleId = 9;
 const String approvedValue = "APPROVATO";
 const String pendingValue = "DA APPROVARE";
 const String refusedValue = "RIFIUTATO";

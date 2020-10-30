@@ -48,10 +48,11 @@ class CompanyActionProvider extends BaseProvider<CompanyAction> {
                   text: LocaleKeys.label_smartworkings,
                   icon: EasyIcons.smartworkings,
                   route: EasyRoute.list(SmartWorking)),
-            CompanyAction(
-                text: LocaleKeys.label_bookings,
-                icon: EasyIcons.workplaces,
-                route: EasyRoute.list(Booking)),
+            if (userInfo.hasBookingModule)
+              CompanyAction(
+                  text: LocaleKeys.label_bookings,
+                  icon: EasyIcons.workplaces,
+                  route: EasyRoute.list(Booking)),
           ]);
 
   @override

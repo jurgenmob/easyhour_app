@@ -31,7 +31,7 @@ class _RequestListScreenState
       : super(emptyText: LocaleKeys.message_no_requests.tr());
 
   @override
-  Widget getItem(Request item) => EasyListItem<Request>(item,
+  Widget getItem(int index, Request item) => EasyListItem<Request>(item,
       startIcon: EasyIcons.approve_ok,
       startText: LocaleKeys.label_approve.tr(),
       endIcon: EasyIcons.approve_ko,

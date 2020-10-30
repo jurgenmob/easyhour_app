@@ -3,7 +3,21 @@ import 'package:flutter/widgets.dart';
 
 final appTheme = ThemeData(
     primaryColor: const Color(0xFF00ADE6),
-//  primarySwatch: Colors.blue,
+    primarySwatch: MaterialColor(
+      0xFF0683F4,
+      <int, Color>{
+        50: const Color(0xFF1CD9FE),
+        100: const Color(0xFF38C0FE),
+        200: const Color(0xFF5AB1F2),
+        300: const Color(0xFF4FACFE),
+        400: const Color(0xFF4286F4),
+        500: const Color(0xFF0683F4),
+        600: const Color(0xFF254EB7),
+        700: const Color(0xFF0A33E9),
+        800: const Color(0xFF2479B9),
+        900: const Color(0xFF004A9F),
+      },
+    ),
     brightness: Brightness.light,
     fontFamily: 'Roboto',
     textTheme: TextTheme(

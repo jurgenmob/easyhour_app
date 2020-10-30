@@ -29,6 +29,9 @@ class UserInfo {
   bool get hasActivitiesModule =>
       configurazioneAzienda.modulos.contains(Module(id: activitiesModuleId));
 
+  bool get hasBookingModule =>
+      configurazioneAzienda.modulos.contains(Module(id: bookingModuleId));
+
   bool get isReporter =>
       authorities?.contains(roleReporter) ?? false || isAdmin;
 
@@ -193,8 +196,9 @@ class UserExtra {
   String reparto;
   bool manager;
   String tipoAuth;
-  String dataNascita;
-  String dataAssunzione;
+
+  // DateTime dataNascita;
+  DateTime dataAssunzione;
   int tariffa;
 
   UserExtra.fromJson(Map<String, dynamic> json) {
@@ -203,8 +207,12 @@ class UserExtra {
     reparto = json['reparto'];
     manager = json['manager'];
     tipoAuth = json['tipoAuth'];
-    dataNascita = json['dataNascita'];
-    dataAssunzione = json['dataAssunzione'];
+    // if (json['dataNascita'] != null) {
+    //   dataNascita = DateTime.parse(json['dataNascita']);
+    // }
+    if (json['dataAssunzione'] != null) {
+      dataAssunzione = DateTime.parse(json['dataAssunzione']);
+    }
     tariffa = json['tariffa'];
   }
 }
