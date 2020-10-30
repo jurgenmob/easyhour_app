@@ -8,6 +8,7 @@ import 'package:easyhour_app/widgets/loader.dart';
 import 'package:easyhour_app/widgets/text_field.dart';
 import 'package:easyhour_app/widgets/version_info.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -73,6 +74,12 @@ class _LoginFormState extends State<_LoginForm> {
             obscureText: true,
             isLast: true,
             onSaved: (value) => _password = value,
+          ),
+          SizedBox(height: 32),
+          FlatButton(
+            child: Text(LocaleKeys.label_forgot_password.tr(),
+                style: Theme.of(context).textTheme.bodyText2),
+            onPressed: () => launch(resetPasswordUrl),
           ),
           Spacer(flex: 2),
           loading

@@ -74,6 +74,7 @@ abstract class  LocaleKeys {
   static const label_my_places = 'label_my_places';
   static const label_help_videos = 'label_help_videos';
   static const label_reset_password = 'label_reset_password';
+  static const label_forgot_password = 'label_forgot_password';
   static const label_privacy_policy = 'label_privacy_policy';
   static const label_ok = 'label_ok';
   static const label_cancel = 'label_cancel';
