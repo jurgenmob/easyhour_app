@@ -53,7 +53,7 @@
   "label_worked_current_hours": "Ore segnate ad oggi",
   "label_on_average": "in media",
   "label_days": {
-    "one": "giorno",
+    "one": "{} giorno",
     "other": "{} giorni"
   },
   "label_on_days": {

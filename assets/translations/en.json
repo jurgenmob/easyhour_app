@@ -53,7 +53,7 @@
   "label_worked_current_hours": "Worked hours to date",
   "label_on_average": "on average",
   "label_days": {
-    "one": "day",
+    "one": "{} day",
     "other": "{} days"
   },
   "label_on_days": {
