@@ -185,7 +185,7 @@ class _EasyListItem extends StatelessWidget {
                             ? FontWeight.bold
                             : FontWeight.normal))
             ]),
-        SizedBox(width: 16),
+        SizedBox(width: 4),
         if (item.approvedIcon != null)
           Container(
             margin: EdgeInsets.symmetric(horizontal: 8),
