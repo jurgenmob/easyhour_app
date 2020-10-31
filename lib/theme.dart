@@ -116,7 +116,7 @@ class EasyIcons {
   // Misc
   static const IconData login = _EasyIconsData(0xe98d);
   static const IconData logout = _EasyIconsData(0xe992);
-  static const IconData delete = _EasyIconsData(0xe92d);
+  static const IconData delete = Icons.delete;
   static const IconData search = _EasyIconsData(0xe9f4);
   static const IconData timer_on = _EasyIconsData(0xe942);
   static const IconData timer_off = _EasyIconsData(0xe943);
@@ -136,9 +136,9 @@ class EasyIcons {
   static const IconData workman = _EasyIconsData(0xe94e);
   static const IconData workman_filled = _EasyIconsData(0xe949);
   static const IconData settings = _EasyIconsData(0xe977);
-  static const IconData approve_ok = _EasyIconsData(0xe9f3);
-  static const IconData approve_ko = _EasyIconsData(0xe926);
-  static const IconData approve_pending = _EasyIconsData(0xe92e);
+  static const IconData approve_ok = Icons.thumb_up;
+  static const IconData approve_ko = Icons.thumb_down;
+  static const IconData approve_pending = Icons.hourglass_full;
 }
 
 class _EasyIconsData extends IconData {

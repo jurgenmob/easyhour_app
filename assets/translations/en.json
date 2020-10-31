@@ -45,12 +45,21 @@
   "label_workplaces_number": "Number of workplaces",
   "label_workplaces_prefix": "Desk names prefix",
 
-  "label_month_hours": "Monthly worked/target hours",
-  "label_current_hours": "Worked/target hours to date",
+  "label_month_hours": "Monthly worked hours:\nTarget hours:",
+  "label_current_hours": "Worked hours to date\nTarget hours:",
   "label_target_month_hours": "Monthly target hours",
   "label_target_current_hours": "Target hours to date",
   "label_worked_month_hours": "Monthly worked hours",
   "label_worked_current_hours": "Worked hours to date",
+  "label_on_average": "on average",
+  "label_days": {
+    "one": "day",
+    "other": "{} days"
+  },
+  "label_on_days": {
+    "one": "in one day",
+    "other": "in {} days"
+  },
 
   "label_vacations": {
     "one": "Vacation",

@@ -133,3 +133,20 @@ void showMessage(ScaffoldState scaffoldState, String message) {
     ..removeCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(message, style: snackBarStyle)));
 }
+
+class DurationAndCount {
+  Duration _duration = Duration.zero;
+  int _count = 0;
+
+  int get count => _count;
+
+  Duration get duration => _duration;
+
+  Duration get average => Duration(seconds: _duration.inSeconds ~/ _count);
+
+  DurationAndCount operator +(Duration other) {
+    _duration += other;
+    _count++;
+    return this;
+  }
+}

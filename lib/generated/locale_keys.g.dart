@@ -42,6 +42,9 @@ abstract class  LocaleKeys {
   static const label_target_current_hours = 'label_target_current_hours';
   static const label_worked_month_hours = 'label_worked_month_hours';
   static const label_worked_current_hours = 'label_worked_current_hours';
+  static const label_on_average = 'label_on_average';
+  static const label_days = 'label_days';
+  static const label_on_days = 'label_on_days';
   static const label_vacations = 'label_vacations';
   static const label_permits = 'label_permits';
   static const label_sicknesses = 'label_sicknesses';

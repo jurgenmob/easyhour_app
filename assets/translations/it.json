@@ -45,12 +45,21 @@
   "label_workplaces_number": "Numero di postazioni",
   "label_workplaces_prefix": "Prefisso nomi scrivanie",
 
-  "label_month_hours": "Ore segnate/previste\nnel mese",
-  "label_current_hours": "Ore segnate/previste\nad oggi",
+  "label_month_hours": "Ore segnate nel mese:\nOre previste:",
+  "label_current_hours": "Ore segnate ad oggi:\nOre previste:",
   "label_target_month_hours": "Ore previste nel mese",
   "label_target_current_hours": "Ore previste ad oggi",
   "label_worked_month_hours": "Ore segnate nel mese",
   "label_worked_current_hours": "Ore segnate ad oggi",
+  "label_on_average": "in media",
+  "label_days": {
+    "one": "giorno",
+    "other": "{} giorni"
+  },
+  "label_on_days": {
+    "one": "in un giorno",
+    "other": "in {} giorni"
+  },
 
   "label_vacations": {
     "one": "Ferie",

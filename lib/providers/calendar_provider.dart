@@ -135,15 +135,15 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   }
 
   /// Get worked hours for a given time range, aggregated by task/vacation/permit/etc.
-  static Map<dynamic, Duration> workedHoursByType(
+  static Map<dynamic, DurationAndCount> workedHoursByType(
       DateTimeRange dateRange, List<CalendarEvent> events) {
-    Map<dynamic, Duration> map = {};
+    Map<dynamic, DurationAndCount> map = {};
     events.forEach((event) {
       _expand(event.dateRange).forEach((date) {
         if (dateRange.contains(date)) {
           // For worklogs use tasks
           final key = event is WorkLog ? event.task : event.runtimeType;
-          map.putIfAbsent(key, () => Duration.zero);
+          map.putIfAbsent(key, () => DurationAndCount());
           map[key] += event.duration(date);
         }
       });

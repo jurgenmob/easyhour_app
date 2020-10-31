@@ -4,6 +4,7 @@ import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/dialogs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class EasyListItem<T extends BaseModel> extends StatelessWidget {
   final BaseModel item;
@@ -45,7 +46,7 @@ class EasyListItem<T extends BaseModel> extends StatelessWidget {
     } else if (item.editable) {
       return _editableItem(context, child: _EasyListItem(item));
     } else {
-      return _EasyListItem(item);
+      return _readonlyItem(context, child: _EasyListItem(item));
     }
   }
 
@@ -163,13 +164,27 @@ class _EasyListItem extends StatelessWidget {
             ),
           ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Text(item.listDetailsTop ?? "",
-              style: Theme.of(context).textTheme.bodyText2),
-          SizedBox(height: 8),
-          Text(item.listDetailsBtm ?? "",
-              style: Theme.of(context).textTheme.bodyText2)
-        ]),
+        Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              if (item.listDetailsTop != null)
+                Text(item.listDetailsTop,
+                    textAlign: TextAlign.right,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: item.highlightDetailsTop
+                            ? FontWeight.bold
+                            : FontWeight.normal)),
+              if (item.listDetailsTop != null && item.listDetailsBtm != null)
+                SizedBox(height: 8),
+              if (item.listDetailsBtm != null)
+                Text(item.listDetailsBtm,
+                    textAlign: TextAlign.right,
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontWeight: item.highlightDetailsBtm
+                            ? FontWeight.bold
+                            : FontWeight.normal))
+            ]),
         SizedBox(width: 16),
         if (item.approvedIcon != null)
           Container(

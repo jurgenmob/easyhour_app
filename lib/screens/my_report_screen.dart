@@ -4,14 +4,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easyhour_app/data/rest_client.dart';
 import 'package:easyhour_app/generated/locale_keys.g.dart';
 import 'package:easyhour_app/globals.dart';
-import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/models/calendar.dart';
+import 'package:easyhour_app/models/report.dart';
 import 'package:easyhour_app/models/task.dart';
 import 'package:easyhour_app/providers/calendar_provider.dart';
 import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/header.dart';
+import 'package:easyhour_app/widgets/header_content.dart';
+import 'package:easyhour_app/widgets/list_item.dart';
 import 'package:easyhour_app/widgets/loader.dart';
-import 'package:easyhour_app/widgets/task_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -25,7 +26,7 @@ class MyReportScreen extends StatefulWidget {
 }
 
 class _MyReportScreenState extends State<MyReportScreen>
-    with TickerProviderStateMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   TabController _tabController;
   DateTimeRange _currentMonthRange;
   DateTimeRange _previousMonthRange;
@@ -52,27 +53,29 @@ class _MyReportScreenState extends State<MyReportScreen>
     super.dispose();
   }
 
+  Future _refreshCurrentTab() => EasyRest().getCalendarEvents(
+      _tabController.index == 0 ? _currentMonthRange : _previousMonthRange);
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        _MyReportHeader(key: _headerKey),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              _MyReportScreenTab(_previousMonthRange,
-                  nextArrowCallback: () => _tabController.animateTo(1)),
-              _MyReportScreenTab(_currentMonthRange,
-                  prevArrowCallback: () => _tabController.animateTo(0)),
-            ],
-          ),
-        ),
-      ],
+    return FixedHeaderAndContent(
+      header: _MyReportHeader(key: _headerKey),
+      content: TabBarView(
+        controller: _tabController,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          _MyReportScreenTab(_previousMonthRange,
+              nextArrowCallback: () => _tabController.animateTo(1)),
+          _MyReportScreenTab(_currentMonthRange,
+              prevArrowCallback: () => _tabController.animateTo(0)),
+        ],
+      ),
+      onRefresh: _refreshCurrentTab,
     );
   }
+
+  @override
+  get wantKeepAlive => true;
 }
 
 class _MyReportScreenTab extends StatefulWidget {
@@ -220,25 +223,30 @@ class _MyReportHeaderState extends State<_MyReportHeader> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(text, style: Theme.of(context).textTheme.bodyText1),
+              child: Text(text,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(fontWeight: FontWeight.normal)),
             ),
           ),
           if (icon != null) icon,
-          SizedBox(
-              width: 108,
-              child: Text(value,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyText1))
+          SizedBox(width: 16),
+          Text(value,
+              textAlign: TextAlign.right,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .copyWith(fontWeight: FontWeight.normal)),
+          SizedBox(width: 16)
         ],
       );
 }
 
 class _TaskList extends StatelessWidget {
-  final Map<dynamic, Duration> _items;
-  final Duration _totalDuration;
+  final Map<dynamic, DurationAndCount> _items;
 
-  _TaskList(this._items)
-      : _totalDuration = _items.values.fold(Duration.zero, (p, e) => p + e);
+  _TaskList(this._items);
 
   @override
   Widget build(BuildContext context) {
@@ -252,62 +260,22 @@ class _TaskList extends StatelessWidget {
   }
 
   Widget getItem(dynamic key) =>
-      _ReportItem(key, duration: _items[key], totalDuration: _totalDuration);
+      _ReportItem(key, durationAndCount: _items[key]);
 }
 
 class _ReportItem extends StatelessWidget {
-  final dynamic type;
-  final Duration duration;
-  final Duration totalDuration;
+  final dynamic typeOrTask;
+  final DurationAndCount durationAndCount;
 
-  _ReportItem(this.type,
-      {@required this.duration, @required this.totalDuration});
+  _ReportItem(this.typeOrTask, {@required this.durationAndCount});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: const Color(0xFF019CE4),
-      margin: EdgeInsets.fromLTRB(4, 4, 4, 8),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              color: Theme.of(context).primaryColor,
-              child: type is Task
-                  ? TaskListItem(type, heroTag: "myreport-${type.id}")
-                  : Container(
-                      height: 80,
-                      alignment: Alignment.centerLeft,
-                      child: Text(BaseModel.displayName(type).plural(2),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold))),
-            ),
-          ),
-          Container(
-              width: 100,
-              alignment: Alignment.center,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Text(duration.formatDisplay(),
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyText2.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                  // SizedBox(
-                  //   width: 60,
-                  //   height: 60,
-                  //   child: CircularProgressIndicator(
-                  //       value: duration.inSeconds / totalDuration.inSeconds,
-                  //       backgroundColor: Theme.of(context).primaryColor,
-                  //       valueColor:
-                  //           AlwaysStoppedAnimation<Color>(Colors.white)),
-                  // )
-                ],
-              ))
-        ],
-      ),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 4),
+      child: EasyListItem<Report>(typeOrTask is Task
+          ? Report.fromTask(typeOrTask, durationAndCount)
+          : Report.fromType(typeOrTask, durationAndCount)),
     );
   }
 }

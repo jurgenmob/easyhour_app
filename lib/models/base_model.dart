@@ -32,6 +32,10 @@ mixin BaseModel<T, P> {
 
   String get listDetailsBtm => null;
 
+  bool get highlightDetailsTop => false;
+
+  bool get highlightDetailsBtm => false;
+
   IconData get approvedIcon => null;
 
   @protected
