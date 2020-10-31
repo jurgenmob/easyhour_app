@@ -94,13 +94,14 @@ class EasyAppBar extends StatelessWidget with PreferredSizeWidget {
         onTap: () => pushNamed(context, route),
         child: Stack(children: [
           IconButton(
+            padding: EdgeInsets.only(top: 8),
             icon: route.icon,
             onPressed: () => pushNamed(context, route),
           ),
           if (route.indicator != null)
             Positioned(
-              bottom: 10,
-              right: 6,
+              bottom: 8,
+              right: 4,
               child: Badge(
                 badgeColor: route.indicator.background,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
