@@ -6,7 +6,7 @@ class FixedHeaderAndContent extends StatelessWidget {
   final RefreshCallback onRefresh;
 
   const FixedHeaderAndContent(
-      {Key key, @required this.header, @required this.content, this.onRefresh})
+      {Key key, this.header, @required this.content, this.onRefresh})
       : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class FixedHeaderAndContent extends StatelessWidget {
         child: IntrinsicHeight(
           child: Column(
             children: <Widget>[
-              header,
+              if (header != null) header,
               Expanded(
                 child: Container(
                   height: 0,

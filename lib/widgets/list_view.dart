@@ -6,6 +6,7 @@ import 'package:easyhour_app/models/base_model.dart';
 import 'package:easyhour_app/providers/base_provider.dart';
 import 'package:easyhour_app/routes.dart';
 import 'package:easyhour_app/theme.dart';
+import 'package:easyhour_app/widgets/header_content.dart';
 import 'package:easyhour_app/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -151,19 +152,23 @@ class _EmptyList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: onRefresh,
-      child: Stack(
-        children: <Widget>[
-          ListView(),
-          Center(
-              child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText1,
-          ))
-        ],
+    final textStyle = Theme.of(context).textTheme.bodyText1;
+
+    return FixedHeaderAndContent(
+      content: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.list, size: 128, color: textStyle.color),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: textStyle,
+            ),
+          ],
+        ),
       ),
+      onRefresh: onRefresh,
     );
   }
 }
