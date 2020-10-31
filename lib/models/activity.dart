@@ -70,7 +70,7 @@ class Activity with BaseModel, CalendarEvent {
     if (id != null) data['id'] = this.id;
     data['descrizione'] = this.descrizione;
     data['tipologia'] = this.tipologia;
-    data['data'] = this.data;
+    data['data'] = this.data.formatRest();
     data['oraInizio'] = this.oraInizio;
     data['oraFine'] = this.oraFine;
     return data;
