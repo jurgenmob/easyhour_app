@@ -240,7 +240,8 @@ class _EventListState
     // Delete the item from its own provider
     if (item is WorkLog) {
       // Due to server constraints worklogs need a special treatment
-      context.read<TaskProvider>().deleteWorklog(context, item.task, item);
+      context.read<TaskProvider>().deleteWorklog(context, item.task, item)
+      .then((_) => EasyAppBar.updateCalendarIndicator(context));
     } else {
       item.provider(context).delete(item);
     }
