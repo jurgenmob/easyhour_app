@@ -48,8 +48,6 @@ class EasyRest {
   get username => _username;
   String _username;
 
-  get domain => _domain;
-  String _domain;
   String _accessToken;
   String _refreshToken;
 
@@ -88,7 +86,6 @@ class EasyRest {
       return options
         ..headers.addAll({
           if (_accessToken != null) "Authorization": "Bearer $_accessToken",
-          "X-AZIENDA-DOMAIN": _domain,
           Headers.contentTypeHeader: Headers.jsonContentType,
           HttpHeaders.userAgentHeader: userAgent,
         });
@@ -117,7 +114,6 @@ class EasyRest {
     prefs = await SharedPreferences.getInstance();
     packageInfo = await PackageInfo.fromPlatform();
 
-    _domain = await _storage.read(key: 'domain');
     _username = await _storage.read(key: 'username');
     _accessToken = await _storage.read(key: 'accessToken');
     _refreshToken = await _storage.read(key: 'refreshToken');
@@ -127,7 +123,6 @@ class EasyRest {
     _accessToken = response?.accessToken;
     _refreshToken = response?.refreshToken;
 
-    await _storage.write(key: 'domain', value: _domain);
     await _storage.write(key: 'username', value: _username);
     await _storage.write(key: 'accessToken', value: _accessToken);
     await _storage.write(key: 'refreshToken', value: _refreshToken);
@@ -137,9 +132,8 @@ class EasyRest {
 
   bool get isUserLogged => _accessToken?.isNotEmpty == true;
 
-  Future<bool> doLogin(String domain, String username, String password) async {
+  Future<bool> doLogin(String username, String password) async {
     _username = username.trim();
-    _domain = domain.trim();
 
     try {
       Response<String> response = await _dio.post<String>('/authenticate',

@@ -33,7 +33,6 @@ class _LoginFormState extends State<_LoginForm> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
 
-  String _domain;
   String _username;
   String _password;
 
@@ -49,14 +48,6 @@ class _LoginFormState extends State<_LoginForm> {
             fit: BoxFit.fitWidth,
           ),
           Spacer(flex: 1),
-          EasyTextField(
-            labelText: LocaleKeys.label_domain,
-            helperText: LocaleKeys.help_domain,
-            icon: EasyIcons.company,
-            initialValue: EasyRest().domain,
-            onSaved: (value) => _domain = value,
-          ),
-          SizedBox(height: 8),
           EasyTextField(
             labelText: LocaleKeys.label_username,
             keyboardType: TextInputType.emailAddress,
@@ -107,7 +98,7 @@ class _LoginFormState extends State<_LoginForm> {
 
       FocusScope.of(context).unfocus();
 
-      EasyRest().doLogin(_domain, _username, _password).then((resultOk) {
+      EasyRest().doLogin(_username, _password).then((resultOk) {
         if (resultOk) {
           Navigator.pushReplacementNamed(context, '/home');
         } else {
