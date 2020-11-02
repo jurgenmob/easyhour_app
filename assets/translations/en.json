@@ -114,6 +114,7 @@
   "empty_list_tasks": "We couldn't find any task currently assigned to you, please contact your manager to start using EasyHour.",
   "empty_list_generic": "No {} planned.\nStart by clicking on the icon in the top-right corner.",
   "empty_list_calendar": "No activities for selected date.",
+  "empty_list_report": "You didn't log any activity in the current month yet.",
   "message_delete_generic": "The selected content has been deleted successfully.",
   "message_add_generic": "The new content has been added successfully.",
   "message_edit_generic": "The content has been modified successfully.",

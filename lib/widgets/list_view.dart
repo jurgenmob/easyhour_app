@@ -83,7 +83,7 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
         return EasyLoader();
       } else if (provider.items?.isEmpty ?? true) {
         // Show an empty list
-        return _EmptyList(
+        return EmptyList(
             text: _error ?? emptyText ?? defaultEmptyText,
             onRefresh: _onRefresh);
       }
@@ -144,11 +144,11 @@ abstract class EasyListState<W extends StatefulWidget, T extends BaseModel,
   get wantKeepAlive => true;
 }
 
-class _EmptyList extends StatelessWidget {
+class EmptyList extends StatelessWidget {
   final String text;
   final Function onRefresh;
 
-  _EmptyList({@required this.text, @required this.onRefresh});
+  EmptyList({@required this.text, this.onRefresh});
 
   @override
   Widget build(BuildContext context) {

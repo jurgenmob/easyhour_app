@@ -12,13 +12,17 @@ import 'package:easyhour_app/theme.dart';
 import 'package:easyhour_app/widgets/header.dart';
 import 'package:easyhour_app/widgets/header_content.dart';
 import 'package:easyhour_app/widgets/list_item.dart';
+import 'package:easyhour_app/widgets/list_view.dart';
 import 'package:easyhour_app/widgets/loader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 final _headerKey = GlobalKey<_MyReportHeaderState>();
+final _currentMonthTabKey = GlobalKey<_MyReportScreenTabState>();
+final _previousMonthTabKey = GlobalKey<_MyReportScreenTabState>();
 
 class MyReportScreen extends StatefulWidget {
   @override
@@ -53,8 +57,31 @@ class _MyReportScreenState extends State<MyReportScreen>
     super.dispose();
   }
 
-  Future _refreshCurrentTab() => EasyRest().getCalendarEvents(
-      _tabController.index == 0 ? _currentMonthRange : _previousMonthRange);
+  Future _refreshCurrentTab() async {
+    if (_tabController.index == 0) {
+      // Update tab content
+      final events = await EasyRest().getCalendarEvents(_previousMonthRange);
+      _previousMonthTabKey.currentState._events = events;
+      _previousMonthTabKey.currentState.setState(() {});
+
+      // Update header
+      _headerKey.currentState
+        ..dateRange = _previousMonthRange
+        ..events = events
+        ..setState(() {});
+    } else if (_tabController.index == 1) {
+      // Update tab content
+      final events = await EasyRest().getCalendarEvents(_currentMonthRange);
+      _currentMonthTabKey.currentState._events = events;
+      _currentMonthTabKey.currentState.setState(() {});
+
+      // Update header
+      _headerKey.currentState
+        ..dateRange = _currentMonthRange
+        ..events = events
+        ..setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +93,13 @@ class _MyReportScreenState extends State<MyReportScreen>
         controller: _tabController,
         physics: NeverScrollableScrollPhysics(),
         children: [
-          _MyReportScreenTab(_previousMonthRange,
+          _MyReportScreenTab(
+              key: _previousMonthTabKey,
+              dateRange: _previousMonthRange,
               nextArrowCallback: () => _tabController.animateTo(1)),
-          _MyReportScreenTab(_currentMonthRange,
+          _MyReportScreenTab(
+              key: _currentMonthTabKey,
+              dateRange: _currentMonthRange,
               prevArrowCallback: () => _tabController.animateTo(0)),
         ],
       ),
@@ -85,8 +116,12 @@ class _MyReportScreenTab extends StatefulWidget {
   final VoidCallback prevArrowCallback;
   final VoidCallback nextArrowCallback;
 
-  _MyReportScreenTab(this.dateRange,
-      {this.prevArrowCallback, this.nextArrowCallback});
+  _MyReportScreenTab(
+      {Key key,
+      @required this.dateRange,
+      this.prevArrowCallback,
+      this.nextArrowCallback})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MyReportScreenTabState();
@@ -98,6 +133,7 @@ class _MyReportScreenTabState extends State<_MyReportScreenTab> {
   @override
   void initState() {
     super.initState();
+
     _loadEvents();
   }
 
@@ -151,6 +187,7 @@ class _MyReportHeader extends StatefulWidget {
 class _MyReportHeaderState extends State<_MyReportHeader> {
   List<CalendarEvent> events;
   DateTimeRange dateRange;
+  DateTimeRange _dateRangeToDate;
   VoidCallback prevArrowCallback;
   VoidCallback nextArrowCallback;
 
@@ -159,15 +196,15 @@ class _MyReportHeaderState extends State<_MyReportHeader> {
     if (dateRange == null) return Container();
 
     // Calculate target and worked hours
-    final dateRangeToDate =
+    _dateRangeToDate =
         CalendarProvider.monthRange(dateRange.mean, upToToday: true);
     final target = CalendarProvider.targetHours(dateRange);
-    final targetToDate = CalendarProvider.targetHours(dateRangeToDate);
+    final targetToDate = CalendarProvider.targetHours(_dateRangeToDate);
     final worked = CalendarProvider.workedHours(dateRange, events);
-    final workedToDate = CalendarProvider.workedHours(dateRangeToDate, events);
+    final workedToDate = CalendarProvider.workedHours(_dateRangeToDate, events);
     print("\nMy report (${dateRange.formatDisplay()}): " +
         "worked = ${worked.formatDisplay()}, target=${target.formatDisplay()}\n");
-    print("\nMy report to date (${dateRangeToDate.formatDisplay()}): " +
+    print("\nMy report to date (${_dateRangeToDate.formatDisplay()}): " +
         "worked = ${workedToDate.formatDisplay()}, target=${targetToDate.formatDisplay()}\n\n");
 
     // Set icons
@@ -198,12 +235,20 @@ class _MyReportHeaderState extends State<_MyReportHeader> {
           ),
         ),
         SizedBox(height: 8),
-        _row(context, LocaleKeys.label_month_hours.tr(),
+        _row(
+            context,
+            LocaleKeys.label_month_hours.tr() +
+                (kDebugMode ? " [" + dateRange.formatDisplay() + "]" : ""),
             "${worked.formatDisplay()}\n${target.formatDisplay()}",
             icon: dateRange.end.isBefore(DateTime.now())
                 ? targetIndicator.icon
                 : null),
-        _row(context, LocaleKeys.label_current_hours.tr(),
+        _row(
+            context,
+            LocaleKeys.label_current_hours.tr() +
+                (kDebugMode
+                    ? " [" + _dateRangeToDate.formatDisplay() + "]"
+                    : ""),
             "${workedToDate.formatDisplay()}\n${targetToDate.formatDisplay()}",
             icon: targetToDateIndicator.icon),
       ],
@@ -254,11 +299,13 @@ class _TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     final keys = _items.keys.toList();
 
-    return ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: keys.length,
-        itemBuilder: (_, index) => getItem(keys[index]));
+    return keys?.isNotEmpty == true
+        ? ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: keys.length,
+            itemBuilder: (_, index) => getItem(keys[index]))
+        : EmptyList(text: LocaleKeys.empty_list_report.tr());
   }
 
   Widget getItem(dynamic key) =>

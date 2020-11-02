@@ -114,6 +114,7 @@
   "empty_list_tasks": "Non hai nessun task assegnato, contatta il tuo responsabile per iniziare ad utilizzare EasyHour.",
   "empty_list_generic": "Non hai ancora inserito {}.\nClicca sull'icona in alto a destra per farlo.",
   "empty_list_calendar": "Nessuna attività inserita per questa data.",
+  "empty_list_report": "Non hai ancora inserito alcuna attività in questo mese.",
   "message_delete_generic": "Il contenuto è stato eliminato correttamente.",
   "message_add_generic": "Il contenuto è stato aggiunto correttamente.",
   "message_edit_generic": "Il contenuto è stato modificato correttamente.",

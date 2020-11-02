@@ -61,6 +61,7 @@ abstract class  LocaleKeys {
   static const empty_list_tasks = 'empty_list_tasks';
   static const empty_list_generic = 'empty_list_generic';
   static const empty_list_calendar = 'empty_list_calendar';
+  static const empty_list_report = 'empty_list_report';
   static const message_delete_generic = 'message_delete_generic';
   static const message_add_generic = 'message_add_generic';
   static const message_edit_generic = 'message_edit_generic';

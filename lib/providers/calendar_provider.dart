@@ -104,7 +104,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
     if (userInfo == null) return Duration.zero;
 
     Duration target = Duration();
-    _expand(dateRange).forEach((date) {
+    _expand(dateRange).where((e) => !(e is Holiday)).forEach((date) {
       target += userInfo.targetHours(date);
 
       // if (kDebugMode)
@@ -119,7 +119,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   static Duration workedHours(
       DateTimeRange dateRange, List<CalendarEvent> events) {
     Duration worked = Duration();
-    events.forEach((event) {
+    events.where((e) => !(e is Holiday)).forEach((event) {
       _expand(event.dateRange).forEach((date) {
         if (dateRange.contains(date)) {
           worked += event.duration(date);
