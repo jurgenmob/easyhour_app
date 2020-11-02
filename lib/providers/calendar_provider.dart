@@ -138,7 +138,7 @@ class CalendarProvider extends BaseProvider<CalendarEvent> {
   static Map<dynamic, DurationAndCount> workedHoursByType(
       DateTimeRange dateRange, List<CalendarEvent> events) {
     Map<dynamic, DurationAndCount> map = {};
-    events.forEach((event) {
+    events.where((e) => !(e is Holiday)).forEach((event) {
       _expand(event.dateRange).forEach((date) {
         if (dateRange.contains(date)) {
           // For worklogs use tasks

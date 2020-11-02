@@ -58,6 +58,8 @@ class _MyReportScreenState extends State<MyReportScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return FixedHeaderAndContent(
       header: _MyReportHeader(key: _headerKey),
       content: TabBarView(
