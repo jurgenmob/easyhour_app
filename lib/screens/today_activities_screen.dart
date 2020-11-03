@@ -49,31 +49,32 @@ class _TodayActivitiesScreenState extends State<TodayActivitiesScreen> {
         (_) => EasyAppBar.updateCalendarIndicator(context));
 
     return Consumer<TodayActivitiesProvider>(
+        key: ValueKey(today),
         builder: (_, TodayActivitiesProvider model, Widget child) {
-      final Type type = model.items?.isNotEmpty ?? false
-          ? model.items.first.runtimeType
-          : null;
+          final Type type = model.items?.isNotEmpty ?? false
+              ? model.items.first.runtimeType
+              : null;
 
-      return type == Vacation || type == Sickness
-          ? Column(children: [
-              SizedBox(height: 24),
-              _TodayActivitiesHeader(model.items,
-                  today: today, showTotalDuration: false),
-              SizedBox(height: 8),
-              Expanded(child: _VacationSicknessContainer(type))
-            ])
-          : GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => FocusScope.of(context).unfocus(),
-              child: Column(children: [
-                EasySearchBar<TodayActivitiesProvider>(),
-                _TodayActivitiesHeader(model.items,
-                    today: today, showTotalDuration: true),
-                SizedBox(height: 8),
-                Expanded(child: _TaskList(today))
-              ]),
-            );
-    });
+          return type == Vacation || type == Sickness
+              ? Column(children: [
+                  SizedBox(height: 24),
+                  _TodayActivitiesHeader(model.items,
+                      today: today, showTotalDuration: false),
+                  SizedBox(height: 8),
+                  Expanded(child: _VacationSicknessContainer(type))
+                ])
+              : GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => FocusScope.of(context).unfocus(),
+                  child: Column(children: [
+                    EasySearchBar<TodayActivitiesProvider>(),
+                    _TodayActivitiesHeader(model.items,
+                        today: today, showTotalDuration: true),
+                    SizedBox(height: 8),
+                    Expanded(child: _TaskList(today))
+                  ]),
+                );
+        });
   }
 }
 
